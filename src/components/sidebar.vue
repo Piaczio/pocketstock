@@ -23,22 +23,22 @@
         >
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title ><v-btn to="/" text flat x-small>Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn></v-list-item-title>
+              <v-btn to="/" text flat >Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title ><v-btn to="/about" text flat x-small>Lista de alimentos<v-icon>mdi-folder</v-icon></v-btn></v-list-item-title>
+              <v-btn to="/about" text flat >Lista de alimentos<v-icon>mdi-folder</v-icon></v-btn>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title ><v-btn to="/crearusuario" text flat x-small>Crear usuarios<v-icon>mdi-account</v-icon></v-btn></v-list-item-title>
+              <v-btn to="/crearusuario" text flat >Crear usuarios<v-icon>mdi-account</v-icon></v-btn>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title ><v-btn to="/creararticulos" text flat x-small>Crear articulos<v-icon>mdi-folder</v-icon></v-btn></v-list-item-title>
+<v-btn to="/creararticulos" text flat >Crear articulos<v-icon>mdi-folder</v-icon></v-btn>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>
@@ -48,17 +48,17 @@
         >
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title ><v-btn to="/electriclist" text flat x-small>Electricidad<v-icon>mdi-account-multiple</v-icon></v-btn></v-list-item-title>
+              <v-btn to="/electriclist" text flat >Electricidad<v-icon>mdi-account-multiple</v-icon></v-btn>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title ><v-btn to="/plomerialist" text flat x-small>Plomeria<v-icon>mdi-folder</v-icon></v-btn></v-list-item-title>
+             <v-btn to="/plomerialist" text flat >Plomeria<v-icon>mdi-folder</v-icon></v-btn>
             </v-list-item-content>
           </v-list-item>
           <v-list-item>
             <v-list-item-content>
-              <v-list-item-title ><v-btn to="/crearusuario" text flat x-small>A/C<v-icon>mdi-account</v-icon></v-btn></v-list-item-title>
+              <v-btn to="/ac" text flat >A/C<v-icon>mdi-account</v-icon></v-btn>
             </v-list-item-content>
           </v-list-item>
         </v-list-item-group>

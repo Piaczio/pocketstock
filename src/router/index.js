@@ -31,6 +31,11 @@ const routes = [
     component: () => import('../components/plomerialist.vue')
   },
   {
+    path: '/ac',
+    name: 'ac',
+    component: () => import('../components/ac.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('../components/About.vue')
