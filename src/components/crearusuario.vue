@@ -5,28 +5,20 @@
     <form>
       <v-text-field
         v-model="name"
-        :error-messages="nameErrors"
         :counter="10"
         label="Nombre"
         required
-        @input="$v.name.$touch()"
-        @blur="$v.name.$touch()"
       ></v-text-field>
       <v-text-field
         v-model="email"
-        :error-messages="emailErrors"
+
         label="codigo"
         required
-        @input="$v.email.$touch()"
-        @blur="$v.email.$touch()"
       ></v-text-field>
             <v-text-field
         v-model="email"
-        :error-messages="emailErrors"
         label="repetir codigo"
         required
-        @input="$v.email.$touch()"
-        @blur="$v.email.$touch()"
       ></v-text-field>
       <v-select
         v-model="select"
@@ -35,14 +27,14 @@
         label="Puesto"
         required
       ></v-select>
-  
       <v-btn
         class="mr-4"
         @click="submit"
+        text
       >
         submit
       </v-btn>
-      <v-btn @click="clear">
+      <v-btn @click="clear" text>
         clear
       </v-btn>
     </form>
@@ -64,7 +56,6 @@ name:'crearusuario',
       'Empleado administrador',
       'Administrador',
     ],
-    checkbox: false,
   }),
 
   computed: {

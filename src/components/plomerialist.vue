@@ -1,6 +1,7 @@
 <template>
 <div class="foodtable">
  <v-card id="app" >
+  <h1>Equipo de plomeria</h1>
   <v-app id="inspire" >
     <v-simple-table>
       <template v-slot:default>
@@ -35,43 +36,43 @@ export default {
     return {
       desserts: [
         {
-          name: 'Frozen Yogurt',
+          name: 'tuberia pvc',
           calories: 159,
         },
         {
-          name: 'Ice cream sandwich',
+          name: 'Conectores en T',
           calories: 237,
         },
         {
-          name: 'Eclair',
+          name: 'Coenctores en L',
           calories: 262,
         },
         {
-          name: 'Cupcake',
+          name: 'Conectores rectos',
           calories: 305,
         },
         {
-          name: 'Gingerbread',
+          name: 'Tomas dobles',
           calories: 356,
         },
         {
-          name: 'Jelly bean',
+          name: 'Pegamento gris',
           calories: 375,
         },
         {
-          name: 'Lollipop',
+          name: 'Pegamento rojo',
           calories: 392,
         },
         {
-          name: 'Honeycomb',
+          name: 'Mezcladores',
           calories: 408,
         },
         {
-          name: 'Donut',
+          name: 'Silicona blanca',
           calories: 452,
         },
         {
-          name: 'KitKat',
+          name: 'Silicona gris',
           calories: 518,
         },
       ],

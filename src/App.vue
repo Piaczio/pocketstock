@@ -1,21 +1,23 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <v-toolbar
-        dense
-        flat
-      >
-          <v-toolbar-items>
-            <v-btn to="/" text flat small>Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn>
-            <v-btn to="/about" text flat small>Lista de alimentos<v-icon>mdi-folder</v-icon></v-btn>
-            <v-btn to="/crearusuario" text flat small>Crear usuario<v-icon>mdi-folder</v-icon></v-btn>
-          </v-toolbar-items>
-      </v-toolbar>
-    </div>
+    <sidebar/>
     <router-view/>
   </div>
 </template>
+<script>
 
+import sidebar from "@/components/sidebar.vue";
+export default {
+  name:'App',
+  components:{
+    sidebar
+  },
+  data: () => ({
+    drawer:false,
+
+  }),
+}
+</script>
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -29,7 +31,7 @@ img{
   height: 15%;
 }
 #nav {
-  padding: 30px;
+  padding: 10px;
 
   a {
     font-weight: bold;

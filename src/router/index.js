@@ -13,12 +13,27 @@ const routes = [
   {
     path: '/crearusuario',
     name: 'crearusuario',
-    component: () => import('../views/crearusuario.vue')
+    component: () => import('../components/crearusuario.vue')
+  },
+  {
+    path: '/creararticulos',
+    name: 'creararticulos',
+    component: () => import('../components/creararticulos.vue')
+  },
+  {
+    path: '/electriclist',
+    name: 'electriclist',
+    component: () => import('../components/electriclist.vue')
+  },
+  {
+    path: '/plomerialist',
+    name: 'plomerialist',
+    component: () => import('../components/plomerialist.vue')
   },
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/About.vue')
+    component: () => import('../components/About.vue')
   },
 ]
 
