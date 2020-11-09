@@ -9,6 +9,13 @@
         label="Nombre articulo"
         required
       ></v-text-field>
+      <v-text-field
+        v-model="cant"
+        type="number"
+        :counter="10"
+        label="Cantidad articulo"
+        required
+      ></v-text-field>
       <v-select
         v-model="selectc"
         :items="itemsc"
@@ -49,7 +56,8 @@ export default {
 name:'crearusuario',
   data: () => ({
     name: '',
-    email: '',
+    cant: '',
+    codigo: '',
     selectc: null,
     selecta: null,
     selectp: null,
@@ -82,7 +90,8 @@ name:'crearusuario',
     },
     clear () {
       this.name = '';
-      this.email = '';
+      this.codigo = '';
+      this.cant='';
       this.selectc = null;
       this.selectp = null;
       this.selecta = null;

@@ -36,7 +36,7 @@ export default {
     return {
       desserts: [
         {
-          name: 'tuberia pvc',
+          name: 'Tuberia pvc',
           calories: 159,
         },
         {

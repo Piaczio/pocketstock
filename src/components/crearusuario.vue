@@ -10,13 +10,12 @@
         required
       ></v-text-field>
       <v-text-field
-        v-model="email"
-
+        v-model="codigo"
         label="codigo"
         required
       ></v-text-field>
             <v-text-field
-        v-model="email"
+        v-model="codigo"
         label="repetir codigo"
         required
       ></v-text-field>
@@ -48,7 +47,7 @@ export default {
 name:'crearusuario',
   data: () => ({
     name: '',
-    email: '',
+    codigo: '',
     select: null,
     items: [
       'Empleado bodega',
@@ -66,11 +65,9 @@ name:'crearusuario',
       this.$v.$touch()
     },
     clear () {
-      this.$v.$reset()
       this.name = ''
-      this.email = ''
+      this.codigo = ''
       this.select = null
-      this.checkbox = false
     },
   },
 }
