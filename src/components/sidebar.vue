@@ -1,80 +1,89 @@
 <template>
   <div id="app">
     <div id="nav">
-      <v-toolbar
-        dense
-        flat
-      >
-      <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
-      <v-spacer></v-spacer>
-      <v-toolbar-title  class="text-uppercase grey--text"><code class="font-weight-light">Pocket</code><strong>stock</strong></v-toolbar-title>
+      <v-toolbar dense flat>
+        <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
+
+        <v-spacer></v-spacer>
+        <v-toolbar-title class="text-uppercase grey--text"
+          ><code class="font-weight-light">Pocket</code
+          ><strong>stock</strong></v-toolbar-title
+        >
+        <v-toolbar-title><GooglePay /></v-toolbar-title>
       </v-toolbar>
-      <v-navigation-drawer 
-      expand-on-hover
-      app
-      v-model="drawer" 
-      
-      
-      >
-      <v-list dense flat>
-        <v-subheader  class="font-weight-light">Pocketstock</v-subheader>
-        <v-list-item-group
-          color="primary"
-        >
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn to="/" text flat >Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn to="/about" text flat >Lista de alimentos<v-icon>mdi-folder</v-icon></v-btn>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn to="/crearusuario" text flat >Crear usuarios<v-icon>mdi-account</v-icon></v-btn>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-<v-btn to="/creararticulos" text flat >Crear articulos<v-icon>mdi-folder</v-icon></v-btn>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-        <v-subheader>Categorias</v-subheader>
-        <v-list-item-group
-          color="primary"
-        >
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn to="/electriclist" text flat >Electricidad<v-icon>mdi-account-multiple</v-icon></v-btn>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-             <v-btn to="/plomerialist" text flat >Plomeria<v-icon>mdi-folder</v-icon></v-btn>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-btn to="/ac" text flat >A/C<v-icon>mdi-account</v-icon></v-btn>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
+      <v-navigation-drawer expand-on-hover app v-model="drawer">
+        <v-list dense flat>
+          <v-subheader class="font-weight-light">Pocketstock</v-subheader>
+          <v-list-item-group color="primary">
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn to="/" text flat
+                  >Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn to="/about" text flat
+                  >Lista de alimentos<v-icon>mdi-folder</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn to="/crearusuario" text flat
+                  >Crear usuarios<v-icon>mdi-account</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn to="/creararticulos" text flat
+                  >Crear articulos<v-icon>mdi-folder</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+          <v-subheader>Categorias</v-subheader>
+          <v-list-item-group color="primary">
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn to="/electriclist" text flat
+                  >Electricidad<v-icon>mdi-account-multiple</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn to="/plomerialist" text flat
+                  >Plomeria<v-icon>mdi-folder</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn to="/ac" text flat
+                  >A/C<v-icon>mdi-account</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
       </v-navigation-drawer>
     </div>
   </div>
 </template>
 <script>
+import GooglePay from "./google-pay/GooglePay.vue";
 export default {
-  name:'sidebar',
+  name: "sidebar",
+  components: {
+    GooglePay,
+  },
   data: () => ({
-    drawer:true,
-
+    drawer: true,
   }),
-}
+};
 </script>
 <style lang="scss">
 #app {
@@ -84,7 +93,7 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-img{
+img {
   width: 15%;
   height: 15%;
 }
