@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-
-Vue.use(VueRouter)
-
+import axios from 'axios'
+import VueAxios from "vue-axios";
+Vue.use(VueRouter, axios, VueAxios)
+window.axios = require('axios')
 const routes = [
   {
     path: '/',
@@ -31,9 +32,9 @@ const routes = [
     component: () => import('../components/electriclist.vue')
   },
   {
-    path: '/plomerialist',
-    name: 'plomerialist',
-    component: () => import('../components/plomerialist.vue')
+    path: '/general_articulos',
+    name: 'general_articulos',
+    component: () => import('../components/general_articulos.vue')
   },
   {
     path: '/ac',
