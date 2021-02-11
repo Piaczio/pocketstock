@@ -1,23 +1,24 @@
 <template>
   <div class="home">
-    <userslist />
+    <sidebar />
+    <router-view />
   </div>
 </template>
-
 <script>
 // @ is an alias to /src
-import userslist from '@/components/userslist.vue'
-
+import sidebar from "@/components/global/sidebar.vue";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    userslist
-  }
-}
+    sidebar,
+  },
+  data: () => ({
+    drawer: false,
+  }),
+};
 </script>
 <style scoped>
-img{
-  width: 15%;
-  height: 15%;
+#home {
+  align-items: center;
 }
 </style>

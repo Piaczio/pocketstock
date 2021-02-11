@@ -28,7 +28,7 @@
                 <td class="table-dist">{{ item.status_articulo }}</td>
                 <td class="table-dist">
                   {{ item.ubicacion_rack_articulo }},
-                  {{ item.ubicacion_traveseaño_articulo }}
+                  {{ item.ubicacion_travesaño_articulo }}
                 </td>
               </tr>
             </tbody>
@@ -64,7 +64,7 @@ export default {
             proveedor_articulo: element.nombre_proveedor,
             status_articulo: element.nombre_status,
             ubicacion_rack_articulo: element.rack,
-            ubicacion_traveseaño_articulo: element.traveseaño,
+            ubicacion_travesaño_articulo: element.travesaño,
           };
 
           if (!datos) return;

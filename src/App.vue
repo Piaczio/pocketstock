@@ -1,22 +1,17 @@
 <template>
   <div id="app">
-    <sidebar/>
-    <router-view/>
+    <login />
   </div>
 </template>
 <script>
-
-import sidebar from "@/components/sidebar.vue";
+import login from "@/components/global/login.vue";
 export default {
-  name:'App',
-  components:{
-    sidebar
+  name: "App",
+  components: {
+    login,
   },
-  data: () => ({
-    drawer:false,
-
-  }),
-}
+  data: () => ({}),
+};
 </script>
 <style lang="scss">
 #app {
@@ -25,21 +20,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-img{
-  width: 15%;
-  height: 15%;
-}
-#nav {
-  padding: 10px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
