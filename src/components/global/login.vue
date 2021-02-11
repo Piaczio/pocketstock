@@ -38,7 +38,7 @@ export default {
   email: "crearusuario",
   data: () => ({
     email: "fsmsoftdev@gmail.com",
-    password: "12345678",
+    password: "SAMF50345",
   }),
 
   validations: {
@@ -70,10 +70,14 @@ export default {
         email: this.email,
         password: this.password,
       };
-
-      axios.post("http://127.0.0.1:8000/login", enviar).then((response) => {
-        console.log(response);
-      });
+      axios
+        .post("http://127.0.0.1:8000/login", enviar)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     },
     clear() {
       this.email = "";
