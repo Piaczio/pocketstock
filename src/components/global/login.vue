@@ -14,7 +14,7 @@
             ></v-text-field>
             <v-text-field
               v-model="password"
-              :counter="8"
+              :counter="4"
               label="password"
               :error-messages="passwordErrors"
               required
@@ -23,6 +23,7 @@
             ></v-text-field>
             <v-btn class="mr-4" @click="login" text> login </v-btn>
             <v-btn @click="clear" text> clear </v-btn>
+            <v-btn @click="clear" to="/" text> back to </v-btn>
           </form>
         </v-card>
       </v-app>
@@ -34,23 +35,24 @@
 const { required, email, minLength } = require("vuelidate/lib/validators");
 import axios from "axios";
 axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://127.0.0.1:8000/";
 export default {
   email: "crearusuario",
   data: () => ({
-    email: "fsmsoftdev@gmail.com",
-    password: "SAMF50345",
+    email: "a@a.com",
+    password: "1234",
   }),
 
   validations: {
     email: { required, email },
-    password: { required, minLength: minLength(8) },
+    password: { required, minLength: minLength(4) },
   },
   computed: {
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
       !this.$v.password.minLength &&
-        errors.push("Password must be at 8 characters long");
+        errors.push("Password must be at 4 characters long");
       !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
@@ -71,9 +73,17 @@ export default {
         password: this.password,
       };
       axios
-        .post("http://127.0.0.1:8000/login", enviar)
+        .get("sanctum/csrf-cookie")
         .then((response) => {
-          console.log(response);
+          console.log("token ->", response);
+          axios
+            .post("api/login", enviar)
+            .then((response) => {
+              console.log(response);
+            })
+            .catch((e) => {
+              console.log(e);
+            });
         })
         .catch((e) => {
           console.log(e);

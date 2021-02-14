@@ -1,20 +1,11 @@
 <template>
-  <div class="home">
-    <sidebar />
-    <router-view />
-  </div>
+  <div class="home"></div>
 </template>
 <script>
 // @ is an alias to /src
-import sidebar from "@/components/global/sidebar.vue";
 export default {
   name: "Home",
-  components: {
-    sidebar,
-  },
-  data: () => ({
-    drawer: false,
-  }),
+  components: {},
 };
 </script>
 <style scoped>

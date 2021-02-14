@@ -1,16 +1,13 @@
 <template>
-  <div id="app">
-    <login />
-  </div>
+  <div id="app"><vue-extend-layouts /></div>
 </template>
 <script>
-import login from "@/components/global/login.vue";
+import VueExtendLayouts from "vue-extend-layout";
 export default {
   name: "App",
   components: {
-    login,
+    VueExtendLayouts,
   },
-  data: () => ({}),
 };
 </script>
 <style lang="scss">

@@ -15,18 +15,12 @@
           <v-list-item-group color="primary">
             <v-list-item>
               <v-list-item-content>
-                <v-btn to="/" text flat
+                <v-btn to="/userslist" text flat
                   >Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn
                 >
               </v-list-item-content>
             </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn to="/about" text flat
-                  >Lista de alimentos<v-icon>mdi-folder</v-icon></v-btn
-                >
-              </v-list-item-content>
-            </v-list-item>
+
             <v-list-item>
               <v-list-item-content>
                 <v-btn to="/crearusuario" text flat
@@ -46,22 +40,8 @@
           <v-list-item-group color="primary">
             <v-list-item>
               <v-list-item-content>
-                <v-btn to="/electriclist" text flat
-                  >Electricidad<v-icon>mdi-account-multiple</v-icon></v-btn
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
                 <v-btn to="/general_articulos" text flat
                   >Articulos en general<v-icon>mdi-folder</v-icon></v-btn
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn to="/ac" text flat
-                  >A/C<v-icon>mdi-account</v-icon></v-btn
                 >
               </v-list-item-content>
             </v-list-item>
