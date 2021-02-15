@@ -23,7 +23,7 @@
             ></v-text-field>
             <v-btn class="mr-4" @click="login" text> login </v-btn>
             <v-btn @click="clear" text> clear </v-btn>
-            <v-btn @click="clear" to="/" text> back to </v-btn>
+            <v-btn @click="clear" to="/home" text> back to </v-btn>
           </form>
         </v-card>
       </v-app>
@@ -75,11 +75,25 @@ export default {
       axios
         .get("sanctum/csrf-cookie")
         .then((response) => {
-          console.log("token ->", response);
+          console.log("token del api ->", response);
           axios
             .post("api/login", enviar)
             .then((response) => {
-              console.log(response);
+              let validado = response.request.withCredentials;
+              console.log("Usuario validado:", validado);
+              if (validado == true) {
+                console.log(
+                  "usuario existente->",
+                  enviar.email,
+                  " clave existente->",
+                  enviar.password
+                );
+                this.$store.commit("setAuthentication", true);
+                console.log("<h1>aqui en login funciona:</h1>", this.$store);
+                this.$router.replace({ name: "Home" });
+              } else if (validado == false) {
+                console.log("Cuanta no existen o incorrecta");
+              }
             })
             .catch((e) => {
               console.log(e);

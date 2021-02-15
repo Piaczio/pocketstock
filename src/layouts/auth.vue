@@ -1,6 +1,5 @@
 <template>
   <div>
-    <login />
     <div class="container-login">
       <router-view />
     </div>
@@ -10,6 +9,7 @@
 <script>
 export default {
   name: "auth", // you can enter any name (optional)
+  components: {},
 };
 </script>
  

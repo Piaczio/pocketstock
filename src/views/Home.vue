@@ -1,5 +1,5 @@
 <template>
-  <div class="home"></div>
+  <div class="home">Estoy en el componente casa</div>
 </template>
 <script>
 // @ is an alias to /src

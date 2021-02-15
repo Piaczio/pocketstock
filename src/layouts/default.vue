@@ -2,9 +2,8 @@
   <div>
     <sidebar />
     <div class="container">
-      <router-view />
+      <router-view /><!--Renderisa cualquier vista que este activa-->
     </div>
-    <YourFooter />
   </div>
 </template>
  

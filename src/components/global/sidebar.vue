@@ -15,6 +15,13 @@
           <v-list-item-group color="primary">
             <v-list-item>
               <v-list-item-content>
+                <v-btn to="/home" text flat
+                  >Home<v-icon>mdi-home</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
                 <v-btn to="/userslist" text flat
                   >Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn
                 >
