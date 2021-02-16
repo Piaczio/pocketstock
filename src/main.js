@@ -13,7 +13,7 @@ Vue.use(Vuex)
 Vue.config.productionTip = false
 
 window.axios = require('axios')
-const store = new Vuex.Store(
+export const store = new Vuex.Store(
   {
     state: {
       authenticated: false
@@ -34,3 +34,4 @@ new Vue({
   render: h => h(App),
   store: store
 }).$mount('#app')
+
