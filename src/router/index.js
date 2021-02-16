@@ -30,20 +30,22 @@ const routes = [
   },
   {
     path: '/home',
-    name: 'Home',
+    name: 'home',
     component: () => import('../views/Home.vue'),
-    /*beforeEnter: () => {
-      if (main.store.state.authenticated == false) {
-        console.log("store data en la que NO te validaron :", main.store.state.authenticated)
-        router.push({ path: '/login' });
+    meta: {
+      authenticated: true
+    },
+    beforeEnter: (to) => {
+      if (to.meta.authenticated == false) {
+
+        router.push('/').catch((e) => { alert(e); });
+        console.log('to ', to, " store data en la que NO te validaron :", to.meta.authenticated)
       }
-      else if (main.store.state.authenticated == true) {
-        console.log("store data en la que si te validaron :", main.store.state.authenticated)
-        router.push({
-          path: '/home'
-        });
+      else if (to.meta.authenticated == true) {
+        console.log('to ', to, "store data en la que si te validaron :", to.meta.authenticated)
+        router.push('/home').catch((e) => { alert(e); });
       }
-    },*/
+    },
 
   },
   {

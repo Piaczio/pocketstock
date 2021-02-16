@@ -21,7 +21,7 @@
               @input="$v.password.$touch()"
               @blur="$v.password.$touch()"
             ></v-text-field>
-            <v-btn class="mr-4" @click="login" text> login </v-btn>
+            <v-btn class="mr-4" v-on:click="login()" text> login </v-btn>
             <v-btn @click="clear" text> clear </v-btn>
             <v-btn @click="clear" to="/home" text> back to </v-btn>
           </form>
@@ -34,6 +34,8 @@
 <script>
 const { required, email, minLength } = require("vuelidate/lib/validators");
 import axios from "axios";
+
+import store from "store";
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://127.0.0.1:8000/";
 export default {
@@ -82,15 +84,15 @@ export default {
               let validado = response.request.withCredentials;
               console.log("Usuario validado:", validado);
               if (validado == true) {
+                store.email = enviar.email;
+                store.password = enviar.password;
                 console.log(
                   "usuario existente->",
-                  enviar.email,
+                  store.email,
                   " clave existente->",
-                  enviar.password
+                  store.password
                 );
-                this.$store.commit("setAuthentication", true);
-                console.log("<h1>aqui en login funciona:</h1>", this.$store);
-                this.$router.replace({ name: "Home" });
+                this.$router.push("home");
               } else if (validado == false) {
                 console.log("Cuanta no existen o incorrecta");
               }

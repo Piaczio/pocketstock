@@ -6,32 +6,23 @@ import axios from 'axios';
 import VueAxios from "vue-axios";
 import Vuelidate from 'vuelidate'
 import Vuex from 'vuex';
+import store from 'store';
 import 'bulma/css/bulma.css';
 Vue.use(Vuelidate)
 Vue.use(VueAxios, axios)
 Vue.use(Vuex)
+Vue.use(store)
 Vue.config.productionTip = false
 
 window.axios = require('axios')
-export const store = new Vuex.Store(
-  {
-    state: {
-      authenticated: false
-    },
-    mutations: {
-      setAuthentication(state, status) {
-        state.authenticated = status;
-      }
-    }
-  }
-)
+
 
 new Vue({
   vuetify,
   router,
   Vuex,
-  VueAxios, axios, Vuelidate,
+  VueAxios, axios, Vuelidate, store,
   render: h => h(App),
-  store: store
+
 }).$mount('#app')
 
