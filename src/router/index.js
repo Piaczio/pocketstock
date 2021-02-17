@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-import * as main from "@/main.js";
-Vue.use(main);
+import store from "@/store";
+//import * as main from "@/main.js";
+//import { nextTick } from 'vue/types/umd';
+//Vue.use(main);
 Vue.use(VueRouter)
+Vue.use(store)
 
 
 const routes = [
@@ -11,7 +13,7 @@ const routes = [
     path: '/',
     redirect: {
       name: 'login',
-      component: () => import('../components/global/login.vue'),
+      component: () => import(/*webpackChunkName: "Login" */'../components/global/login.vue'),
       meta: {
         layout: 'auth',
         name: 'auth'
@@ -21,7 +23,7 @@ const routes = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('../components/global/login.vue'),
+    component: () => import(/*webpackChunkName: "Login" */'../components/global/login.vue'),
 
     meta: {
       layout: 'auth',
@@ -31,22 +33,26 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: () => import('../views/Home.vue'),
+    component: () => import(/*webpackChunkName: "Home" */'../views/Home.vue'),
     meta: {
       authenticated: true
     },
-    beforeEnter: (to) => {
-      if (to.meta.authenticated == false) {
-
-        router.push('/').catch((e) => { alert(e); });
-        console.log('to ', to, " store data en la que NO te validaron :", to.meta.authenticated)
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (validado == true && from.path !== '/') {
+        if (store.email && store.password) {
+          next();
+          console.log("pasaste la validado con: ", store.email, " y ", store.password)
+        }
       }
-      else if (to.meta.authenticated == true) {
-        console.log('to ', to, "store data en la que si te validaron :", to.meta.authenticated)
-        router.push('/home').catch((e) => { alert(e); });
+      else if (!validado) {
+        next({ name: 'login' });
       }
-    },
+      else {
+        next({ name: 'login' });
+      }
 
+    }
   },
   {
     path: '*',
@@ -87,4 +93,8 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 })
+
+
+
+
 export default router

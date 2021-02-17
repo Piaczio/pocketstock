@@ -1,13 +1,13 @@
 <template>
   <div class="foodtable">
     <v-card id="app">
-      <h1>Equipo de plomeria</h1>
+      <h1>Artículos en general</h1>
       <v-app id="inspire">
         <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
-                <th class="text-left">Articulo</th>
+                <th class="text-left">Artículo</th>
                 <th class="text-left">Cantidad</th>
                 <th class="text-left">Descripción</th>
                 <th class="text-left">Tipo</th>
@@ -40,6 +40,8 @@
 </template>
 <script >
 import axios from "axios";
+//axios.defaults.withCredentials = true;
+//axios.defaults.baseURL = "";
 export default {
   name: "GeneralArticulo Lista",
   data() {
@@ -51,7 +53,7 @@ export default {
     axios
       .get("http://127.0.0.1:8000/api/articulo")
       .then((response) => {
-        console.log("this -> ", response.data);
+        console.log("this -> ", response);
         let articulos = response.data;
 
         articulos.forEach((element) => {

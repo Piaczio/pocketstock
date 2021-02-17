@@ -22,8 +22,7 @@
               @blur="$v.password.$touch()"
             ></v-text-field>
             <v-btn class="mr-4" v-on:click="login()" text> login </v-btn>
-            <v-btn @click="clear" text> clear </v-btn>
-            <v-btn @click="clear" to="/home" text> back to </v-btn>
+            <v-btn @click="clear" text> limpiar </v-btn>
           </form>
         </v-card>
       </v-app>
@@ -35,7 +34,7 @@
 const { required, email, minLength } = require("vuelidate/lib/validators");
 import axios from "axios";
 
-import store from "store";
+import store from "@/store";
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = "http://127.0.0.1:8000/";
 export default {
@@ -92,7 +91,7 @@ export default {
                   " clave existente->",
                   store.password
                 );
-                this.$router.push("home");
+                this.$router.push("/home").catch(() => {});
               } else if (validado == false) {
                 console.log("Cuanta no existen o incorrecta");
               }
@@ -105,6 +104,7 @@ export default {
           console.log(e);
         });
     },
+
     clear() {
       this.email = "";
       this.password = "";

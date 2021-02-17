@@ -1,10 +1,10 @@
 <template>
-  <div class="home">Estoy en el componente casa</div>
+  <div class="home"><h1>Estoy en el componente casa</h1></div>
 </template>
 <script>
 // @ is an alias to /src
 export default {
-  name: "Home",
+  name: "home",
   components: {},
 };
 </script>

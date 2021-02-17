@@ -3,7 +3,13 @@
     <div id="nav">
       <v-toolbar dense flat>
         <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
+
         <v-spacer></v-spacer>
+        <v-btn style="width: 110.095px; height: 34.016px; border-radius: 7px">
+          <img
+            src="@/assets/Add-to-Apple-Wallet/Add to Apple Wallet Badges/ES/web/Add_to_Apple_Wallet_rgb_ES.svg"
+          />
+        </v-btn>
         <v-toolbar-title class="text-uppercase grey--text"
           ><code class="font-weight-light">Pocket</code
           ><strong>stock</strong></v-toolbar-title
@@ -17,13 +23,6 @@
               <v-list-item-content>
                 <v-btn to="/home" text flat
                   >Home<v-icon>mdi-home</v-icon></v-btn
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn to="/userslist" text flat
-                  >Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn
                 >
               </v-list-item-content>
             </v-list-item>
@@ -48,8 +47,23 @@
             <v-list-item>
               <v-list-item-content>
                 <v-btn to="/general_articulos" text flat
-                  >Articulos en general<v-icon>mdi-folder</v-icon></v-btn
+                  >Artículos<v-icon>mdi-folder</v-icon></v-btn
                 >
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn to="/userslist" text flat
+                  >Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn
+                >
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
+          <v-subheader>Usuario y configuración</v-subheader>
+          <v-list-item-group color="primary">
+            <v-list-item>
+              <v-list-item-content>
+                <v-btn class="mr-3" v-on:click="logout()" text> Logout </v-btn>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -59,11 +73,19 @@
   </div>
 </template>
 <script>
+import store from "@/store.js";
 export default {
   name: "sidebar",
   data: () => ({
     drawer: true,
+    components: {},
   }),
+  methods: {
+    logout() {
+      (store.user = null), (store.email = null);
+      this.$router.push("/");
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -73,10 +95,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-img {
-  width: 15%;
-  height: 15%;
 }
 
 #nav {
