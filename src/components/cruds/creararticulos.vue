@@ -36,7 +36,7 @@
             required
           ></v-select>-->
           <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-          <v-btn @click="clear" text> clear </v-btn>
+          <v-btn @click="clear" text> Limpiar </v-btn>
         </form>
       </v-app>
     </div>

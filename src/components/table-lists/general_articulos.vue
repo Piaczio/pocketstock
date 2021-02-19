@@ -43,7 +43,7 @@ import axios from "axios";
 //axios.defaults.withCredentials = true;
 //axios.defaults.baseURL = "";
 export default {
-  name: "GeneralArticulo Lista",
+  name: "articulos_general",
   data() {
     return {
       articulosArray: [],
