@@ -9,7 +9,6 @@
           ><code class="font-weight-light">Pocket</code
           ><strong>stock</strong></v-toolbar-title
         >
-        <v-toolbar-title><GooglePay /></v-toolbar-title>
       </v-toolbar>
       <v-navigation-drawer expand-on-hover app v-model="drawer">
         <v-list dense flat>
@@ -74,12 +73,9 @@
   </div>
 </template>
 <script>
-import GooglePay from "./google-pay/GooglePay.vue";
 export default {
   name: "sidebar",
-  components: {
-    GooglePay,
-  },
+  components: {},
   data: () => ({
     drawer: true,
   }),

@@ -8,12 +8,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-<<<<<<< HEAD
     "axios": "^0.21.1",
     "bulma": "^0.9.2",
-=======
-    "@google-pay/button-element": "^2.1.5",
->>>>>>> New-features
     "core-js": "^3.6.5",
     "store": "^2.0.12",
     "umd": "^3.0.3",
