@@ -10,64 +10,48 @@
             src="@/assets/Add-to-Apple-Wallet/Add to Apple Wallet Badges/ES/web/Add_to_Apple_Wallet_rgb_ES.svg"
           />
         </v-btn>
-        <v-toolbar-title class="text-uppercase grey--text"
-          ><code class="font-weight-light">Pocket</code
-          ><strong>stock</strong></v-toolbar-title
-        >
       </v-toolbar>
-      <v-navigation-drawer expand-on-hover app v-model="drawer">
-        <v-list dense text>
-          <v-subheader class="font-weight-light">Pocketstock</v-subheader>
+      <v-navigation-drawer permanent app>
+        <v-list>
           <v-list-item-group color="primary">
             <v-list-item>
               <v-list-item-content>
-                <v-btn to="/home" text flat
-                  >Home<v-icon>mdi-home</v-icon></v-btn
+                <v-list-item-title
+                  style="font-size: 30px"
+                  class="text-uppercase grey--text title"
                 >
+                  <code class="font-weight-light">Pocket</code
+                  ><strong>stock</strong>
+                </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
+            <v-divider></v-divider>
 
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn to="/crearusuario" text flat
-                  >Crear usuarios<v-icon>mdi-account</v-icon></v-btn
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn to="/creararticulos" text flat
-                  >Crear articulos<v-icon>mdi-folder</v-icon></v-btn
-                >
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-          <v-subheader>Categorias</v-subheader>
-          <v-list-item-group color="primary">
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn to="/general_articulos" text flat
-                  >Artículos<v-icon>mdi-folder</v-icon></v-btn
-                >
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn to="/userslist" text flat
-                  >Lista de clientes<v-icon>mdi-account-multiple</v-icon></v-btn
-                >
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-          <v-subheader>Usuario y configuración</v-subheader>
-          <v-list-item-group color="primary">
-            <v-list-item>
-              <v-list-item-content>
-                <v-btn class="mr-3" v-on:click="logout()" text> Logout </v-btn>
-              </v-list-item-content>
-            </v-list-item>
+            <v-list dense nav>
+              <v-list-item
+                v-for="item in items"
+                :key="item.title"
+                link
+                :to="item.path"
+              >
+                <v-list-item-icon>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
           </v-list-item-group>
         </v-list>
+        <v-divider></v-divider>
+        <template v-slot:append>
+          <div class="pa-2">
+            <v-btn class="mr-6" v-on:click="logout()" text>
+              Cerrar sesión
+            </v-btn>
+          </div>
+        </template>
       </v-navigation-drawer>
     </div>
   </div>
@@ -77,8 +61,18 @@ import store from "@/store.js";
 export default {
   name: "sidebar",
   data: () => ({
-    drawer: true,
     components: {},
+    items: [
+      { path: "/home", title: "Home", icon: "mdi-home" },
+      { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
+      { path: "/creararticulos", title: "Crear articulo", icon: "mdi-folder" },
+      {
+        path: "/general_articulos",
+        title: "Articulos",
+        icon: "mdi-folder-multiple",
+      },
+      { path: "/userslist", title: "Clientes", icon: "mdi-account-multiple" },
+    ],
   }),
   methods: {
     logout() {

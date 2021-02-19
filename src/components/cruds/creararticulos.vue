@@ -2,21 +2,22 @@
   <div class="foodtable">
     <div id="app">
       <v-app id="inspire">
-        <form>
-          <v-text-field
-            v-model="name"
-            :counter="10"
-            label="Nombre articulo"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="cant"
-            type="number"
-            :counter="10"
-            label="Cantidad articulo"
-            required
-          ></v-text-field>
-          <!--<v-select
+        <v-card class="cont-card" elevation="2">
+          <form>
+            <v-text-field
+              v-model="name"
+              :counter="10"
+              label="Nombre articulo"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="cant"
+              type="number"
+              :counter="10"
+              label="Cantidad articulo"
+              required
+            ></v-text-field>
+            <!--<v-select
             v-model="selectc"
             :items="itemsc"
             label="Categoria"
@@ -35,9 +36,10 @@
             label="Tipo de articulo"
             required
           ></v-select>-->
-          <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-          <v-btn @click="clear" text> clear </v-btn>
-        </form>
+            <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+            <v-btn @click="clear" text> Limpiar </v-btn>
+          </form>
+        </v-card>
       </v-app>
     </div>
   </div>
@@ -101,5 +103,11 @@ export default {
   padding-left: 30%;
   padding-top: 0%;
   padding-right: 30%;
+}
+.cont-card {
+  padding-left: 2%;
+  padding-top: 2%;
+  padding-right: 2%;
+  padding-bottom: 2%;
 }
 </style>

@@ -21,7 +21,9 @@
               @input="$v.password.$touch()"
               @blur="$v.password.$touch()"
             ></v-text-field>
-            <v-btn class="mr-4" v-on:click="login()" text> login </v-btn>
+            <v-btn class="mr-4" v-on:click="login()" text>
+              Iniciar sesión
+            </v-btn>
             <v-btn @click="clear" text> limpiar </v-btn>
           </form>
         </v-card>
