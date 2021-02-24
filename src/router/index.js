@@ -69,6 +69,11 @@ const routes = [
     component: () => import('../components/cruds/crearusuario.vue')
   },
   {
+    path: '/crearcategoria',
+    name: 'crearcategoria',
+    component: () => import('../components/cruds/crearcategoria.vue')
+  },
+  {
     path: '/userslist',
     name: 'userslist',
     component: () => import('../components/table-lists/userslist.vue')

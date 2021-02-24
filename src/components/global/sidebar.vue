@@ -57,50 +57,55 @@
   </div>
 </template>
 <script>
-import store from "@/store.js";
-export default {
-  name: "sidebar",
-  data: () => ({
-    components: {},
-    items: [
-      { path: "/home", title: "Home", icon: "mdi-home" },
-      { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
-      { path: "/creararticulos", title: "Crear articulo", icon: "mdi-folder" },
-      {
-        path: "/general_articulos",
-        title: "Articulos",
-        icon: "mdi-folder-multiple",
+  import store from "@/store.js";
+  export default {
+    name: "sidebar",
+    data: () => ({
+      components: {},
+      items: [
+        { path: "/home", title: "Home", icon: "mdi-home" },
+        { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
+        { path: "/creararticulos", title: "Crear articulo", icon: "mdi-folder" },
+        {
+          path: "/crearcategoria",
+          title: "Crear categoria",
+          icon: "mdi-folder",
+        },
+        {
+          path: "/general_articulos",
+          title: "Articulos",
+          icon: "mdi-folder-multiple",
+        },
+        { path: "/userslist", title: "Clientes", icon: "mdi-account-multiple" },
+      ],
+    }),
+    methods: {
+      logout() {
+        (store.user = null), (store.email = null);
+        this.$router.push("/");
       },
-      { path: "/userslist", title: "Clientes", icon: "mdi-account-multiple" },
-    ],
-  }),
-  methods: {
-    logout() {
-      (store.user = null), (store.email = null);
-      this.$router.push("/");
     },
-  },
-};
+  };
 </script>
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
     color: #2c3e50;
+  }
 
-    &.router-link-exact-active {
-      color: #42b983;
+  #nav {
+    padding: 30px;
+
+    a {
+      font-weight: bold;
+      color: #2c3e50;
+
+      &.router-link-exact-active {
+        color: #42b983;
+      }
     }
   }
-}
 </style>
