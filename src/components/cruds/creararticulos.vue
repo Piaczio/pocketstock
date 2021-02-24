@@ -46,68 +46,68 @@
 </template>
 
 <script>
-import axios from "axios";
-//axios.defaults.withCredentials = true;
-//axios.defaults.baseURL = "http://127.0.0.1:8000/";
-export default {
-  name: "crearusuario",
-  data: () => ({
-    name: "clavo",
-    cant: "2345",
-    //codigo: "",
-    //selectc: null,
-    //selectt: null,
-    //selectp: null,
-    //itemsc: ["plomeria", "electricidad", "carpinteria"],
-    //itemsp: ["home depot", "office depot", "general"],
-    //itemstt: ["consumible", "herramienta"],
-  }),
+  import axios from "axios";
+  axios.defaults.withCredentials = true;
+  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  export default {
+    name: "crearusuario",
+    data: () => ({
+      name: "clavo",
+      cant: "2345",
+      //codigo: "",
+      //selectc: null,
+      //selectt: null,
+      //selectp: null,
+      //itemsc: ["plomeria", "electricidad", "carpinteria"],
+      //itemsp: ["home depot", "office depot", "general"],
+      //itemstt: ["consumible", "herramienta"],
+    }),
 
-  computed: {},
+    computed: {},
 
-  methods: {
-    submit() {
-      //this.$v.$touch();
-      let enviar = {
-        nombre_articulo: this.name,
-        cantidad_articulo: this.cant,
-        //codigo: this.codigo,
-        //categoria: this.selectc,
-        //proveedor: this.selectp,
-        //tipo: this.selectt,
-      };
-      console.log("DATOS POR ENIAR:", enviar);
-      axios
-        .post("http://127.0.0.1:8000/api/articulo", enviar)
-        .then((response) => {
-          console.log("Response de articulo:", response);
-        })
-        .catch((e) => {
-          alert(e.message);
-        });
+    methods: {
+      submit() {
+        //this.$v.$touch();
+        let enviar = {
+          nombre_articulo: this.name,
+          cantidad_articulo: this.cant,
+          //codigo: this.codigo,
+          //categoria: this.selectc,
+          //proveedor: this.selectp,
+          //tipo: this.selectt,
+        };
+        console.log("DATOS POR ENIAR:", enviar);
+        axios
+          .post("api/articulo", enviar)
+          .then((response) => {
+            console.log("Response de articulo:", response);
+          })
+          .catch((e) => {
+            alert(e.message);
+          });
+      },
+      clear() {
+        this.name = "";
+        //this.codigo = "";
+        this.cant = "";
+        //this.selectc = null;
+        //this.selectp = null;
+        //this.selectt = null;
+      },
     },
-    clear() {
-      this.name = "";
-      //this.codigo = "";
-      this.cant = "";
-      //this.selectc = null;
-      //this.selectp = null;
-      //this.selectt = null;
-    },
-  },
-};
+  };
 </script>
 
 <style>
-.foodtable {
-  padding-left: 30%;
-  padding-top: 0%;
-  padding-right: 30%;
-}
-.cont-card {
-  padding-left: 2%;
-  padding-top: 2%;
-  padding-right: 2%;
-  padding-bottom: 2%;
-}
+  .foodtable {
+    padding-left: 30%;
+    padding-top: 0%;
+    padding-right: 30%;
+  }
+  .cont-card {
+    padding-left: 2%;
+    padding-top: 2%;
+    padding-right: 2%;
+    padding-bottom: 2%;
+  }
 </style>
