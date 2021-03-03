@@ -62,7 +62,7 @@ const routes = [
       layout: 'error' // name of the layout
     }
   },
-
+  //Cruds 
   {
     path: '/crearusuario',
     name: 'crearusuario',
@@ -73,15 +73,42 @@ const routes = [
     name: 'crearcategoria',
     component: () => import('../components/cruds/crearcategoria.vue')
   },
-  {
-    path: '/userslist',
-    name: 'userslist',
-    component: () => import('../components/table-lists/userslist.vue')
-  },
+
   {
     path: '/creararticulos',
     name: 'creararticulos',
     component: () => import('../components/cruds/creararticulos.vue')
+  },
+  {
+    path: '/crearmarca',
+    name: 'crearmarca',
+    component: () => import('../components/cruds/crearmarca.vue')
+  },
+  {
+    path: '/crearstatus',
+    name: 'crearstatus',
+    component: () => import('../components/cruds/crearstatus.vue')
+  },
+  {
+    path: '/crearubicacion',
+    name: 'crearubicacion',
+    component: () => import('../components/cruds/crearubicacion.vue')
+  },
+  {
+    path: '/crearproveedor',
+    name: 'crearproveedor',
+    component: () => import('../components/cruds/crearproveedor.vue')
+  },
+  {
+    path: '/creartipo',
+    name: 'creartipo',
+    component: () => import('../components/cruds/creartipo.vue')
+  },
+  //Listas
+  {
+    path: '/userslist',
+    name: 'userslist',
+    component: () => import('../components/table-lists/userslist.vue')
   },
   {
     path: '/general_articulos',

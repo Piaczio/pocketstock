@@ -11,7 +11,7 @@
           rounded="pill"
           top
         >
-          ¡Categoria guardada exitosamente!
+          ¡Ubicación guardada exitosamente!
         </v-snackbar>
         <v-snackbar
           dense
@@ -27,16 +27,17 @@
         <v-card class="cont-card" elevation="2">
           <form>
             <v-text-field
-              v-model="name"
+              v-model="rack"
               :counter="10"
-              label="Nombre categoria"
+              label="Rack"
               required
             ></v-text-field>
-            <v-textarea v-model="descripcion" :counter="120" color="teal">
-              <template v-slot:label>
-                <div>Descripción categoria <small>(opcional)</small></div>
-              </template>
-            </v-textarea>
+            <v-text-field
+              v-model="travesaño"
+              :counter="10"
+              label="Travesaño"
+              required
+            ></v-text-field>
             <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
             <v-btn @click="clear" text> Limpiar </v-btn>
           </form>
@@ -51,10 +52,10 @@
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    name: "crearcategoria",
+    name: "crearmarca",
     data: () => ({
-      name: "",
-      descripcion: "",
+      rack: "",
+      travesaño: "",
       alert1: false,
       alert2: false,
       timeout: 2000,
@@ -63,14 +64,14 @@
     methods: {
       submit() {
         let enviar = {
-          nombre_categoria: this.name,
-          descripcion_categoria: this.descripcion,
+          rack: this.rack,
+          traveseaño: this.travesaño,
         };
-        console.log("DATOS POR ENIAR en categoria:", enviar);
+        console.log("DATOS POR ENIAR en ubicacion:", enviar);
         axios
-          .post("api/categoria", enviar)
+          .post("api/ubicacion", enviar)
           .then((response) => {
-            console.log("Response de categoria:", response);
+            console.log("Response de ubicacion:", response);
             if (response.statusText === "Created") {
               this.alert1 = true;
             }
@@ -81,7 +82,7 @@
           });
       },
       clear() {
-        (this.name = ""), (this.descripcion = "");
+        (this.rack = ""), (this.travesaño = "");
       },
     },
   };

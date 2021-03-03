@@ -11,7 +11,7 @@
           rounded="pill"
           top
         >
-          ¡Categoria guardada exitosamente!
+          ¡Tipo guardada exitosamente!
         </v-snackbar>
         <v-snackbar
           dense
@@ -29,14 +29,10 @@
             <v-text-field
               v-model="name"
               :counter="10"
-              label="Nombre categoria"
+              label="Nombre tipo"
               required
             ></v-text-field>
-            <v-textarea v-model="descripcion" :counter="120" color="teal">
-              <template v-slot:label>
-                <div>Descripción categoria <small>(opcional)</small></div>
-              </template>
-            </v-textarea>
+
             <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
             <v-btn @click="clear" text> Limpiar </v-btn>
           </form>
@@ -51,10 +47,9 @@
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    name: "crearcategoria",
+    name: "creartipo",
     data: () => ({
       name: "",
-      descripcion: "",
       alert1: false,
       alert2: false,
       timeout: 2000,
@@ -63,14 +58,13 @@
     methods: {
       submit() {
         let enviar = {
-          nombre_categoria: this.name,
-          descripcion_categoria: this.descripcion,
+          name_tipo: this.name,
         };
-        console.log("DATOS POR ENIAR en categoria:", enviar);
+        console.log("DATOS POR ENIAR en tipo:", enviar);
         axios
-          .post("api/categoria", enviar)
+          .post("api/tipo", enviar)
           .then((response) => {
-            console.log("Response de categoria:", response);
+            console.log("Response de tipo:", response);
             if (response.statusText === "Created") {
               this.alert1 = true;
             }
@@ -81,7 +75,7 @@
           });
       },
       clear() {
-        (this.name = ""), (this.descripcion = "");
+        this.name = "";
       },
     },
   };
