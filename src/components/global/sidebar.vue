@@ -76,6 +76,11 @@
           title: "Articulos",
           icon: "mdi-folder-multiple",
         },
+        {
+          path: "/categoria_list",
+          title: "Categorias",
+          icon: "mdi-folder-multiple",
+        },
         { path: "/userslist", title: "Clientes", icon: "mdi-account-multiple" },
       ],
     }),
