@@ -88,6 +88,11 @@ const routes = [
     name: 'general_articulos',
     component: () => import('../components/table-lists/general_articulos.vue')
   },
+  {
+    path: '/categoria_list',
+    name: 'categoria_list',
+    component: () => import('@/components/table-lists/categoria-list.vue')
+  },
 
 ]
 
