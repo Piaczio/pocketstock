@@ -46,22 +46,60 @@
               item-value="categoria_id"
               label="Categoria"
             >
-              <!--<td>{{ itemsc. }}</td>-->
             </v-select>
-            <!--
-          <v-select
-            v-model="selectp"
-            :items="itemsp"
-            label="Proveedor"
-            required
-          ></v-select>
-          <v-select
-            v-model="selectt"
-            :items="itemstt"
-            :error-messages="selectErrors"
-            label="Tipo de articulo"
-            required
-          ></v-select>-->
+            <v-select
+              v-model="selectt"
+              :items="itemstt"
+              item-text="name_tipo"
+              item-value="tipo_id"
+              label="Tipo"
+            >
+            </v-select>
+
+            <v-select
+              v-model="selectp"
+              :items="itemsp"
+              item-text="nombre_proveedor"
+              item-value="proveedor_id"
+              label="Proveedor"
+              required
+            ></v-select>
+            <v-select
+              v-model="selectm"
+              :items="itemstm"
+              item-text="nombre_marca"
+              item-value="marca_id"
+              label="Marca"
+              required
+            ></v-select>
+            <v-select
+              v-model="selectst"
+              :items="itemstst"
+              item-text="nombre_status"
+              item-value="status_id"
+              label="Status"
+              required
+            ></v-select>
+            <v-col>
+              <v-row>
+                <v-select
+                  v-model="selectu"
+                  :items="itemsu"
+                  item-text="rack"
+                  item-value="ubicacion_id"
+                  label="Ubicación rack"
+                  required
+                ></v-select>
+                <v-select
+                  v-model="selectu"
+                  :items="itemsu"
+                  item-text="travesaño"
+                  item-value="ubicacion_id"
+                  label="Ubicación travesaño"
+                  required
+                ></v-select>
+              </v-row>
+            </v-col>
             <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
             <v-btn @click="clear" text> Limpiar </v-btn>
           </form>
@@ -81,12 +119,19 @@
       name: "clavo",
       cant: "2345",
       //codigo: "",
-      selectc: null,
-      //selectt: null,
-      //selectp: null,
-      itemsc: [],
-      //itemsp: ["home depot", "office depot", "general"],
-      //itemstt: ["consumible", "herramienta"],
+      selectc: null, //categoria
+      selectt: null, //tipo
+      selectp: null, //proveedor
+      selectm: null, //marca
+      selectst: null, //status
+      selectu: null, //ubicacion
+
+      itemsc: [], //categoria
+      itemstt: [], //tipo
+      itemsp: [], //proveedor
+      itemstm: [], //marca
+      itemstst: [], //status
+      itemsu: [], //ubucacion
       alert1: false,
       alert2: false,
       timeout: 2000,
@@ -110,6 +155,97 @@
         .catch((e) => {
           console.log(e.message);
         });
+      axios
+        .get("api/marca")
+        .then((response) => {
+          let marcas = response.data;
+
+          marcas.forEach((element) => {
+            let datos = {
+              marca_id: element.id,
+              nombre_marca: element.nombre_marca,
+            };
+            console.log("recibidos ", datos);
+            if (!datos) return;
+            this.itemstm.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+      axios
+        .get("api/proveedor")
+        .then((response) => {
+          let proveedores = response.data;
+
+          proveedores.forEach((element) => {
+            let datos = {
+              proveedor_id: element.id,
+              nombre_proveedor: element.nombre_proveedor,
+            };
+            console.log("recibidos proveedor ", datos);
+            if (!datos) return;
+            this.itemsp.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+      axios
+        .get("api/status")
+        .then((response) => {
+          let status = response.data;
+
+          status.forEach((element) => {
+            let datos = {
+              status_id: element.id,
+              nombre_status: element.nombre_status,
+            };
+            console.log("recibidos ", datos);
+            if (!datos) return;
+            this.itemstst.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+      axios
+        .get("api/tipo")
+        .then((response) => {
+          let tipos = response.data;
+
+          tipos.forEach((element) => {
+            let datos = {
+              tipo_id: element.id,
+              name_tipo: element.name_tipo,
+            };
+            console.log("recibidos ", datos);
+            if (!datos) return;
+            this.itemstt.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+      axios
+        .get("api/ubicacion")
+        .then((response) => {
+          let ubicaciones = response.data;
+
+          ubicaciones.forEach((element) => {
+            let datos = {
+              ubicacion_id: element.id,
+              travesaño: element.travesaño,
+              rack: element.rack,
+            };
+            console.log("recibidos ", datos);
+            if (!datos) return;
+            this.itemsu.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
     },
     computed: {},
 
@@ -119,10 +255,13 @@
         let enviar = {
           nombre_articulo: this.name,
           cantidad_articulo: this.cant,
-          //codigo: this.codigo,
+
           categoria_id: this.selectc,
-          //proveedor: this.selectp,
-          //tipo: this.selectt,
+          proveedor_id: this.selectp,
+          tipo_id: this.selectt,
+          status_id: this.selectst,
+          marca_id: this.selectm,
+          ubicacion_id: this.selectu,
         };
         console.log("Por enviar ", enviar);
         axios
@@ -143,8 +282,11 @@
         //this.codigo = "";
         this.cant = "";
         this.selectc = null;
-        //this.selectp = null;
-        //this.selectt = null;
+        this.selectp = null;
+        this.selectt = null;
+        this.selectst = null;
+        this.selectu = null;
+        this.selectm = null;
       },
     },
   };

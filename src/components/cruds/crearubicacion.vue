@@ -65,7 +65,7 @@
       submit() {
         let enviar = {
           rack: this.rack,
-          traveseaño: this.travesaño,
+          travesaño: this.travesaño,
         };
         console.log("DATOS POR ENIAR en ubicacion:", enviar);
         axios
