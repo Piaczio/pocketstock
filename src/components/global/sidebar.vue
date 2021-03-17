@@ -5,11 +5,6 @@
         <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
 
         <v-spacer></v-spacer>
-        <v-btn style="width: 110.095px; height: 34.016px; border-radius: 7px">
-          <img
-            src="@/assets/Add-to-Apple-Wallet/Add to Apple Wallet Badges/ES/web/Add_to_Apple_Wallet_rgb_ES.svg"
-          />
-        </v-btn>
       </v-toolbar>
       <v-navigation-drawer permanent app>
         <v-list>
