@@ -66,7 +66,7 @@
           nombre_categoria: this.name,
           descripcion_categoria: this.descripcion,
         };
-        console.log("DATOS POR ENIAR en categoria:", enviar);
+
         axios
           .post("api/categoria", enviar)
           .then((response) => {
@@ -79,6 +79,8 @@
             console.log(e.message);
             this.alert2 = true;
           });
+        this.alert1 = false;
+        this.alert2 = false;
       },
       clear() {
         (this.name = ""), (this.descripcion = "");

@@ -73,6 +73,8 @@
             console.log(e.message);
             this.alert2 = true;
           });
+        this.alert1 = false;
+        this.alert2 = false;
       },
       clear() {
         this.name = "";

@@ -67,11 +67,10 @@
           rack: this.rack,
           travesaño: this.travesaño,
         };
-        console.log("DATOS POR ENIAR en ubicacion:", enviar);
+
         axios
           .post("api/ubicacion", enviar)
           .then((response) => {
-            console.log("Response de ubicacion:", response);
             if (response.statusText === "Created") {
               this.alert1 = true;
             }
@@ -80,6 +79,8 @@
             console.log(e.message);
             this.alert2 = true;
           });
+        this.alert1 = false;
+        this.alert2 = false;
       },
       clear() {
         (this.rack = ""), (this.travesaño = "");

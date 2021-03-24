@@ -59,11 +59,10 @@
         let enviar = {
           nombre_status: this.name,
         };
-        console.log("DATOS POR ENIAR en status:", enviar);
+
         axios
           .post("api/status", enviar)
           .then((response) => {
-            console.log("Response de status:", response);
             if (response.statusText === "Created") {
               this.alert1 = true;
             }
@@ -72,6 +71,8 @@
             console.log(e.message);
             this.alert2 = true;
           });
+        this.alert1 = false;
+        this.alert2 = false;
       },
       clear() {
         this.name = "";

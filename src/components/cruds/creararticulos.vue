@@ -147,7 +147,7 @@
               categoria_id: element.id,
               nombre_categoria: element.nombre_categoria,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemsc.push(datos);
           });
@@ -165,7 +165,7 @@
               marca_id: element.id,
               nombre_marca: element.nombre_marca,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemstm.push(datos);
           });
@@ -183,7 +183,7 @@
               proveedor_id: element.id,
               nombre_proveedor: element.nombre_proveedor,
             };
-            console.log("recibidos proveedor ", datos);
+
             if (!datos) return;
             this.itemsp.push(datos);
           });
@@ -201,7 +201,7 @@
               status_id: element.id,
               nombre_status: element.nombre_status,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemstst.push(datos);
           });
@@ -219,7 +219,7 @@
               tipo_id: element.id,
               name_tipo: element.name_tipo,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemstt.push(datos);
           });
@@ -238,7 +238,7 @@
               travesaño: element.travesaño,
               rack: element.rack,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemsu.push(datos);
           });
@@ -263,7 +263,7 @@
           marca_id: this.selectm,
           ubicacion_id: this.selectu,
         };
-        console.log("Por enviar ", enviar);
+
         axios
           .post("api/articulo", enviar)
           .then((response) => {
@@ -275,6 +275,8 @@
             console.log(e.message);
             this.alert2 = true;
           });
+        this.alert1 = false;
+        this.alert2 = false;
       },
 
       clear() {

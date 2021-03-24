@@ -60,8 +60,8 @@
       items: [
         { path: "/home", title: "Home", icon: "mdi-home" },
         { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
-        { path: "/creararticulos", title: "Crear articulo", icon: "mdi-folder" },
-        { path: "/crearcategoria", title: "Crear categoria", icon: "mdi-folder" },
+        { path: "/creararticulos", title: "Crear artículo", icon: "mdi-folder" },
+        { path: "/crearcategoria", title: "Crear categoría", icon: "mdi-folder" },
         { path: "/crearmarca", title: "Crear marca", icon: "mdi-folder" },
         { path: "/crearproveedor", title: "Crear proveedor", icon: "mdi-folder" },
         { path: "/crearstatus", title: "Crear status", icon: "mdi-folder" },
@@ -69,12 +69,17 @@
         { path: "/crearubicacion", title: "Crear ubicacion", icon: "mdi-folder" },
         {
           path: "/general_articulos",
-          title: "Articulos",
+          title: "Artículos",
           icon: "mdi-folder-multiple",
         },
         {
           path: "/categoria_list",
           title: "Categorias",
+          icon: "mdi-folder-multiple",
+        },
+        {
+          path: "/marca_list",
+          title: "Marcas",
           icon: "mdi-folder-multiple",
         },
         { path: "/userslist", title: "Clientes", icon: "mdi-account-multiple" },
