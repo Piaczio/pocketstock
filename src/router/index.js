@@ -75,9 +75,9 @@ const routes = [
   },
 
   {
-    path: '/creararticulos',
-    name: 'creararticulos',
-    component: () => import('../components/cruds/creararticulos.vue')
+    path: '/crear',
+    name: 'crear',
+    component: () => import('../components/global/creacion.vue')
   },
   {
     path: '/crearmarca',

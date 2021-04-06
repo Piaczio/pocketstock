@@ -60,7 +60,7 @@
       items: [
         { path: "/home", title: "Home", icon: "mdi-home" },
         { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
-        { path: "/creararticulos", title: "Crear artículo", icon: "mdi-folder" },
+        { path: "/crear", title: "Crear", icon: "mdi-folder" },
         { path: "/crearcategoria", title: "Crear categoría", icon: "mdi-folder" },
         { path: "/crearmarca", title: "Crear marca", icon: "mdi-folder" },
         { path: "/crearproveedor", title: "Crear proveedor", icon: "mdi-folder" },
