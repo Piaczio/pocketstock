@@ -1,31 +1,42 @@
 <template>
-  <div class="foodtable">
-    <div id="app">
-      <v-app id="inspire">
-        <v-snackbar
-          dense
-          color="success"
-          outlined
-          :value="alert1"
-          :timeout="timeout"
-          rounded="pill"
-          top
+  <div id="app">
+    <v-snackbar
+      dense
+      color="success"
+      outlined
+      :value="alertsuccess"
+      :timeout="timeout"
+      rounded="pill"
+      top
+    >
+      ¡Marca guardada exitosamente!
+    </v-snackbar>
+    <v-snackbar
+      dense
+      color="red"
+      outlined
+      :value="alertproblem"
+      :timeout="timeout"
+      rounded="pill"
+      top
+    >
+      ¡Ups hubo un problema!
+    </v-snackbar>
+    <v-app id="inspire">
+      <div class="text-center">
+        <v-dialog
+          content-class="elevation-0"
+          v-model="parentdialog"
+          max-width="800px"
+          persistent
         >
-          ¡Marca guardada exitosamente!
-        </v-snackbar>
-        <v-snackbar
-          dense
-          color="red"
-          outlined
-          :value="alert2"
-          :timeout="timeout"
-          rounded="pill"
-          top
-        >
-          ¡Ups hubo un problema!
-        </v-snackbar>
-        <v-card class="cont-card" elevation="2">
-          <form>
+          <v-card elevation="2">
+            <v-toolbar light flat>
+              <v-btn icon color="dark" @click="onClose">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+              <v-toolbar-title>Crear Marca</v-toolbar-title>
+            </v-toolbar>
             <v-text-field
               v-model="name"
               :counter="10"
@@ -34,10 +45,10 @@
             ></v-text-field>
             <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
             <v-btn @click="clear" text> Limpiar </v-btn>
-          </form>
-        </v-card>
-      </v-app>
-    </div>
+          </v-card>
+        </v-dialog>
+      </div>
+    </v-app>
   </div>
 </template>
 
@@ -47,33 +58,40 @@
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     name: "crearmarca",
+    props: {
+      parentdialog: { type: Boolean },
+    } /*data de llegado de componente padre creacion*/,
     data: () => ({
       name: "",
-      alert1: false,
-      alert2: false,
+      alertsuccess: false,
+      alertproblem: false,
       timeout: 2000,
     }),
 
     methods: {
+      onClose() {
+        /*Envia parametro de cierre a componente creación*/
+        this.$emit("dialogFromChild", false);
+      },
       submit() {
+        this.$emit("dialogFromChild", false);
         let enviar = {
           nombre_marca: this.name,
         };
-        console.log("DATOS POR ENIAR en marca:", enviar);
+
         axios
           .post("api/marca", enviar)
           .then((response) => {
-            console.log("Response de marca:", response);
             if (response.statusText === "Created") {
-              this.alert1 = true;
+              this.alertsuccess = true;
             }
+            this.alertproblem = false;
           })
           .catch((e) => {
             console.log(e.message);
-            this.alert2 = true;
+            this.alertproblem = true;
           });
-        this.alert1 = false;
-        this.alert2 = false;
+        this.alertsuccess = false;
       },
       clear() {
         this.name = "";
@@ -83,15 +101,4 @@
 </script>
 
 <style>
-  .foodtable {
-    padding-left: 30%;
-    padding-top: 0%;
-    padding-right: 30%;
-  }
-  .cont-card {
-    padding-left: 2%;
-    padding-top: 2%;
-    padding-right: 2%;
-    padding-bottom: 2%;
-  }
 </style>

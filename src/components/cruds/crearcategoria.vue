@@ -4,7 +4,7 @@
       dense
       color="success"
       outlined
-      :value="alert1"
+      :value="alertsuccess"
       :timeout="timeout"
       rounded="pill"
       top
@@ -15,7 +15,7 @@
       dense
       color="red"
       outlined
-      :value="alert2"
+      :value="alertproblem"
       :timeout="timeout"
       rounded="pill"
       top
@@ -28,12 +28,14 @@
           content-class="elevation-0"
           v-model="parentdialog"
           max-width="800px"
+          persistent
         >
           <v-card>
             <v-toolbar light flat>
               <v-btn icon color="dark" @click="onClose">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
+              <v-toolbar-title>Crear categoria</v-toolbar-title>
             </v-toolbar>
             <v-text-field
               v-model="name"
@@ -70,13 +72,14 @@
     data: () => ({
       name: "",
       descripcion: "",
-      alert1: false,
-      alert2: false,
+      alertsuccess: false,
+      alertproblem: false,
       timeout: 2000,
     }),
 
     methods: {
       onClose() {
+        /*Envia parametro de cierre a componente creación*/
         this.$emit("dialogFromChild", false);
       },
       submit() {
@@ -90,15 +93,15 @@
           .post("api/categoria", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alert1 = true;
+              this.alertsuccess = true;
             }
-            this.alert2 = false;
+            this.alertproblem = false;
           })
           .catch((e) => {
             console.log(e.message);
-            this.alert2 = true;
+            this.alertproblem = true;
           });
-        this.alert1 = false;
+        this.alertsuccess = false;
       },
       clear() {
         (this.name = ""), (this.descripcion = "");

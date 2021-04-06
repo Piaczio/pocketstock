@@ -6,7 +6,7 @@
           dense
           color="success"
           outlined
-          :value="alert1"
+          :value="alertsuccess"
           :timeout="timeout"
           rounded="pill"
           top
@@ -17,7 +17,7 @@
           dense
           color="red"
           outlined
-          :value="alert2"
+          :value="alertproblem"
           :timeout="timeout"
           rounded="pill"
           top
@@ -46,7 +46,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col sm="2" md="2" lx="4">
+              <v-col sm="3" md="3" lx="4">
                 <v-select
                   v-model="selectc"
                   :items="itemsc"
@@ -154,8 +154,8 @@
       itemstm: [], //marca
       itemstst: [], //status
       itemsu: [], //ubucacion
-      alert1: false,
-      alert2: false,
+      alertsuccess: false,
+      alertproblem: false,
       timeout: 2000,
     }),
     mounted() {
@@ -290,15 +290,15 @@
           .post("api/articulo", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alert1 = true;
+              this.alertsuccess = true;
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.alert2 = true;
+            this.alertproblem = true;
           });
-        this.alert1 = false;
-        this.alert2 = false;
+        this.alertsuccess = false;
+        this.alertproblem = false;
       },
 
       clear() {
@@ -322,11 +322,12 @@
     padding-top: 0%;
     padding-right: 0%;
   }
+
   .v-card {
     padding-left: 2%;
     padding-top: 2%;
     padding-right: 2%;
     padding-bottom: 2%;
-    width: 70%;
+    width: 100%;
   }
 </style>

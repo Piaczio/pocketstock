@@ -61,12 +61,7 @@
         { path: "/home", title: "Home", icon: "mdi-home" },
         { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
         { path: "/crear", title: "Crear", icon: "mdi-folder" },
-        { path: "/crearcategoria", title: "Crear categoría", icon: "mdi-folder" },
-        { path: "/crearmarca", title: "Crear marca", icon: "mdi-folder" },
-        { path: "/crearproveedor", title: "Crear proveedor", icon: "mdi-folder" },
-        { path: "/crearstatus", title: "Crear status", icon: "mdi-folder" },
-        { path: "/creartipo", title: "Crear tipo", icon: "mdi-folder" },
-        { path: "/crearubicacion", title: "Crear ubicacion", icon: "mdi-folder" },
+
         {
           path: "/general_articulos",
           title: "Artículos",
