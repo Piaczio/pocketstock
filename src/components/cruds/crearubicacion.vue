@@ -83,13 +83,27 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
-        let enviar = {
-          rack: this.rack,
-          travesaño: this.travesaño,
+        let enviar_rack = {
+          nombre_rack: this.rack,
+        };
+        let enviar_travesaño = {
+          nombre_travesaño: this.travesaño,
         };
 
         axios
-          .post("api/ubicacion", enviar)
+          .post("api/rack", enviar_rack)
+          .then((response) => {
+            if (response.statusText === "Created") {
+              this.alertsuccess = true;
+            }
+            this.alertproblem = false;
+          })
+          .catch((e) => {
+            console.log(e.message);
+            this.alertproblem = true;
+          });
+        axios
+          .post("api/travesaño", enviar_travesaño)
           .then((response) => {
             if (response.statusText === "Created") {
               this.alertsuccess = true;
@@ -102,6 +116,7 @@
           });
         this.alertsuccess = false;
       },
+
       clear() {
         (this.rack = ""), (this.travesaño = "");
       },

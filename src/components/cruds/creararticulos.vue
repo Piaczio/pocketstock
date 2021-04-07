@@ -102,20 +102,20 @@
             <v-row>
               <v-col sm="3" md="5" lx="3">
                 <v-select
-                  v-model="selectu"
-                  :items="itemsu"
-                  item-text="rack"
-                  item-value="ubicacion_id"
+                  v-model="selectr"
+                  :items="itemsr"
+                  item-text="nombre_rack"
+                  item-value="rack_id"
                   label="Ubicación rack"
                   required
                 ></v-select>
               </v-col>
               <v-col sm="3" md="5" lx="3">
                 <v-select
-                  v-model="selectu"
-                  :items="itemsu"
-                  item-text="travesaño"
-                  item-value="ubicacion_id"
+                  v-model="selectT"
+                  :items="itemsT"
+                  item-text="nombre_travesaño"
+                  item-value="travesaño_id"
                   label="Ubicación travesaño"
                   required
                 ></v-select>
@@ -146,14 +146,16 @@
       selectp: null, //proveedor
       selectm: null, //marca
       selectst: null, //status
-      selectu: null, //ubicacion
+      selectr: null, //rack
+      selectT: null, //travesaño
 
       itemsc: [], //categoria
       itemstt: [], //tipo
       itemsp: [], //proveedor
       itemstm: [], //marca
       itemstst: [], //status
-      itemsu: [], //ubucacion
+      itemsr: [], //rack
+      itemsT: [], //travesaño
       alertsuccess: false,
       alertproblem: false,
       timeout: 2000,
@@ -249,20 +251,38 @@
         .catch((e) => {
           console.log(e.message);
         });
+
       axios
-        .get("api/ubicacion")
+        .get("api/rack")
         .then((response) => {
-          let ubicaciones = response.data;
+          let racks = response.data;
 
-          ubicaciones.forEach((element) => {
+          racks.forEach((element) => {
             let datos = {
-              ubicacion_id: element.id,
-              travesaño: element.travesaño,
-              rack: element.rack,
+              rack_id: element.id,
+              nombre_rack: element.nombre_rack,
             };
-
+            console.log("Data en selector rack:", datos);
             if (!datos) return;
-            this.itemsu.push(datos);
+            this.itemsr.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+      axios
+        .get("api/travesaño")
+        .then((response) => {
+          let travesaños = response.data;
+
+          travesaños.forEach((element) => {
+            let datos = {
+              travesaño_id: element.id,
+              nombre_travesaño: element.nombre_travesaño,
+            };
+            console.log("Data en selector travesaño:", datos);
+            if (!datos) return;
+            this.itemsT.push(datos);
           });
         })
         .catch((e) => {
@@ -283,7 +303,8 @@
           tipo_id: this.selectt,
           status_id: this.selectst,
           marca_id: this.selectm,
-          ubicacion_id: this.selectu,
+          rack_id: this.selectr,
+          travesaño_id: this.selectT,
         };
 
         axios
@@ -309,7 +330,8 @@
         this.selectp = null;
         this.selectt = null;
         this.selectst = null;
-        this.selectu = null;
+        this.selectr = null;
+        this.selectT = null;
         this.selectm = null;
       },
     },
