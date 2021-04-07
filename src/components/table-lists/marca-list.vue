@@ -1,20 +1,18 @@
 <template>
   <div class="foodtable">
     <v-card id="app">
-      <h1>Categorias en general</h1>
+      <h1>Marcas en general</h1>
       <v-app id="inspire">
         <v-simple-table>
           <template v-slot:default>
             <thead>
               <tr>
                 <th class="text-left">Nombre</th>
-                <th class="text-left">Descripcion</th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="item in categoriasArray" :key="item.itemid">
-                <td class="text-left">{{ item.nombre_categoria }}</td>
-                <td class="text-left">{{ item.descripcion_categoria }}</td>
+              <tr v-for="item in marcasArray" :key="item.itemid">
+                <td class="text-left">{{ item.nombre_marca }}</td>
               </tr>
             </tbody>
           </template>
@@ -29,28 +27,27 @@
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    name: "categoria_list",
+    name: "marca_list",
     data() {
       return {
-        categoriasArray: [],
+        marcasArray: [],
       };
     },
     mounted() {
       axios
-        .get("api/categoria")
+        .get("api/marca")
         .then((response) => {
-          let categorias = response.data;
-          console.log("this pre fetch -> ", categorias);
-          categorias.forEach((element) => {
+          let marcas = response.data;
+          console.log("this pre fetch -> ", marcas);
+          marcas.forEach((element) => {
             let datos = {
-              nombre_categoria: element.nombre_categoria,
-              descripcion_categoria: element.descripcion_categoria,
+              nombre_marca: element.nombre_marca,
             };
 
             if (!datos) return;
-            this.categoriasArray.push(datos);
+            this.marcasArray.push(datos);
           });
-          console.log("this -> ", this.categoriasArray);
+          console.log("this -> ", this.marcasArray);
         })
         .catch((error) => console.log(error));
     },

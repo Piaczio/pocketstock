@@ -9,7 +9,7 @@
               <tr>
                 <th class="text-left">Artículo</th>
                 <th class="text-left">Cantidad</th>
-                <th class="text-left">Categoria</th>
+                <th class="text-left">Categoría</th>
                 <th class="text-left">Tipo</th>
                 <th class="text-left">Marca</th>
                 <th class="text-left">Proveedor</th>

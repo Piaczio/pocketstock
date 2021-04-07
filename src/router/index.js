@@ -75,9 +75,9 @@ const routes = [
   },
 
   {
-    path: '/creararticulos',
-    name: 'creararticulos',
-    component: () => import('../components/cruds/creararticulos.vue')
+    path: '/crear',
+    name: 'crear',
+    component: () => import('../components/global/creacion.vue')
   },
   {
     path: '/crearmarca',
@@ -119,6 +119,11 @@ const routes = [
     path: '/categoria_list',
     name: 'categoria_list',
     component: () => import('@/components/table-lists/categoria-list.vue')
+  },
+  {
+    path: '/marca_list',
+    name: 'marca_list',
+    component: () => import('@/components/table-lists/marca-list.vue')
   },
 
 ]

@@ -6,7 +6,7 @@
           dense
           color="success"
           outlined
-          :value="alert1"
+          :value="alertsuccess"
           :timeout="timeout"
           rounded="pill"
           top
@@ -17,7 +17,7 @@
           dense
           color="red"
           outlined
-          :value="alert2"
+          :value="alertproblem"
           :timeout="timeout"
           rounded="pill"
           top
@@ -26,80 +26,102 @@
         </v-snackbar>
         <v-card class="v-card" elevation="2">
           <form>
-            <v-text-field
-              v-model="name"
-              :counter="10"
-              label="Nombre articulo"
-              required
-            ></v-text-field>
-            <v-text-field
-              v-model="cant"
-              type="number"
-              :counter="10"
-              label="Cantidad articulo"
-              required
-            ></v-text-field>
-            <v-select
-              v-model="selectc"
-              :items="itemsc"
-              item-text="nombre_categoria"
-              item-value="categoria_id"
-              label="Categoria"
-            >
-            </v-select>
-            <v-select
-              v-model="selectt"
-              :items="itemstt"
-              item-text="name_tipo"
-              item-value="tipo_id"
-              label="Tipo"
-            >
-            </v-select>
-
-            <v-select
-              v-model="selectp"
-              :items="itemsp"
-              item-text="nombre_proveedor"
-              item-value="proveedor_id"
-              label="Proveedor"
-              required
-            ></v-select>
-            <v-select
-              v-model="selectm"
-              :items="itemstm"
-              item-text="nombre_marca"
-              item-value="marca_id"
-              label="Marca"
-              required
-            ></v-select>
-            <v-select
-              v-model="selectst"
-              :items="itemstst"
-              item-text="nombre_status"
-              item-value="status_id"
-              label="Status"
-              required
-            ></v-select>
-            <v-col>
-              <v-row>
+            <v-row>
+              <v-col sm="6" md="6" lx="4">
+                <v-text-field
+                  v-model="name"
+                  :counter="10"
+                  label="Nombre articulo"
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col sm="2" md="3" lx="4">
+                <v-text-field
+                  v-model="cant"
+                  type="number"
+                  :counter="10"
+                  label="Cantidad articulo"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col sm="3" md="3" lx="4">
                 <v-select
-                  v-model="selectu"
-                  :items="itemsu"
-                  item-text="rack"
-                  item-value="ubicacion_id"
+                  v-model="selectc"
+                  :items="itemsc"
+                  item-text="nombre_categoria"
+                  item-value="categoria_id"
+                  label="Categoria"
+                >
+                </v-select>
+              </v-col>
+              <v-col sm="2" md="2" lx="4">
+                <v-select
+                  v-model="selectt"
+                  :items="itemstt"
+                  item-text="name_tipo"
+                  item-value="tipo_id"
+                  label="Tipo"
+                >
+                </v-select>
+              </v-col>
+              <v-col sm="2" md="4" lx="4">
+                <v-select
+                  v-model="selectp"
+                  :items="itemsp"
+                  item-text="nombre_proveedor"
+                  item-value="proveedor_id"
+                  label="Proveedor"
+                  required
+                ></v-select>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col sm="2" md="3" lx="4">
+                <v-select
+                  v-model="selectm"
+                  :items="itemstm"
+                  item-text="nombre_marca"
+                  item-value="marca_id"
+                  label="Marca"
+                  required
+                ></v-select>
+              </v-col>
+              <v-col sm="2" md="3" lx="4">
+                <v-select
+                  v-model="selectst"
+                  :items="itemstst"
+                  item-text="nombre_status"
+                  item-value="status_id"
+                  label="Status"
+                  required
+                ></v-select>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col sm="3" md="5" lx="3">
+                <v-select
+                  v-model="selectr"
+                  :items="itemsr"
+                  item-text="nombre_rack"
+                  item-value="rack_id"
                   label="Ubicación rack"
                   required
                 ></v-select>
+              </v-col>
+              <v-col sm="3" md="5" lx="3">
                 <v-select
-                  v-model="selectu"
-                  :items="itemsu"
-                  item-text="travesaño"
-                  item-value="ubicacion_id"
+                  v-model="selectT"
+                  :items="itemsT"
+                  item-text="nombre_travesaño"
+                  item-value="travesaño_id"
                   label="Ubicación travesaño"
                   required
                 ></v-select>
-              </v-row>
-            </v-col>
+              </v-col>
+            </v-row>
+
             <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
             <v-btn @click="clear" text> Limpiar </v-btn>
           </form>
@@ -109,7 +131,7 @@
   </div>
 </template>
 
-<script>
+<script scope>
   import axios from "axios";
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
@@ -124,16 +146,18 @@
       selectp: null, //proveedor
       selectm: null, //marca
       selectst: null, //status
-      selectu: null, //ubicacion
+      selectr: null, //rack
+      selectT: null, //travesaño
 
       itemsc: [], //categoria
       itemstt: [], //tipo
       itemsp: [], //proveedor
       itemstm: [], //marca
       itemstst: [], //status
-      itemsu: [], //ubucacion
-      alert1: false,
-      alert2: false,
+      itemsr: [], //rack
+      itemsT: [], //travesaño
+      alertsuccess: false,
+      alertproblem: false,
       timeout: 2000,
     }),
     mounted() {
@@ -147,7 +171,7 @@
               categoria_id: element.id,
               nombre_categoria: element.nombre_categoria,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemsc.push(datos);
           });
@@ -165,7 +189,7 @@
               marca_id: element.id,
               nombre_marca: element.nombre_marca,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemstm.push(datos);
           });
@@ -183,7 +207,7 @@
               proveedor_id: element.id,
               nombre_proveedor: element.nombre_proveedor,
             };
-            console.log("recibidos proveedor ", datos);
+
             if (!datos) return;
             this.itemsp.push(datos);
           });
@@ -201,7 +225,7 @@
               status_id: element.id,
               nombre_status: element.nombre_status,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemstst.push(datos);
           });
@@ -219,7 +243,7 @@
               tipo_id: element.id,
               name_tipo: element.name_tipo,
             };
-            console.log("recibidos ", datos);
+
             if (!datos) return;
             this.itemstt.push(datos);
           });
@@ -227,20 +251,38 @@
         .catch((e) => {
           console.log(e.message);
         });
-      axios
-        .get("api/ubicacion")
-        .then((response) => {
-          let ubicaciones = response.data;
 
-          ubicaciones.forEach((element) => {
+      axios
+        .get("api/rack")
+        .then((response) => {
+          let racks = response.data;
+
+          racks.forEach((element) => {
             let datos = {
-              ubicacion_id: element.id,
-              travesaño: element.travesaño,
-              rack: element.rack,
+              rack_id: element.id,
+              nombre_rack: element.nombre_rack,
             };
-            console.log("recibidos ", datos);
+            console.log("Data en selector rack:", datos);
             if (!datos) return;
-            this.itemsu.push(datos);
+            this.itemsr.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+      axios
+        .get("api/travesaño")
+        .then((response) => {
+          let travesaños = response.data;
+
+          travesaños.forEach((element) => {
+            let datos = {
+              travesaño_id: element.id,
+              nombre_travesaño: element.nombre_travesaño,
+            };
+            console.log("Data en selector travesaño:", datos);
+            if (!datos) return;
+            this.itemsT.push(datos);
           });
         })
         .catch((e) => {
@@ -261,20 +303,23 @@
           tipo_id: this.selectt,
           status_id: this.selectst,
           marca_id: this.selectm,
-          ubicacion_id: this.selectu,
+          rack_id: this.selectr,
+          travesaño_id: this.selectT,
         };
-        console.log("Por enviar ", enviar);
+
         axios
           .post("api/articulo", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alert1 = true;
+              this.alertsuccess = true;
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.alert2 = true;
+            this.alertproblem = true;
           });
+        this.alertsuccess = false;
+        this.alertproblem = false;
       },
 
       clear() {
@@ -285,23 +330,26 @@
         this.selectp = null;
         this.selectt = null;
         this.selectst = null;
-        this.selectu = null;
+        this.selectr = null;
+        this.selectT = null;
         this.selectm = null;
       },
     },
   };
 </script>
 
-<style scope>
+<style >
   .foodtable {
     padding-left: 30%;
     padding-top: 0%;
-    padding-right: 30%;
+    padding-right: 0%;
   }
+
   .v-card {
     padding-left: 2%;
     padding-top: 2%;
     padding-right: 2%;
     padding-bottom: 2%;
+    width: 100%;
   }
 </style>

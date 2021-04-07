@@ -5,11 +5,6 @@
         <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
 
         <v-spacer></v-spacer>
-        <v-btn style="width: 110.095px; height: 34.016px; border-radius: 7px">
-          <img
-            src="@/assets/Add-to-Apple-Wallet/Add to Apple Wallet Badges/ES/web/Add_to_Apple_Wallet_rgb_ES.svg"
-          />
-        </v-btn>
       </v-toolbar>
       <v-navigation-drawer permanent app>
         <v-list>
@@ -65,21 +60,21 @@
       items: [
         { path: "/home", title: "Home", icon: "mdi-home" },
         { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
-        { path: "/creararticulos", title: "Crear articulo", icon: "mdi-folder" },
-        { path: "/crearcategoria", title: "Crear categoria", icon: "mdi-folder" },
-        { path: "/crearmarca", title: "Crear marca", icon: "mdi-folder" },
-        { path: "/crearproveedor", title: "Crear proveedor", icon: "mdi-folder" },
-        { path: "/crearstatus", title: "Crear status", icon: "mdi-folder" },
-        { path: "/creartipo", title: "Crear tipo", icon: "mdi-folder" },
-        { path: "/crearubicacion", title: "Crear ubicacion", icon: "mdi-folder" },
+        { path: "/crear", title: "Crear", icon: "mdi-folder" },
+
         {
           path: "/general_articulos",
-          title: "Articulos",
+          title: "Artículos",
           icon: "mdi-folder-multiple",
         },
         {
           path: "/categoria_list",
           title: "Categorias",
+          icon: "mdi-folder-multiple",
+        },
+        {
+          path: "/marca_list",
+          title: "Marcas",
           icon: "mdi-folder-multiple",
         },
         { path: "/userslist", title: "Clientes", icon: "mdi-account-multiple" },
