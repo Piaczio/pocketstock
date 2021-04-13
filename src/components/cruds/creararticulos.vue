@@ -1,133 +1,131 @@
 <template>
-  <div class="foodtable">
-    <div id="app">
-      <v-app id="inspire">
-        <v-snackbar
-          dense
-          color="success"
-          outlined
-          :value="alertsuccess"
-          :timeout="timeout"
-          rounded="pill"
-          top
-        >
-          ¡Categoria guardada exitosamente!
-        </v-snackbar>
-        <v-snackbar
-          dense
-          color="red"
-          outlined
-          :value="alertproblem"
-          :timeout="timeout"
-          rounded="pill"
-          top
-        >
-          ¡Ups hubo un problema!
-        </v-snackbar>
-        <v-card class="v-card" elevation="2">
-          <form>
-            <v-row>
-              <v-col sm="6" md="6" lx="4">
-                <v-text-field
-                  v-model="name"
-                  :counter="10"
-                  label="Nombre articulo"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col sm="2" md="3" lx="4">
-                <v-text-field
-                  v-model="cant"
-                  type="number"
-                  :counter="10"
-                  label="Cantidad articulo"
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col sm="3" md="3" lx="4">
-                <v-select
-                  v-model="selectc"
-                  :items="itemsc"
-                  item-text="nombre_categoria"
-                  item-value="categoria_id"
-                  label="Categoria"
-                >
-                </v-select>
-              </v-col>
-              <v-col sm="2" md="2" lx="4">
-                <v-select
-                  v-model="selectt"
-                  :items="itemstt"
-                  item-text="name_tipo"
-                  item-value="tipo_id"
-                  label="Tipo"
-                >
-                </v-select>
-              </v-col>
-              <v-col sm="2" md="4" lx="4">
-                <v-select
-                  v-model="selectp"
-                  :items="itemsp"
-                  item-text="nombre_proveedor"
-                  item-value="proveedor_id"
-                  label="Proveedor"
-                  required
-                ></v-select>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col sm="2" md="3" lx="4">
-                <v-select
-                  v-model="selectm"
-                  :items="itemstm"
-                  item-text="nombre_marca"
-                  item-value="marca_id"
-                  label="Marca"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col sm="2" md="3" lx="4">
-                <v-select
-                  v-model="selectst"
-                  :items="itemstst"
-                  item-text="nombre_status"
-                  item-value="status_id"
-                  label="Status"
-                  required
-                ></v-select>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col sm="3" md="5" lx="3">
-                <v-select
-                  v-model="selectr"
-                  :items="itemsr"
-                  item-text="nombre_rack"
-                  item-value="rack_id"
-                  label="Ubicación rack"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col sm="3" md="5" lx="3">
-                <v-select
-                  v-model="selectT"
-                  :items="itemsT"
-                  item-text="nombre_travesaño"
-                  item-value="travesaño_id"
-                  label="Ubicación travesaño"
-                  required
-                ></v-select>
-              </v-col>
-            </v-row>
+  <div id="app">
+    <v-app id="inspire">
+      <v-snackbar
+        dense
+        color="success"
+        outlined
+        :value="alertsuccess"
+        :timeout="timeout"
+        rounded="pill"
+        top
+      >
+        ¡Categoria guardada exitosamente!
+      </v-snackbar>
+      <v-snackbar
+        dense
+        color="red"
+        outlined
+        :value="alertproblem"
+        :timeout="timeout"
+        rounded="pill"
+        top
+      >
+        ¡Ups hubo un problema!
+      </v-snackbar>
+      <v-card class="v-card" elevation="2">
+        <form>
+          <v-row>
+            <v-col sm="6" md="6" lx="4">
+              <v-text-field
+                v-model="name"
+                :counter="10"
+                label="Nombre articulo"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col sm="2" md="3" lx="4">
+              <v-text-field
+                v-model="cant"
+                type="number"
+                :counter="10"
+                label="Cantidad articulo"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col sm="3" md="3" lx="4">
+              <v-select
+                v-model="selectc"
+                :items="itemsc"
+                item-text="nombre_categoria"
+                item-value="categoria_id"
+                label="Categoria"
+              >
+              </v-select>
+            </v-col>
+            <v-col sm="2" md="2" lx="4">
+              <v-select
+                v-model="selectt"
+                :items="itemstt"
+                item-text="name_tipo"
+                item-value="tipo_id"
+                label="Tipo"
+              >
+              </v-select>
+            </v-col>
+            <v-col sm="2" md="4" lx="4">
+              <v-select
+                v-model="selectp"
+                :items="itemsp"
+                item-text="nombre_proveedor"
+                item-value="proveedor_id"
+                label="Proveedor"
+                required
+              ></v-select>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col sm="2" md="3" lx="4">
+              <v-select
+                v-model="selectm"
+                :items="itemstm"
+                item-text="nombre_marca"
+                item-value="marca_id"
+                label="Marca"
+                required
+              ></v-select>
+            </v-col>
+            <v-col sm="2" md="3" lx="4">
+              <v-select
+                v-model="selectst"
+                :items="itemstst"
+                item-text="nombre_status"
+                item-value="status_id"
+                label="Status"
+                required
+              ></v-select>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col sm="3" md="5" lx="3">
+              <v-select
+                v-model="selectr"
+                :items="itemsr"
+                item-text="nombre_rack"
+                item-value="rack_id"
+                label="Ubicación rack"
+                required
+              ></v-select>
+            </v-col>
+            <v-col sm="3" md="5" lx="3">
+              <v-select
+                v-model="selectT"
+                :items="itemsT"
+                item-text="nombre_travesaño"
+                item-value="travesaño_id"
+                label="Ubicación travesaño"
+                required
+              ></v-select>
+            </v-col>
+          </v-row>
 
-            <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-            <v-btn @click="clear" text> Limpiar </v-btn>
-          </form>
-        </v-card>
-      </v-app>
-    </div>
+          <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+          <v-btn @click="clear" text> Limpiar </v-btn>
+        </form>
+      </v-card>
+    </v-app>
   </div>
 </template>
 
@@ -339,13 +337,15 @@
 </script>
 
 <style >
-  .foodtable {
-    padding-left: 30%;
-    padding-top: 0%;
-    padding-right: 0%;
+  #app {
+    display: grid;
+    align-content: center;
+    padding-left: 10%;
   }
 
   .v-card {
+    display: grid;
+    align-content: center;
     padding-left: 2%;
     padding-top: 2%;
     padding-right: 2%;

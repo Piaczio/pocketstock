@@ -126,6 +126,8 @@ const routes = [
     component: () => import('@/components/table-lists/marca-list.vue')
   },
 
+
+
 ]
 
 
