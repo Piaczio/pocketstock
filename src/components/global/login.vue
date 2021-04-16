@@ -1,5 +1,5 @@
 <template>
-  <div class="foodtable">
+  <div class="logcard">
     <div id="app">
       <v-app id="inspire">
         <v-card class="cont-card" elevation="2">
@@ -115,16 +115,19 @@
   };
 </script>
 
-<style>
-  .foodtable {
-    padding-left: 30%;
-    padding-top: 20%;
-    padding-right: 30%;
+<style scoped>
+  .logcard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 12em;
   }
+
   .cont-card {
     padding-left: 2%;
     padding-top: 2%;
     padding-right: 2%;
     padding-bottom: 2%;
+    width: 24em;
   }
 </style>

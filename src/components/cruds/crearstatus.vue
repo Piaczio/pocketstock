@@ -1,55 +1,55 @@
 <template>
-  <div id="app">
-    <v-snackbar
-      dense
-      color="success"
-      outlined
-      :value="alertsuccess"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Status guardada exitosamente!
-    </v-snackbar>
-    <v-snackbar
-      dense
-      color="red"
-      outlined
-      :value="alertproblem"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Ups hubo un problema!
-    </v-snackbar>
-    <v-app id="inspire">
-      <div class="text-center">
-        <v-dialog
-          content-class="elevation-0"
-          v-model="parentdialog"
-          max-width="800px"
-          persistent
+  <v-dialog
+    content-class="elevation-0"
+    v-model="parentdialog"
+    max-width="20rem"
+    persistent
+  >
+    <v-card elevation="2">
+      <div class="cont-card">
+        <v-snackbar
+          dense
+          color="success"
+          outlined
+          :value="alertsuccess"
+          :timeout="timeout"
+          rounded="pill"
+          top
         >
-          <v-card class="cont-card" elevation="2">
-            <v-toolbar light flat>
-              <v-btn icon color="dark" @click="onClose">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-              <v-toolbar-title>Crear status</v-toolbar-title>
-            </v-toolbar>
+          ¡Status guardada exitosamente!
+        </v-snackbar>
+        <v-snackbar
+          dense
+          color="red"
+          outlined
+          :value="alertproblem"
+          :timeout="timeout"
+          rounded="pill"
+          top
+        >
+          ¡Ups hubo un problema!
+        </v-snackbar>
+        <v-toolbar light flat>
+          <v-btn icon color="dark" @click="onClose">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Crear status</v-toolbar-title>
+        </v-toolbar>
+        <v-row justify-sm="center">
+          <v-col md="10rem">
             <v-text-field
               v-model="name"
               :counter="10"
               label="Nombre status"
               required
             ></v-text-field>
-            <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-            <v-btn @click="clear" text> Limpiar </v-btn>
-          </v-card>
-        </v-dialog>
+          </v-col>
+        </v-row>
+        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+        <v-btn @click="clear" text> Limpiar </v-btn>
       </div>
-    </v-app>
-  </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -100,16 +100,8 @@
   };
 </script>
 
-<style>
-  .foodtable {
-    padding-left: 30%;
-    padding-top: 0%;
-    padding-right: 30%;
-  }
+<style scoped>
   .cont-card {
-    padding-left: 2%;
-    padding-top: 2%;
-    padding-right: 2%;
-    padding-bottom: 2%;
+    padding: 2%;
   }
 </style>

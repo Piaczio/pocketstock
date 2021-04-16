@@ -60,10 +60,8 @@
       items: [
         { path: "/home", title: "Home", icon: "mdi-home" },
         { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
-        { path: "/crear", title: "Crear", icon: "mdi-folder" },
-
         {
-          path: "/general_articulos",
+          path: "/articulos",
           title: "Artículos",
           icon: "mdi-folder-multiple",
         },

@@ -1,5 +1,10 @@
 <template>
-  <div id="app">
+  <v-dialog
+    content-class="elevation-0"
+    v-model="parentdialog"
+    max-width="20rem"
+    persistent
+  >
     <v-snackbar
       dense
       color="success"
@@ -22,35 +27,31 @@
     >
       ¡Ups hubo un problema!
     </v-snackbar>
-    <v-app id="inspire">
-      <div class="text-center">
-        <v-dialog
-          content-class="elevation-0"
-          v-model="parentdialog"
-          max-width="800px"
-          persistent
-        >
-          <v-card elevation="2">
-            <v-toolbar light flat>
-              <v-btn icon color="dark" @click="onClose">
-                <v-icon> mdi-close </v-icon>
-              </v-btn>
-              <v-toolbar-title>Crear tipo</v-toolbar-title>
-            </v-toolbar>
+    <v-card elevation="2">
+      <div class="cont-card">
+        <v-toolbar light flat>
+          <v-btn icon color="dark" @click="onClose">
+            <v-icon> mdi-close </v-icon>
+          </v-btn>
+          <v-toolbar-title>Crear tipo</v-toolbar-title>
+        </v-toolbar>
+        <v-row>
+          <v-col md="10">
             <v-text-field
               v-model="name"
               :counter="10"
               label="Nombre tipo"
               required
             ></v-text-field>
-
-            <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-            <v-btn @click="clear" text> Limpiar </v-btn>
-          </v-card>
-        </v-dialog>
+          </v-col>
+        </v-row>
+        <v-card-actions>
+          <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+          <v-btn @click="clear" text> Limpiar </v-btn>
+        </v-card-actions>
       </div>
-    </v-app>
-  </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -101,5 +102,8 @@
   };
 </script>
 
-<style>
+<style scoped>
+  .cont-card {
+    padding: 1rem;
+  }
 </style>

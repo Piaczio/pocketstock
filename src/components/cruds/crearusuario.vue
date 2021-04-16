@@ -31,39 +31,39 @@
 </template>
 
 <script>
-export default {
-  name: "crearusuario",
-  data: () => ({
-    name: "",
-    codigo: "",
-    select: null,
-    items: [
-      "Empleado bodega",
-      "Empleado tecnico",
-      "Empleado administrador",
-      "Administrador",
-    ],
-  }),
+  export default {
+    name: "crearusuario",
+    data: () => ({
+      name: "",
+      codigo: "",
+      select: null,
+      items: [
+        "Empleado bodega",
+        "Empleado tecnico",
+        "Empleado administrador",
+        "Administrador",
+      ],
+    }),
 
-  computed: {},
+    computed: {},
 
-  methods: {
-    submit() {
-      this.$v.$touch();
+    methods: {
+      submit() {
+        this.$v.$touch();
+      },
+      clear() {
+        this.name = "";
+        this.codigo = "";
+        this.select = null;
+      },
     },
-    clear() {
-      this.name = "";
-      this.codigo = "";
-      this.select = null;
-    },
-  },
-};
+  };
 </script>
 
-<style>
-.foodtable {
-  padding-left: 30%;
-  padding-top: 0%;
-  padding-right: 30%;
-}
+<style scoped>
+  .foodtable {
+    padding-left: 30%;
+    padding-top: 0%;
+    padding-right: 30%;
+  }
 </style>

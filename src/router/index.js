@@ -111,9 +111,9 @@ const routes = [
     component: () => import('../components/table-lists/userslist.vue')
   },
   {
-    path: '/general_articulos',
-    name: 'general_articulos',
-    component: () => import('../components/table-lists/general_articulos.vue')
+    path: '/articulos',
+    name: 'articulos',
+    component: () => import('../views/main-articulos.vue')
   },
   {
     path: '/categoria_list',

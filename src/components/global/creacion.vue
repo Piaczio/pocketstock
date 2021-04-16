@@ -1,10 +1,16 @@
 <template>
-  <div>
-    <v-row class="no-scroll">
-      <v-col>
-        <creararticulos />
-      </v-col>
+  <!--
+  En esta tarjeta se encuentra el listado de componentes para crear todos los elementos
+  dentro del sistema.
+-->
+  <v-card class="list-card">
+    <v-row>
       <v-col align-self="end" cols="2">
+        <v-row>
+          <v-btn color="primary" text @click="dialogarticulo = !dialogarticulo">
+            Articulos
+          </v-btn>
+        </v-row>
         <v-row>
           <v-btn
             color="primary"
@@ -49,6 +55,11 @@
         </v-row>
       </v-col>
     </v-row>
+
+    <creararticulo
+      :parentdialog="dialogarticulo"
+      v-on:dialogFromChild="syncFromArticulo($event)"
+    />
     <crearcategoria
       :parentdialog="dialogcategoria"
       v-on:dialogFromChild="syncFromCategoria($event)"
@@ -73,21 +84,22 @@
       :parentdialog="dialogubicacion"
       v-on:dialogFromChild="syncFromUbicacion($event)"
     />
-  </div>
+  </v-card>
 </template>
 
 <script>
+  import creararticulo from "../cruds/creararticulos.vue";
   import crearcategoria from "../cruds/crearcategoria.vue";
   import crearmarca from "../cruds/crearmarca.vue";
   import creartipo from "../cruds/creartipo.vue";
   import crearproveedor from "../cruds/crearproveedor.vue";
-  import creararticulos from "../cruds/creararticulos.vue";
+
   import crearstatus from "../cruds/crearstatus.vue";
   import crearubicacion from "../cruds/crearubicacion.vue";
   export default {
-    name: "crearusuario",
+    name: "crearlist",
     components: {
-      creararticulos,
+      creararticulo,
       crearcategoria,
       crearmarca,
       creartipo,
@@ -96,6 +108,9 @@
       crearstatus,
     },
     methods: {
+      syncFromArticulo(updatedDialog) {
+        this.dialogarticulo = updatedDialog;
+      },
       syncFromCategoria(updatedDialog) {
         this.dialogcategoria = updatedDialog;
       },
@@ -116,6 +131,7 @@
       },
     },
     data: () => ({
+      dialogarticulo: false,
       dialogcategoria: false,
       dialogmarca: false,
       dialogtipo: false,
@@ -125,13 +141,13 @@
     }),
   };
 </script>
+<style scoped>
+  .list-card {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 1em;
 
-
-
-<style >
-  .no-scroll {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 20px;
+    height: 16.5em;
   }
 </style>

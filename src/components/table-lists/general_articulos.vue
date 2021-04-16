@@ -13,17 +13,6 @@
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                  color="primary"
-                  dark
-                  class="mb-2"
-                  v-bind="attrs"
-                  v-on="on"
-                >
-                  New Item
-                </v-btn>
-              </template>
               <v-card>
                 <v-card-title>
                   <span class="headline">{{ formTitle }}</span>
@@ -174,13 +163,13 @@
       defaultItem: {
         nombre_articulo: "",
         cantidad_articulo: 0,
-        nombre_categoria: 0,
-        name_tipo: 0,
-        nombre_marca: 0,
-        nombre_proveedor: 0,
-        nombre_status: 0,
-        nombre_rack: 0,
-        nombre_travesaño: 0,
+        nombre_categoria: "",
+        name_tipo: "",
+        nombre_marca: "",
+        nombre_proveedor: "",
+        nombre_status: "",
+        nombre_rack: "",
+        nombre_travesaño: "",
       },
     }),
     mounted() {
@@ -277,10 +266,5 @@
   };
 </script>
 
-<style>
-  #app {
-    padding-left: 10%;
-    padding-top: 0%;
-    padding-right: 5%;
-  }
+<style scoped>
 </style>
