@@ -81,26 +81,50 @@
     <creararticulo
       :parentdialog="dialogarticulo"
       v-on:dialogFromChild="syncFromArticulo($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:locationCreated="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:locationNotCreated="syncToProblem($event)"
     />
     <crearcategoria
       :parentdialog="dialogcategoria"
       v-on:dialogFromChild="syncFromCategoria($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:locationCreated="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:locationNotCreated="syncToProblem($event)"
     />
     <crearmarca
       :parentdialog="dialogmarca"
       v-on:dialogFromChild="syncFromMarca($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:locationCreated="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:locationNotCreated="syncToProblem($event)"
     />
     <creartipo
       :parentdialog="dialogtipo"
       v-on:dialogFromChild="syncFromTipo($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:locationCreated="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:locationNotCreated="syncToProblem($event)"
     />
     <crearproveedor
       :parentdialog="dialogproveedor"
       v-on:dialogFromChild="syncFromProveedor($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:locationCreated="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:locationNotCreated="syncToProblem($event)"
     />
     <crearstatus
       :parentdialog="dialogstatus"
       v-on:dialogFromChild="syncFromStatus($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:locationCreated="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:locationNotCreated="syncToProblem($event)"
     />
 
     <crearubicacion

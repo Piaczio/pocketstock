@@ -5,28 +5,6 @@
     max-width="20rem"
     persistent
   >
-    <v-snackbar
-      dense
-      color="success"
-      outlined
-      :value="alertsuccess"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Tipo guardada exitosamente!
-    </v-snackbar>
-    <v-snackbar
-      dense
-      color="red"
-      outlined
-      :value="alertproblem"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Ups hubo un problema!
-    </v-snackbar>
     <v-card elevation="2">
       <div class="cont-card">
         <v-toolbar light flat>
@@ -65,9 +43,6 @@
     } /*data de llegado de componente padre creacion*/,
     data: () => ({
       name: "",
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
 
     methods: {
@@ -77,6 +52,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
+        this.$emit("locationCreated", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("locationNotCreated", false);
         let enviar = {
           name_tipo: this.name,
         };
@@ -85,15 +62,13 @@
           .post("api/tipo", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alertsuccess = true;
+              this.$emit("locationCreated", true);
             }
-            this.alertproblem = false;
           })
           .catch((e) => {
             console.log(e.message);
-            this.alertproblem = true;
+            this.$emit("locationNotCreated", true);
           });
-        this.alertsuccess = false;
       },
       clear() {
         this.name = "";

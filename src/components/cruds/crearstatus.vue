@@ -7,28 +7,6 @@
   >
     <v-card elevation="2">
       <div class="cont-card">
-        <v-snackbar
-          dense
-          color="success"
-          outlined
-          :value="alertsuccess"
-          :timeout="timeout"
-          rounded="pill"
-          top
-        >
-          ¡Status guardada exitosamente!
-        </v-snackbar>
-        <v-snackbar
-          dense
-          color="red"
-          outlined
-          :value="alertproblem"
-          :timeout="timeout"
-          rounded="pill"
-          top
-        >
-          ¡Ups hubo un problema!
-        </v-snackbar>
         <v-toolbar light flat>
           <v-btn icon color="dark" @click="onClose">
             <v-icon>mdi-close</v-icon>
@@ -75,6 +53,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
+        this.$emit("locationCreated", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("locationNotCreated", false);
         let enviar = {
           nombre_status: this.name,
         };
@@ -83,15 +63,13 @@
           .post("api/status", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alertsuccess = true;
+              this.$emit("locationCreated", true);
             }
-            this.alertproblem = false;
           })
           .catch((e) => {
             console.log(e.message);
-            this.alertproblem = true;
+            this.$emit("locationNotCreated", true);
           });
-        this.alertsuccess = false;
       },
       clear() {
         this.name = "";

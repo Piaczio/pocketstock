@@ -5,28 +5,6 @@
     max-width="800px"
     persistent
   >
-    <v-snackbar
-      dense
-      color="success"
-      outlined
-      :value="alertsuccess"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Categoria guardada exitosamente!
-    </v-snackbar>
-    <v-snackbar
-      dense
-      color="red"
-      outlined
-      :value="alertproblem"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Ups hubo un problema!
-    </v-snackbar>
     <v-card elevation="2">
       <div class="cont-card">
         <v-toolbar light flat>
@@ -166,9 +144,6 @@
       itemstst: [], //status
       itemsr: [], //rack
       itemsT: [], //travesaño
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
     mounted() {
       axios
@@ -308,6 +283,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
+        this.$emit("locationCreated", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("locationNotCreated", false);
         let enviar = {
           nombre_articulo: this.name,
           cantidad_articulo: this.cant,
@@ -325,15 +302,13 @@
           .post("api/articulo", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alertsuccess = true;
+              this.$emit("locationCreated", true);
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.alertproblem = true;
+            this.$emit("locationNotCreated", true);
           });
-        this.alertsuccess = false;
-        this.alertproblem = false;
       },
 
       clear() {
