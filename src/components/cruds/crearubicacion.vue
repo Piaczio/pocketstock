@@ -59,7 +59,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
-        this.$emit("locationCreated", false);
+        this.$emit("locationCreated", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("locationNotCreated", false);
         let enviar_rack = {
           nombre_rack: this.rack,
         };
@@ -71,30 +72,25 @@
           .post("api/rack", enviar_rack)
           .then((response) => {
             if (response.statusText === "Created") {
-              //this.alertsuccess = true;
               this.$emit("locationCreated", true);
             }
-            this.alertproblem = false;
           })
           .catch((e) => {
             console.log(e.message);
-            this.alertproblem = true;
+            this.$emit("locationNotCreated", true);
           });
         axios
           .post("api/travesaño", enviar_travesaño)
           .then((response) => {
             if (response.statusText === "Created") {
-              //this.alertsuccess = true;
               this.$emit("locationCreated", true);
             }
-            this.alertproblem = false;
           })
           .catch((e) => {
             console.log(e.message);
-            this.alertproblem = true;
+
+            this.$emit("locationNotCreated", true);
           });
-        //this.alertsuccess = false;
-        this.$emit("locationCreated", false);
       },
 
       clear() {

@@ -13,18 +13,18 @@
       rounded="pill"
       top
     >
-      ¡Ubicación guardada exitosamente!
+      ¡Guardado exitosamente!
     </v-snackbar>
     <v-snackbar
       dense
-      color="red"
+      color="danger"
       outlined
       :value="alertproblem"
       :timeout="timeout"
       rounded="pill"
       top
     >
-      ¡Ups hubo un problema!
+      ¡Oops hubo un problema!
     </v-snackbar>
     <v-row>
       <v-col align-self="end" cols="2">
@@ -102,10 +102,14 @@
       :parentdialog="dialogstatus"
       v-on:dialogFromChild="syncFromStatus($event)"
     />
+
     <crearubicacion
       :parentdialog="dialogubicacion"
       v-on:dialogFromChild="syncFromUbicacion($event)"
-      @locationCreated="alertsuccess = !alertsuccess"
+      :incomingsuccess="alertsuccess"
+      v-on:locationCreated="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:locationNotCreated="syncToProblem($event)"
     />
   </v-card>
 </template>
@@ -121,6 +125,10 @@
   import crearubicacion from "../cruds/crearubicacion.vue";
   export default {
     name: "crearlist",
+    props: {
+      incomingsuccess: { type: Boolean },
+      incomingproblem: { type: Boolean },
+    },
     components: {
       creararticulo,
       crearcategoria,
@@ -131,6 +139,12 @@
       crearstatus,
     },
     methods: {
+      syncToSuccess(updatedDialog) {
+        this.alertsuccess = updatedDialog;
+      },
+      syncToProblem(updatedDialog) {
+        this.alertproblem = updatedDialog;
+      },
       syncFromArticulo(updatedDialog) {
         this.dialogarticulo = updatedDialog;
       },
