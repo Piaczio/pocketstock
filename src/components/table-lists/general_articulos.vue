@@ -126,9 +126,11 @@
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
+    components: {},
     data: () => ({
       dialog: false,
       dialogDelete: false,
+
       headers: [
         {
           text: "Articulo",
@@ -194,7 +196,6 @@
             if (!datos) return;
             this.articulosArray.push(datos);
           });
-          console.log("this fetched data -> ", this.articulosArray);
         })
         .catch((error) => console.log(error));
     },

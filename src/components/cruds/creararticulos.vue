@@ -272,7 +272,7 @@
               rack_id: element.id,
               nombre_rack: element.nombre_rack,
             };
-            console.log("Data en selector rack:", datos);
+
             if (!datos) return;
             this.itemsr.push(datos);
           });
@@ -290,7 +290,7 @@
               travesaño_id: element.id,
               nombre_travesaño: element.nombre_travesaño,
             };
-            console.log("Data en selector travesaño:", datos);
+
             if (!datos) return;
             this.itemsT.push(datos);
           });
