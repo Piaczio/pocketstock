@@ -35,28 +35,6 @@
         <v-btn @click="clear" text> Limpiar </v-btn>
       </div>
     </v-card>
-    <v-snackbar
-      dense
-      color="success"
-      outlined
-      :value="alertsuccess"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Ubicación guardada exitosamente!
-    </v-snackbar>
-    <v-snackbar
-      dense
-      color="red"
-      outlined
-      :value="alertproblem"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Ups hubo un problema!
-    </v-snackbar>
   </v-dialog>
 </template>
 
@@ -72,9 +50,6 @@
     data: () => ({
       rack: "",
       travesaño: "",
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
 
     methods: {
@@ -84,6 +59,7 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
+        this.$emit("locationCreated", false);
         let enviar_rack = {
           nombre_rack: this.rack,
         };
@@ -95,7 +71,8 @@
           .post("api/rack", enviar_rack)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alertsuccess = true;
+              //this.alertsuccess = true;
+              this.$emit("locationCreated", true);
             }
             this.alertproblem = false;
           })
@@ -107,7 +84,8 @@
           .post("api/travesaño", enviar_travesaño)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alertsuccess = true;
+              //this.alertsuccess = true;
+              this.$emit("locationCreated", true);
             }
             this.alertproblem = false;
           })
@@ -115,7 +93,8 @@
             console.log(e.message);
             this.alertproblem = true;
           });
-        this.alertsuccess = false;
+        //this.alertsuccess = false;
+        this.$emit("locationCreated", false);
       },
 
       clear() {

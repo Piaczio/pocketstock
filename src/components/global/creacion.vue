@@ -4,6 +4,28 @@
   dentro del sistema.
 -->
   <v-card class="list-card">
+    <v-snackbar
+      dense
+      color="success"
+      outlined
+      :value="alertsuccess"
+      :timeout="timeout"
+      rounded="pill"
+      top
+    >
+      ¡Ubicación guardada exitosamente!
+    </v-snackbar>
+    <v-snackbar
+      dense
+      color="red"
+      outlined
+      :value="alertproblem"
+      :timeout="timeout"
+      rounded="pill"
+      top
+    >
+      ¡Ups hubo un problema!
+    </v-snackbar>
     <v-row>
       <v-col align-self="end" cols="2">
         <v-row>
@@ -83,6 +105,7 @@
     <crearubicacion
       :parentdialog="dialogubicacion"
       v-on:dialogFromChild="syncFromUbicacion($event)"
+      @locationCreated="alertsuccess = !alertsuccess"
     />
   </v-card>
 </template>
@@ -138,6 +161,9 @@
       dialogproveedor: false,
       dialogstatus: false,
       dialogubicacion: false,
+      alertsuccess: false,
+      alertproblem: false,
+      timeout: 2000,
     }),
   };
 </script>

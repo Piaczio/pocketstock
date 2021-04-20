@@ -55,8 +55,8 @@
   import store from "@/store.js";
   export default {
     name: "sidebar",
+    components: {},
     data: () => ({
-      components: {},
       items: [
         { path: "/home", title: "Home", icon: "mdi-home" },
         { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
