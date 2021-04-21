@@ -123,9 +123,10 @@
 
 <script>
   import axios from "axios";
-  //axios.defaults.withCredentials = true;
+  axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
+    name: "tabla-articulos",
     components: {},
     data: () => ({
       dialog: false,
@@ -179,8 +180,10 @@
         .get("api/articulo")
         .then((response) => {
           let articulos = response.data;
+          console.log(articulos);
           articulos.forEach((element) => {
             let datos = {
+              id: element.id,
               nombre_articulo: element.nombre_articulo,
               cantidad_articulo: element.cantidad_articulo,
               descripcion_articulo: element.descripcion_articulo, //pendiente
@@ -232,6 +235,10 @@
         this.editedIndex = this.articulosArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
+        console.log("Edited indice :", this.editedIndex);
+        console.log("Edited articulo completo :", this.editedItem.id);
+        let id = this.editedItem.id;
+        axios.delete("api/articulo/" + id).catch((error) => console.log(error));
       },
 
       deleteItemConfirm() {
