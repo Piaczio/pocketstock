@@ -15,7 +15,7 @@
             <v-dialog v-model="dialog" max-width="500px">
               <v-card>
                 <v-card-title>
-                  <span class="headline">{{ formTitle }}</span>
+                  <h1 class="headline">{{ formTitle }}</h1>
                 </v-card-title>
 
                 <v-card-text>
@@ -30,6 +30,7 @@
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
                           v-model="editedItem.cantidad_articulo"
+                          type="number"
                           label="Cantidad"
                         ></v-text-field>
                       </v-col>
