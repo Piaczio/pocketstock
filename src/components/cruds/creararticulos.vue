@@ -2,7 +2,7 @@
   <v-dialog
     content-class="elevation-0"
     v-model="parentdialog"
-    max-width="800px"
+    max-width="36rem"
     persistent
   >
     <v-card elevation="2">
@@ -11,7 +11,7 @@
           <v-btn icon color="dark" @click="onClose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Crear categoria</v-toolbar-title>
+          <v-toolbar-title>Crear artículo</v-toolbar-title>
         </v-toolbar>
         <v-row>
           <v-col sm="6" md="6" lx="4">
@@ -22,7 +22,7 @@
               required
             ></v-text-field>
           </v-col>
-          <v-col sm="2" md="3" lx="4">
+          <v-col sm="2" md="4" lx="4">
             <v-text-field
               v-model="cant"
               type="number"
@@ -39,11 +39,11 @@
               :items="itemsc"
               item-text="nombre_categoria"
               item-value="categoria_id"
-              label="Categoria"
+              label="Categoría"
             >
             </v-select>
           </v-col>
-          <v-col sm="2" md="2" lx="4">
+          <v-col sm="2" md="3" lx="4">
             <v-select
               v-model="selectt"
               :items="itemstt"
@@ -65,7 +65,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col sm="2" md="3" lx="4">
+          <v-col sm="2" md="5" lx="4">
             <v-select
               v-model="selectm"
               :items="itemstm"
@@ -75,7 +75,7 @@
               required
             ></v-select>
           </v-col>
-          <v-col sm="2" md="3" lx="4">
+          <v-col sm="2" md="5" lx="4">
             <v-select
               v-model="selectst"
               :items="itemstst"
@@ -109,8 +109,10 @@
           </v-col>
         </v-row>
 
-        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-        <v-btn @click="clear" text> Limpiar </v-btn>
+        <v-btn color="blue darken-1" class="mr-4" v-on:click="submit" text>
+          Guardar
+        </v-btn>
+        <v-btn color="blue darken-1" @click="clear" text> Limpiar </v-btn>
       </div>
     </v-card>
   </v-dialog>
@@ -126,9 +128,9 @@
       parentdialog: { type: Boolean },
     } /*data de llegado de componente padre creacion*/,
     data: () => ({
-      name: "clavo",
-      cant: "2345",
-      //codigo: "",
+      name: "",
+      cant: "",
+
       selectc: null, //categoria
       selectt: null, //tipo
       selectp: null, //proveedor
@@ -283,8 +285,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
-        this.$emit("locationCreated", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("locationNotCreated", false);
+        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("notifyproblem", false);
         let enviar = {
           nombre_articulo: this.name,
           cantidad_articulo: this.cant,
@@ -302,12 +304,12 @@
           .post("api/articulo", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.$emit("locationCreated", true);
+              this.$emit("notifysuccess", true);
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("locationNotCreated", true);
+            this.$emit("notifyproblem", true);
           });
       },
 

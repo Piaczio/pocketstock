@@ -68,51 +68,16 @@ const routes = [
     name: 'crearusuario',
     component: () => import('../components/cruds/crearusuario.vue')
   },
-  {
-    path: '/crearcategoria',
-    name: 'crearcategoria',
-    component: () => import('../components/cruds/crearcategoria.vue')
-  },
 
-  {
-    path: '/crear',
-    name: 'crear',
-    component: () => import('../components/global/creacion.vue')
-  },
-  {
-    path: '/crearmarca',
-    name: 'crearmarca',
-    component: () => import('../components/cruds/crearmarca.vue')
-  },
-  {
-    path: '/crearstatus',
-    name: 'crearstatus',
-    component: () => import('../components/cruds/crearstatus.vue')
-  },
-  {
-    path: '/crearubicacion',
-    name: 'crearubicacion',
-    component: () => import('../components/cruds/crearubicacion.vue')
-  },
-  {
-    path: '/crearproveedor',
-    name: 'crearproveedor',
-    component: () => import('../components/cruds/crearproveedor.vue')
-  },
-  {
-    path: '/creartipo',
-    name: 'creartipo',
-    component: () => import('../components/cruds/creartipo.vue')
-  },
   //Listas
   {
-    path: '/userslist',
-    name: 'userslist',
-    component: () => import('../components/table-lists/userslist.vue')
+    path: '/usuarios',
+    name: 'usuarios',
+    component: () => import('../views/main-usuarios.vue')
   },
   {
     path: '/articulos',
-    name: 'articulos',
+    name: 'artículos',
     component: () => import('../views/main-articulos.vue')
   },
   {

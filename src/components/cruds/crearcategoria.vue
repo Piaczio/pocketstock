@@ -10,23 +10,23 @@
         <v-btn icon color="dark" @click="onClose">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Crear categoria</v-toolbar-title>
+        <v-toolbar-title>Crear categorías</v-toolbar-title>
       </v-toolbar>
       <v-row
-        ><v-col md="6">
+        ><v-col md="8">
           <v-text-field
             v-model="name"
             :counter="10"
-            label="Nombre categoria"
+            label="Nombre categoría"
             required
           ></v-text-field>
         </v-col>
       </v-row>
       <v-row>
-        <v-col md="8">
+        <v-col md="10">
           <v-textarea v-model="descripcion" :counter="120" color="teal">
             <template v-slot:label>
-              <div>Descripción categoria <small>(opcional)</small></div>
+              <div>Descripción categoría <small>(opcional)</small></div>
             </template>
           </v-textarea>
         </v-col>
@@ -60,8 +60,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
-        this.$emit("locationCreated", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("locationNotCreated", false);
+        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("notifyproblem", false);
         let enviar = {
           nombre_categoria: this.name,
           descripcion_categoria: this.descripcion,
@@ -71,12 +71,12 @@
           .post("api/categoria", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.$emit("locationCreated", true);
+              this.$emit("notifysuccess", true);
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("locationNotCreated", true);
+            this.$emit("notifyproblem", true);
           });
       },
       clear() {

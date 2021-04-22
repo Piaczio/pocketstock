@@ -1,7 +1,7 @@
 <template>
   <div class="foodtable">
     <v-card id="app">
-      <h1>Categorias en general</h1>
+      <h1>Categorías en general</h1>
       <v-app id="inspire">
         <v-simple-table>
           <template v-slot:default>

@@ -10,7 +10,7 @@
         <v-btn icon color="dark" @click="onClose">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Crear Marca</v-toolbar-title>
+        <v-toolbar-title>Crear marcas</v-toolbar-title>
       </v-toolbar>
       <v-row>
         <v-col md="10">
@@ -50,8 +50,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
-        this.$emit("locationCreated", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("locationNotCreated", false);
+        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("notifyproblem", false);
         let enviar = {
           nombre_marca: this.name,
         };
@@ -60,12 +60,12 @@
           .post("api/marca", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.$emit("locationCreated", true);
+              this.$emit("notifysuccess", true);
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("locationNotCreated", true);
+            this.$emit("notifyproblem", true);
           });
       },
       clear() {
@@ -77,6 +77,6 @@
 
 <style scoped>
   .cont-card {
-    padding: 2%;
+    padding: 4%;
   }
 </style>

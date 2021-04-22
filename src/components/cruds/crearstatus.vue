@@ -53,8 +53,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
-        this.$emit("locationCreated", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("locationNotCreated", false);
+        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("notifyproblem", false);
         let enviar = {
           nombre_status: this.name,
         };
@@ -63,12 +63,12 @@
           .post("api/status", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.$emit("locationCreated", true);
+              this.$emit("notifysuccess", true);
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("locationNotCreated", true);
+            this.$emit("notifyproblem", true);
           });
       },
       clear() {

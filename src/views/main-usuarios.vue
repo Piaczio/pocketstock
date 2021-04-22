@@ -2,21 +2,21 @@
   <div class="no-scroll">
     <v-row>
       <v-col id="table-article" md="10">
-        <tablaArticulos />
+        <tablausuarios />
       </v-col>
       <v-col sm="2" md="2">
-        <creacionlist />
+        <creacionuserlist />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
-  import tablaArticulos from "../components/table-lists/tabla-articulos.vue";
-  import creacionlist from "../components/global/creacion.vue";
+  import tablausuarios from "../components/table-lists/tabla-usuarios.vue";
+  import creacionuserlist from "../components/global/creacion-user.vue";
   export default {
     name: "artículos",
-    components: { tablaArticulos, creacionlist },
+    components: { tablausuarios, creacionuserlist },
   };
 </script>
 

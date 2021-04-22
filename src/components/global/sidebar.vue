@@ -59,7 +59,7 @@
     data: () => ({
       items: [
         { path: "/home", title: "Home", icon: "mdi-home" },
-        { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
+        { path: "/usuarios", title: "Usuarios", icon: "mdi-account-multiple" },
         {
           path: "/articulos",
           title: "Artículos",
@@ -67,7 +67,7 @@
         },
         {
           path: "/categoria_list",
-          title: "Categorias",
+          title: "Categorías",
           icon: "mdi-folder-multiple",
         },
         {
@@ -75,7 +75,6 @@
           title: "Marcas",
           icon: "mdi-folder-multiple",
         },
-        { path: "/userslist", title: "Clientes", icon: "mdi-account-multiple" },
       ],
     }),
     methods: {
