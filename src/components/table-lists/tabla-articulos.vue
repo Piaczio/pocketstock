@@ -162,7 +162,6 @@
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     name: "tabla-articulos",
-    components: {},
     data: () => ({
       dialog: false,
       dialogDelete: false,
@@ -273,24 +272,7 @@
         .catch((e) => {
           console.log(e.message);
         });
-      axios
-        .get("api/categoria")
-        .then((response) => {
-          let categorias = response.data;
 
-          categorias.forEach((element) => {
-            let datos = {
-              categoria_id: element.id,
-              nombre_categoria: element.nombre_categoria,
-            };
-
-            if (!datos) return;
-            this.itemsc.push(datos);
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-        });
       axios
         .get("api/marca")
         .then((response) => {

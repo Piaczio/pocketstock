@@ -3,7 +3,7 @@
     <v-app id="inspire">
       <v-data-table
         :headers="headers"
-        :items="articulosArray"
+        :items="usersArray"
         sort-by="cantidad_articulo"
         class="elevation-1"
       >
@@ -15,7 +15,7 @@
             <v-dialog v-model="dialog" max-width="500px">
               <v-card>
                 <v-card-title>
-                  <span class="headline">{{ formTitle }}</span>
+                  <h1 class="headline">{{ formTitle }}</h1>
                 </v-card-title>
 
                 <v-card-text>
@@ -23,57 +23,26 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.nombre_articulo"
+                          v-model="editedItem.name"
                           label="Nombre"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.cantidad_articulo"
-                          label="Cantidad"
+                          v-model="editedItem.email"
+                          type="email"
+                          label="Correo"
                         ></v-text-field>
                       </v-col>
                       <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.nombre_categoria"
-                          label="Categoría"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.name_tipo"
-                          label="Tipo"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.nombre_marca"
-                          label="Marca"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.nombre_proveedor"
-                          label="Proveedor"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.nombre_status"
-                          label="Status"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.nombre_rack"
-                          label="Rack"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.nombre_travesaño"
-                          label="Travesaño"
-                        ></v-text-field>
+                        <v-select
+                          v-model="selectrol"
+                          :items="itemsrol"
+                          v-on="categ()"
+                          item-text="name_rol"
+                          item-value="rol_id"
+                          label="Rol"
+                        ></v-select>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -82,24 +51,26 @@
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="close">
-                    Cancel
+                    Cancelar
                   </v-btn>
-                  <v-btn color="blue darken-1" text @click="save"> Save </v-btn>
+                  <v-btn color="blue darken-1" text @click="save">
+                    Guardar
+                  </v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
             <v-dialog v-model="dialogDelete" max-width="500px">
               <v-card>
                 <v-card-title class="headline"
-                  >Are you sure you want to delete this item?</v-card-title
+                  >¿Estas seguro de querer eliminarlo?</v-card-title
                 >
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="closeDelete"
-                    >Cancel</v-btn
+                    >Cancelar</v-btn
                   >
                   <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                    >OK</v-btn
+                    >Aceptar</v-btn
                   >
                   <v-spacer></v-spacer>
                 </v-card-actions>
@@ -126,87 +97,87 @@
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    name: "tabla-articulos",
-    components: {},
+    name: "tabla-usuarios",
     data: () => ({
       dialog: false,
       dialogDelete: false,
 
       headers: [
         {
-          text: "Articulo",
+          text: "Usuarios",
           align: "start",
           sortable: false,
-          value: "nombre_articulo",
+          value: "name",
         },
-        { text: "Cantidad", value: "cantidad_articulo" },
-        { text: "Categoría", value: "nombre_categoria" },
-        { text: "Tipo", value: "name_tipo" },
-        { text: "Marca", value: "nombre_marca" },
-        { text: "Proveedor", value: "nombre_proveedor" },
-        { text: "Status", value: "nombre_status" },
-        { text: "Rack", value: "nombre_rack" },
-        { text: "Travesaño", value: "nombre_travesaño" },
+        { text: "Correo", value: "email" },
+        { text: "Rol", value: "name_rol" },
+
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      articulosArray: [],
+      usersArray: [],
+      //variable en la que se deposita la posicion en el selector
+      selectrol: null, //Rol
+
+      //Array en el que se deposita de los selectores.
+      itemsrol: [], //Rol
+
       editedIndex: -1,
       editedItem: {
         id: "",
-        nombre_articulo: "",
-        cantidad_articulo: 0,
-        nombre_categoria: "",
-        name_tipo: "",
-        nombre_marca: "",
-        nombre_proveedor: "",
-        nombre_status: "",
-        nombre_rack: "",
-        nombre_travesaño: "",
+        name: "",
+        email: "",
+        name_rol: "",
       },
       defaultItem: {
         id: "",
-        nombre_articulo: "",
-        cantidad_articulo: 0,
-        nombre_categoria: "",
-        name_tipo: "",
-        nombre_marca: "",
-        nombre_proveedor: "",
-        nombre_status: "",
-        nombre_rack: "",
-        nombre_travesaño: "",
+        name: "",
+        email: "",
+        name_rol: "",
       },
     }),
     mounted() {
       axios
-        .get("api/articulo")
+        .get("api/user")
         .then((response) => {
-          let articulos = response.data;
-          articulos.forEach((element) => {
+          let user = response.data;
+          console.log("User response:", user);
+          user.forEach((element) => {
             let datos = {
               id: element.id,
-              nombre_articulo: element.nombre_articulo,
-              cantidad_articulo: element.cantidad_articulo,
-              descripcion_articulo: element.descripcion_articulo, //pendiente
-              nombre_categoria: element.nombre_categoria,
-              name_tipo: element.name_tipo,
-              nombre_marca: element.nombre_marca,
-              nombre_proveedor: element.nombre_proveedor,
-              nombre_status: element.nombre_status,
-              //campos de ubicación
-              nombre_rack: element.nombre_rack,
-              nombre_travesaño: element.nombre_travesaño,
+              name: element.name,
+              email: element.email,
+              name_rol: element.name_rol,
             };
             if (!datos) return;
-            this.articulosArray.push(datos);
+            this.usersArray.push(datos);
           });
         })
         .catch((error) => console.log(error));
+
+      axios
+        .get("api/rol")
+        .then((response) => {
+          let categorias = response.data;
+
+          categorias.forEach((element) => {
+            let datos = {
+              rol_id: element.id,
+              name_rol: element.name_rol,
+            };
+
+            if (!datos) return;
+            this.itemsrol.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
     },
 
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? "New Item" : "Editar articulo";
+        return this.editedIndex === -1 ? "New Item" : "Editar usuario";
       },
     },
 
@@ -225,24 +196,52 @@
 
     methods: {
       initialize() {},
+      categ(recived) {
+        var tempid = null;
+        var tempname = null;
+        tempname;
+        if (this.itemsrol) {
+          let rol = this.itemsrol;
+          rol.forEach((element) => {
+            let datos = {
+              rol_id: element.rol_id,
+              name_rol: element.name_rol,
+            };
+            if (datos.name_rol === recived) {
+              tempid = datos.rol_id;
+              tempname = datos.name_rol;
+
+              this.selectrol = tempid;
+            }
+          });
+        }
+
+        return tempid;
+      },
 
       editItem(item) {
-        this.editedIndex = this.articulosArray.indexOf(item);
+        this.editedIndex = this.usersArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
+
+        if (this.editedItem.name_rol) {
+          //categoria
+          this.categ(this.editedItem.name_rol);
+        }
+
         this.dialog = true;
       },
 
       deleteItem(item) {
-        this.editedIndex = this.articulosArray.indexOf(item);
+        this.editedIndex = this.usersArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/articulo/" + id).catch((error) => console.log(error));
+        axios.delete("api/user/" + id).catch((error) => console.log(error));
       },
 
       deleteItemConfirm() {
-        this.articulosArray.splice(this.editedIndex, 1);
+        this.usersArray.splice(this.editedIndex, 1);
         this.closeDelete();
       },
 
@@ -264,30 +263,24 @@
 
       save() {
         if (this.editedIndex > -1) {
-          Object.assign(this.articulosArray[this.editedIndex], this.editedItem);
+          Object.assign(this.usersArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
-          let url = "api/articulo/";
+          let url = "api/user/";
           console.log("edit method:", url + send.id);
           url = url + send.id;
-          url = `${url}?${"nombre_articulo=" + send.nombre_articulo}&${
-            "cantidad_articulo=" + send.cantidad_articulo
-          }&${"nombre_categoria=" + send.nombre_categoria}&${
-            "name_tipo=" + send.name_tipo
-          }&${"nombre_marca=" + send.nombre_marca}&${
-            "nombre_proveedor=" + send.nombre_proveedor
-          }&${"nombre_status=" + send.nombre_status}&${
-            "nombre_rack=" + send.nombre_rack
-          }&${"nombre_travesaño=" + send.nombre_travesaño}`;
+          url = `${url}?${"name=" + send.name}&${"email=" + send.email}&${
+            "rol_id=" + this.selectrol
+          }`;
 
           console.log("edit method:", url);
           axios
             .put(url)
             .then((response) => {
-              console.log(response.data);
+              console.log("Si se pudo:", response.data);
             })
             .catch((error) => console.log(error));
         } else {
-          this.articulosArray.push(this.editedItem);
+          this.usersArray.push(this.editedItem);
         }
         this.close();
       },

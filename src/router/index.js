@@ -80,16 +80,7 @@ const routes = [
     name: 'artículos',
     component: () => import('../views/main-articulos.vue')
   },
-  {
-    path: '/categoria_list',
-    name: 'categoria_list',
-    component: () => import('@/components/table-lists/categoria-list.vue')
-  },
-  {
-    path: '/marca_list',
-    name: 'marca_list',
-    component: () => import('@/components/table-lists/marca-list.vue')
-  },
+
 
 
 

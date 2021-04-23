@@ -65,16 +65,6 @@
           title: "Artículos",
           icon: "mdi-folder-multiple",
         },
-        {
-          path: "/categoria_list",
-          title: "Categorías",
-          icon: "mdi-folder-multiple",
-        },
-        {
-          path: "/marca_list",
-          title: "Marcas",
-          icon: "mdi-folder-multiple",
-        },
       ],
     }),
     methods: {
