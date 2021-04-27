@@ -2,7 +2,7 @@
   <div class="no-scroll">
     <v-row>
       <v-col id="table-article" md="10">
-        <tablaArticulos />
+        <tablacategoria />
       </v-col>
       <v-col id="creation" sm="2" md="2">
         <creacionlist />
@@ -12,11 +12,11 @@
 </template>
 
 <script>
-  import tablaArticulos from "../components/table-lists/tabla-articulos.vue";
-  import creacionlist from "../components/global/creacion.vue";
+  import tablacategoria from "../components/table-lists/tabla-categoria.vue";
+  import creacionlist from "../components/global/creacion-categoria.vue";
   export default {
-    name: "artículos",
-    components: { tablaArticulos, creacionlist },
+    name: "categorias",
+    components: { tablacategoria, creacionlist },
   };
 </script>
 

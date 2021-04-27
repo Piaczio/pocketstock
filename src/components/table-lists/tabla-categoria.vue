@@ -4,7 +4,7 @@
       <v-col cols="12" sm="6" md="4">
         <v-text-field
           v-model="search"
-          label="Buscar usuario"
+          label="Buscar categoria"
           class="mx-4"
         ></v-text-field>
       </v-col>
@@ -12,14 +12,15 @@
     <v-app id="inspire">
       <v-data-table
         :headers="headers"
-        :items="usersArray"
+        :items="categoriaArray"
+        sort-by="cantidad_articulo"
         class="elevation-1"
         :search="search"
         :custom-filter="filterOnlyCapsText.toUpperCase"
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Tabla usuarios</v-toolbar-title>
+            <v-toolbar-title>Tabla categoria</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
@@ -33,26 +34,9 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.name"
+                          v-model="editedItem.nombre_categoria"
                           label="Nombre"
                         ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-text-field
-                          v-model="editedItem.email"
-                          type="email"
-                          label="Correo"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" sm="6" md="4">
-                        <v-select
-                          v-model="selectrol"
-                          :items="itemsrol"
-                          v-on="categ()"
-                          item-text="name_rol"
-                          item-value="rol_id"
-                          label="Rol"
-                        ></v-select>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -107,7 +91,7 @@
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    name: "tabla-usuarios",
+    nombre_categoria: "tabla-categoria",
     data: () => ({
       dialog: false,
       dialogDelete: false,
@@ -115,18 +99,16 @@
 
       headers: [
         {
-          text: "Usuarios",
+          text: "Categorias",
           align: "start",
           sortable: false,
-          value: "name",
+          value: "nombre_categoria",
         },
-        { text: "Correo", value: "email" },
-        { text: "Rol", value: "name_rol" },
 
         { text: "Actions", value: "actions", sortable: false },
       ],
 
-      usersArray: [],
+      categoriaArray: [],
       //variable en la que se deposita la posicion en el selector
       selectrol: null, //Rol
 
@@ -136,59 +118,34 @@
       editedIndex: -1,
       editedItem: {
         id: "",
-        name: "",
-        email: "",
-        name_rol: "",
+        nombre_categoria: "",
       },
       defaultItem: {
         id: "",
-        name: "",
-        email: "",
-        name_rol: "",
+        nombre_categoria: "",
       },
     }),
     mounted() {
       axios
-        .get("api/user")
+        .get("api/categoria")
         .then((response) => {
-          let user = response.data;
-          console.log("User response:", user);
-          user.forEach((element) => {
+          let categoria = response.data;
+          console.log("Categoria response:", categoria);
+          categoria.forEach((element) => {
             let datos = {
               id: element.id,
-              name: element.name,
-              email: element.email,
-              name_rol: element.name_rol,
+              nombre_categoria: element.nombre_categoria,
             };
             if (!datos) return;
-            this.usersArray.push(datos);
+            this.categoriaArray.push(datos);
           });
         })
         .catch((error) => console.log(error));
-
-      axios
-        .get("api/rol")
-        .then((response) => {
-          let categorias = response.data;
-
-          categorias.forEach((element) => {
-            let datos = {
-              rol_id: element.id,
-              name_rol: element.name_rol,
-            };
-
-            if (!datos) return;
-            this.itemsrol.push(datos);
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-        });
     },
 
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? "New Item" : "Editar usuario";
+        return this.editedIndex === -1 ? "New Item" : "Editar categoria";
       },
     },
 
@@ -215,52 +172,25 @@
           value.toString().toLocaleUpperCase().indexOf(search) !== -1
         );
       },
-      categ(recived) {
-        var tempid = null;
-        var tempname = null;
-        tempname;
-        if (this.itemsrol) {
-          let rol = this.itemsrol;
-          rol.forEach((element) => {
-            let datos = {
-              rol_id: element.rol_id,
-              name_rol: element.name_rol,
-            };
-            if (datos.name_rol === recived) {
-              tempid = datos.rol_id;
-              tempname = datos.name_rol;
-
-              this.selectrol = tempid;
-            }
-          });
-        }
-
-        return tempid;
-      },
 
       editItem(item) {
-        this.editedIndex = this.usersArray.indexOf(item);
+        this.editedIndex = this.categoriaArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
-
-        if (this.editedItem.name_rol) {
-          //categoria
-          this.categ(this.editedItem.name_rol);
-        }
 
         this.dialog = true;
       },
 
       deleteItem(item) {
-        this.editedIndex = this.usersArray.indexOf(item);
+        this.editedIndex = this.categoriaArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/user/" + id).catch((error) => console.log(error));
+        axios.delete("api/categoria/" + id).catch((error) => console.log(error));
       },
 
       deleteItemConfirm() {
-        this.usersArray.splice(this.editedIndex, 1);
+        this.categoriaArray.splice(this.editedIndex, 1);
         this.closeDelete();
       },
 
@@ -282,14 +212,12 @@
 
       save() {
         if (this.editedIndex > -1) {
-          Object.assign(this.usersArray[this.editedIndex], this.editedItem);
+          Object.assign(this.categoriaArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
-          let url = "api/user/";
+          let url = "api/categoria/";
           console.log("edit method:", url + send.id);
           url = url + send.id;
-          url = `${url}?${"name=" + send.name}&${"email=" + send.email}&${
-            "rol_id=" + this.selectrol
-          }`;
+          url = `${url}?${"nombre_categoria=" + send.nombre_categoria}`;
 
           console.log("edit method:", url);
           axios
@@ -299,7 +227,7 @@
             })
             .catch((error) => console.log(error));
         } else {
-          this.usersArray.push(this.editedItem);
+          this.categoriaArray.push(this.editedItem);
         }
         this.close();
       },

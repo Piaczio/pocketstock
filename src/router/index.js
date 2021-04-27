@@ -80,6 +80,20 @@ const routes = [
     name: 'artículos',
     component: () => import('../views/main-articulos.vue')
   },
+  {
+    path: '/categorias',
+    name: 'categorias',
+    component: () => import('../views/main-categorias.vue')
+  }, {
+    path: '/marcas',
+    name: 'marcas',
+    component: () => import('../views/main-marcas.vue')
+  },
+  {
+    path: '/proveedores',
+    name: 'proveedores',
+    component: () => import('../views/main-proveedores.vue')
+  },
 
 
 

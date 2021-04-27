@@ -66,13 +66,20 @@
             Status
           </v-btn>
         </v-row>
+
+        <v-row><v-subheader>Ubicación</v-subheader></v-row>
+        <v-row>
+          <v-btn color="primary" text @click="dialograck = !dialograck">
+            Rack
+          </v-btn>
+        </v-row>
         <v-row>
           <v-btn
             color="primary"
             text
-            @click="dialogubicacion = !dialogubicacion"
+            @click="dialogtravesaño = !dialogtravesaño"
           >
-            Ubicación
+            Travesaño
           </v-btn>
         </v-row>
       </v-col>
@@ -127,9 +134,17 @@
       v-on:notifyproblem="syncToProblem($event)"
     />
 
-    <crearubicacion
-      :parentdialog="dialogubicacion"
-      v-on:dialogFromChild="syncFromUbicacion($event)"
+    <crearrack
+      :parentdialog="dialograck"
+      v-on:dialogFromChild="syncFromRack($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
+    />
+    <creartravesaño
+      :parentdialog="dialogtravesaño"
+      v-on:dialogFromChild="syncFromTravesaño($event)"
       :incomingsuccess="alertsuccess"
       v-on:notifysuccess="syncToSuccess($event)"
       :incomingproblem="alertproblem"
@@ -146,7 +161,9 @@
   import crearproveedor from "../cruds/crearproveedor.vue";
 
   import crearstatus from "../cruds/crearstatus.vue";
-  import crearubicacion from "../cruds/crearubicacion.vue";
+
+  import crearrack from "../cruds/crearrack.vue";
+  import creartravesaño from "../cruds/creartravesaño.vue";
   export default {
     name: "crearlist",
     props: {
@@ -159,8 +176,9 @@
       crearmarca,
       creartipo,
       crearproveedor,
-      crearubicacion,
       crearstatus,
+      crearrack,
+      creartravesaño,
     },
     methods: {
       syncToSuccess(updatedDialog) {
@@ -187,8 +205,11 @@
       syncFromStatus(updatedDialog) {
         this.dialogstatus = updatedDialog;
       },
-      syncFromUbicacion(updatedDialog) {
-        this.dialogubicacion = updatedDialog;
+      syncFromRack(updatedDialog) {
+        this.dialograck = updatedDialog;
+      },
+      syncFromTravesaño(updatedDialog) {
+        this.dialogtravesaño = updatedDialog;
       },
     },
     data: () => ({
@@ -198,7 +219,8 @@
       dialogtipo: false,
       dialogproveedor: false,
       dialogstatus: false,
-      dialogubicacion: false,
+      dialograck: false,
+      dialogtravesaño: false,
       alertsuccess: false,
       alertproblem: false,
       timeout: 2000,
@@ -212,6 +234,6 @@
     justify-content: center;
     padding: 1em;
 
-    height: 16.5em;
+    height: 22em;
   }
 </style>

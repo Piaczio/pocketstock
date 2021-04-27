@@ -4,7 +4,7 @@
       <v-col cols="12" sm="6" md="4">
         <v-text-field
           v-model="search"
-          label="Buscar artículo por nombre"
+          label="Buscar artículo"
           class="mx-4"
         ></v-text-field>
       </v-col>
