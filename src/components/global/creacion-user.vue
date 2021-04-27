@@ -33,6 +33,11 @@
             Usuarios
           </v-btn>
         </v-row>
+        <v-row>
+          <v-btn color="primary" text @click="dialogrol = !dialogrol">
+            Rol
+          </v-btn>
+        </v-row>
       </v-col>
     </v-row>
 
@@ -44,12 +49,20 @@
       :incomingproblem="alertproblem"
       v-on:notifyproblem="syncToProblem($event)"
     />
+    <crearrol
+      :parentdialog="dialogrol"
+      v-on:dialogFromChild="syncFromRol($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
+    />
   </v-card>
 </template>
 
 <script>
   import crearusuario from "../cruds/crearusuario.vue";
-
+  import crearrol from "../cruds/crearrol.vue";
   export default {
     name: "crearlist",
     props: {
@@ -58,6 +71,7 @@
     },
     components: {
       crearusuario,
+      crearrol,
     },
     methods: {
       syncToSuccess(updatedDialog) {
@@ -69,9 +83,13 @@
       syncFromUsuario(updatedDialog) {
         this.dialogusuarios = updatedDialog;
       },
+      syncFromRol(updatedDialog) {
+        this.dialogrol = updatedDialog;
+      },
     },
     data: () => ({
       dialogusuarios: false,
+      dialogrol: false,
       alertsuccess: false,
       alertproblem: false,
       timeout: 2000,

@@ -1,15 +1,25 @@
 <template>
-  <div class="home"><h1>Estoy en el componente casa</h1></div>
+  <div class="no-scroll">
+    <v-row
+      ><v-col id="table-article" md="12"><tableCampos /></v-col
+    ></v-row>
+  </div>
 </template>
 <script>
+  import tableCampos from "../components/table-lists/table-campos.vue";
   // @ is an alias to /src
   export default {
     name: "home",
-    components: {},
+    components: { tableCampos },
   };
 </script>
 <style scoped>
-  #home {
-    align-items: center;
+  .no-scroll {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20rem;
+  }
+  #table-article {
+    padding-left: 15rem;
   }
 </style>

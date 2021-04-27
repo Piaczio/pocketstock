@@ -1,11 +1,23 @@
 <template>
   <div id="app">
+    <v-row>
+      <v-col cols="12" sm="6" md="4">
+        <v-text-field
+          v-model="search"
+          label="Buscar artículo por nombre"
+          class="mx-4"
+        ></v-text-field>
+      </v-col>
+    </v-row>
+
     <v-app id="inspire">
       <v-data-table
         :headers="headers"
         :items="articulosArray"
         sort-by="cantidad_articulo"
         class="elevation-1"
+        :search="search"
+        :custom-filter="filterOnlyCapsText.toUpperCase"
       >
         <template v-slot:top>
           <v-toolbar flat>
@@ -163,6 +175,7 @@
   export default {
     name: "tabla-articulos",
     data: () => ({
+      search: "",
       dialog: false,
       dialogDelete: false,
 
@@ -405,6 +418,15 @@
 
     methods: {
       initialize() {},
+
+      filterOnlyCapsText(value, search) {
+        return (
+          value != null &&
+          search != null &&
+          typeof value === "string" &&
+          value.toString().toLocaleUpperCase().indexOf(search) !== -1
+        );
+      },
       categ(recived) {
         var tempid = null;
         var tempname = null;

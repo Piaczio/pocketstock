@@ -4,7 +4,7 @@ import vuetify from './plugins/vuetify';
 import router from './router';
 import axios from 'axios';
 import VueAxios from "vue-axios";
-import Vuelidate from 'vuelidate'
+import Vuelidate from 'vuelidate';
 import Vuex from 'vuex';
 import store from 'store';
 import 'bulma/css/bulma.css';
