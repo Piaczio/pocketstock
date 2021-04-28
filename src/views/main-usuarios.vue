@@ -4,7 +4,7 @@
       <v-col id="table-article" md="10">
         <tablausuarios />
       </v-col>
-      <v-col sm="2" md="2">
+      <v-col id="creation" sm="2" md="2">
         <creacionuserlist />
       </v-col>
     </v-row>
@@ -28,5 +28,8 @@
   }
   #table-article {
     padding-left: 15rem;
+  }
+  #creation {
+    padding-top: 5.1rem;
   }
 </style>

@@ -103,6 +103,6 @@
     justify-content: center;
     padding: 1em;
 
-    height: 16.5em;
+    height: 5.2em;
   }
 </style>
