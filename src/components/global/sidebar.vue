@@ -22,9 +22,9 @@
             </v-list-item>
             <v-divider></v-divider>
 
-            <v-list dense nav>
+            <v-list>
               <v-list-item
-                v-for="item in items"
+                v-for="item in itemsmain"
                 :key="item.title"
                 link
                 :to="item.path"
@@ -38,6 +38,26 @@
               </v-list-item>
             </v-list>
           </v-list-item-group>
+
+          <v-list-group :value="true" no-action sub-group>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>Campos</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list-item
+              v-for="item in itemstable"
+              :key="item.title"
+              link
+              :to="item.path"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </v-list-group>
         </v-list>
         <v-divider></v-divider>
         <template v-slot:append>
@@ -57,7 +77,7 @@
     name: "sidebar",
     components: {},
     data: () => ({
-      items: [
+      itemsmain: [
         { path: "/home", title: "Home", icon: "mdi-home" },
         { path: "/usuarios", title: "Usuarios", icon: "mdi-account-multiple" },
         {
@@ -65,6 +85,8 @@
           title: "Artículos",
           icon: "mdi-folder-multiple",
         },
+      ],
+      itemstable: [
         {
           path: "/categorias",
           title: "Categorias",
