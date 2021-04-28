@@ -22,7 +22,7 @@
             </v-list-item>
             <v-divider></v-divider>
 
-            <v-list>
+            <v-list dense flat>
               <v-list-item
                 v-for="item in itemsmain"
                 :key="item.title"
@@ -49,6 +49,8 @@
               v-for="item in itemstable"
               :key="item.title"
               link
+              dense
+              flat
               :to="item.path"
             >
               <v-list-item-title>{{ item.title }}</v-list-item-title>

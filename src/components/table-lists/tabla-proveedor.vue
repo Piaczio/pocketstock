@@ -105,7 +105,7 @@
           value: "nombre_proveedor",
         },
 
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false },
       ],
 
       proveedorArray: [],

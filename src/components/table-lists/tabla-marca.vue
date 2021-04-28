@@ -105,7 +105,7 @@
           value: "nombre_marca",
         },
 
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false },
       ],
 
       marcaArray: [],

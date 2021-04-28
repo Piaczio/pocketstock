@@ -181,7 +181,7 @@
 
       headers: [
         {
-          text: "Articulo",
+          text: "Artículo",
           align: "start",
           sortable: false,
           value: "nombre_articulo",
@@ -194,7 +194,7 @@
         { text: "Status", value: "nombre_status" },
         { text: "Rack", value: "nombre_rack" },
         { text: "Travesaño", value: "nombre_travesaño" },
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false },
       ],
 
       articulosArray: [],

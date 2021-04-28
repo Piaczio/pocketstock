@@ -123,7 +123,7 @@
         { text: "Correo", value: "email" },
         { text: "Rol", value: "name_rol" },
 
-        { text: "Actions", value: "actions", sortable: false },
+        { text: "Acciones", value: "actions", sortable: false },
       ],
 
       usersArray: [],
