@@ -1,5 +1,5 @@
 <template>
-  <div class="foodtable">
+  <div class="logcard">
     <div id="app">
       <v-app id="inspire">
         <v-card class="cont-card" elevation="2">
@@ -37,13 +37,14 @@
   import axios from "axios";
 
   import store from "@/store";
+
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     email: "crearusuario",
     data: () => ({
-      email: "a@a.com",
-      password: "1234",
+      email: "a@a.com", //a@a.com
+      password: "1234", //1234
     }),
 
     validations: {
@@ -69,7 +70,7 @@
     },
 
     methods: {
-      login() {
+      async login() {
         this.$v.$touch();
         let enviar = {
           email: this.email,
@@ -78,24 +79,18 @@
         axios
           .get("sanctum/csrf-cookie")
           .then((response) => {
-            console.log("token del api ->", response);
+            response;
             axios
               .post("api/login", enviar)
               .then((response) => {
                 let validado = response.request.withCredentials;
-                console.log("Usuario validado:", validado);
                 if (validado == true) {
-                  store.email = enviar.email;
-                  store.password = enviar.password;
-                  console.log(
-                    "usuario existente->",
-                    store.email,
-                    " clave existente->",
-                    store.password
-                  );
+                  store.state.token = response.data.token;
+                  let token = store.state.token;
+                  this.$store.dispatch("login", { token });
                   this.$router.push("/home").catch(() => {});
                 } else if (validado == false) {
-                  console.log("Cuanta no existen o incorrecta");
+                  alert("Cuanta no existen o incorrecta");
                 }
               })
               .catch((e) => {
@@ -115,16 +110,19 @@
   };
 </script>
 
-<style>
-  .foodtable {
-    padding-left: 30%;
-    padding-top: 20%;
-    padding-right: 30%;
+<style scoped>
+  .logcard {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 12em;
   }
+
   .cont-card {
     padding-left: 2%;
     padding-top: 2%;
     padding-right: 2%;
     padding-bottom: 2%;
+    width: 24em;
   }
 </style>

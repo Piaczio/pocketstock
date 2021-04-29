@@ -22,9 +22,9 @@
             </v-list-item>
             <v-divider></v-divider>
 
-            <v-list dense nav>
+            <v-list dense flat>
               <v-list-item
-                v-for="item in items"
+                v-for="item in itemsmain"
                 :key="item.title"
                 link
                 :to="item.path"
@@ -38,6 +38,28 @@
               </v-list-item>
             </v-list>
           </v-list-item-group>
+
+          <v-list-group :value="true" no-action sub-group>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title>Campos</v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list-item
+              v-for="item in itemstable"
+              :key="item.title"
+              link
+              dense
+              flat
+              :to="item.path"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </v-list-group>
         </v-list>
         <v-divider></v-divider>
         <template v-slot:append>
@@ -55,34 +77,40 @@
   import store from "@/store.js";
   export default {
     name: "sidebar",
+    components: {},
     data: () => ({
-      components: {},
-      items: [
+      itemsmain: [
         { path: "/home", title: "Home", icon: "mdi-home" },
-        { path: "/crearusuario", title: "Crear usuario", icon: "mdi-account" },
-        { path: "/crear", title: "Crear", icon: "mdi-folder" },
-
+        { path: "/usuarios", title: "Usuarios", icon: "mdi-account-multiple" },
         {
-          path: "/general_articulos",
+          path: "/articulos",
           title: "Artículos",
           icon: "mdi-folder-multiple",
         },
+      ],
+      itemstable: [
         {
-          path: "/categoria_list",
+          path: "/categorias",
           title: "Categorias",
           icon: "mdi-folder-multiple",
         },
         {
-          path: "/marca_list",
+          path: "/marcas",
           title: "Marcas",
           icon: "mdi-folder-multiple",
         },
-        { path: "/userslist", title: "Clientes", icon: "mdi-account-multiple" },
+        {
+          path: "/proveedores",
+          title: "Proveedores",
+          icon: "mdi-folder-multiple",
+        },
       ],
     }),
     methods: {
       logout() {
-        (store.user = null), (store.email = null);
+        let commit = (store.state.token = null);
+
+        this.$store.dispatch("logout", commit);
         this.$router.push("/");
       },
     },

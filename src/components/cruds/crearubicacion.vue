@@ -1,62 +1,41 @@
 <template>
-  <div id="app">
-    <v-snackbar
-      dense
-      color="success"
-      outlined
-      :value="alertsuccess"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Ubicación guardada exitosamente!
-    </v-snackbar>
-    <v-snackbar
-      dense
-      color="red"
-      outlined
-      :value="alertproblem"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Ups hubo un problema!
-    </v-snackbar>
-    <v-app id="inspire">
-      <div class="text-center">
-        <v-dialog
-          content-class="elevation-0"
-          v-model="parentdialog"
-          max-width="800px"
-          persistent
-        >
-          <v-card elevation="2">
-            <v-toolbar light flat>
-              <v-btn icon color="dark" @click="onClose">
-                <v-icon> mdi-close </v-icon>
-              </v-btn>
-              <v-toolbar-title>Crear ubicación</v-toolbar-title>
-            </v-toolbar>
-
+  <v-dialog
+    content-class="elevation-0"
+    v-model="parentdialog"
+    max-width="28rem"
+    persistent
+  >
+    <v-card elevation="2">
+      <div class="cont-card">
+        <v-toolbar light flat>
+          <v-btn icon color="dark" @click="onClose">
+            <v-icon> mdi-close </v-icon>
+          </v-btn>
+          <v-toolbar-title>Crear ubicación</v-toolbar-title>
+        </v-toolbar>
+        <v-row>
+          <v-col sm="3" md="6">
             <v-text-field
               v-model="rack"
               :counter="10"
               label="Rack"
               required
             ></v-text-field>
+          </v-col>
+          <v-col sm="3" md="6">
             <v-text-field
               v-model="travesaño"
               :counter="10"
               label="Travesaño"
               required
             ></v-text-field>
-            <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-            <v-btn @click="clear" text> Limpiar </v-btn>
-          </v-card>
-        </v-dialog>
+          </v-col>
+        </v-row>
+        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+        <v-btn @click="clear" text> Limpiar </v-btn>
       </div>
-    </v-app>
-  </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -71,9 +50,6 @@
     data: () => ({
       rack: "",
       travesaño: "",
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
 
     methods: {
@@ -83,6 +59,8 @@
       },
       submit() {
         this.$emit("dialogFromChild", false);
+        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("notifyproblem", false);
         let enviar_rack = {
           nombre_rack: this.rack,
         };
@@ -94,27 +72,25 @@
           .post("api/rack", enviar_rack)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alertsuccess = true;
+              this.$emit("notifysuccess", true);
             }
-            this.alertproblem = false;
           })
           .catch((e) => {
             console.log(e.message);
-            this.alertproblem = true;
+            this.$emit("notifyproblem", true);
           });
         axios
           .post("api/travesaño", enviar_travesaño)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alertsuccess = true;
+              this.$emit("notifysuccess", true);
             }
-            this.alertproblem = false;
           })
           .catch((e) => {
             console.log(e.message);
-            this.alertproblem = true;
+
+            this.$emit("notifyproblem", true);
           });
-        this.alertsuccess = false;
       },
 
       clear() {
@@ -124,5 +100,8 @@
   };
 </script>
 
-<style>
+<style scoped>
+  .cont-card {
+    padding: 2%;
+  }
 </style>

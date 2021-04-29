@@ -2,7 +2,7 @@
   <v-dialog
     content-class="elevation-0"
     v-model="parentdialog"
-    max-width="20rem"
+    max-width="28rem"
     persistent
   >
     <v-card elevation="2">
@@ -11,22 +11,20 @@
           <v-btn icon color="dark" @click="onClose">
             <v-icon> mdi-close </v-icon>
           </v-btn>
-          <v-toolbar-title>Crear tipo</v-toolbar-title>
+          <v-toolbar-title>Crear travesaño</v-toolbar-title>
         </v-toolbar>
         <v-row>
-          <v-col md="10">
+          <v-col sm="3" md="6">
             <v-text-field
-              v-model="name"
+              v-model="travesaño"
               :counter="10"
-              label="Nombre tipo"
+              label="Travesaño"
               required
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-card-actions>
-          <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-          <v-btn @click="clear" text> Limpiar </v-btn>
-        </v-card-actions>
+        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+        <v-btn @click="clear" text> Limpiar </v-btn>
       </div>
     </v-card>
   </v-dialog>
@@ -37,12 +35,12 @@
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    name: "creartipo",
+    name: "crearmarca",
     props: {
       parentdialog: { type: Boolean },
     } /*data de llegado de componente padre creacion*/,
     data: () => ({
-      name: "",
+      travesaño: "",
     }),
 
     methods: {
@@ -54,12 +52,13 @@
         this.$emit("dialogFromChild", false);
         this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
         this.$emit("notifyproblem", false);
-        let enviar = {
-          name_tipo: this.name,
+
+        let enviar_travesaño = {
+          nombre_travesaño: this.travesaño,
         };
 
         axios
-          .post("api/tipo", enviar)
+          .post("api/travesaño", enviar_travesaño)
           .then((response) => {
             if (response.statusText === "Created") {
               this.$emit("notifysuccess", true);
@@ -67,11 +66,13 @@
           })
           .catch((e) => {
             console.log(e.message);
+
             this.$emit("notifyproblem", true);
           });
       },
+
       clear() {
-        this.name = "";
+        this.travesaño = "";
       },
     },
   };
@@ -79,6 +80,6 @@
 
 <style scoped>
   .cont-card {
-    padding: 1rem;
+    padding: 2%;
   }
 </style>

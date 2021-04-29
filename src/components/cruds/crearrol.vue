@@ -9,24 +9,22 @@
       <div class="cont-card">
         <v-toolbar light flat>
           <v-btn icon color="dark" @click="onClose">
-            <v-icon> mdi-close </v-icon>
+            <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>Crear tipo</v-toolbar-title>
+          <v-toolbar-title>Crear rol</v-toolbar-title>
         </v-toolbar>
-        <v-row>
-          <v-col md="10">
+        <v-row justify-sm="center">
+          <v-col md="10rem">
             <v-text-field
-              v-model="name"
+              v-model="name_rol"
               :counter="10"
-              label="Nombre tipo"
+              label="Nombre rol"
               required
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-card-actions>
-          <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-          <v-btn @click="clear" text> Limpiar </v-btn>
-        </v-card-actions>
+        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+        <v-btn @click="clear" text> Limpiar </v-btn>
       </div>
     </v-card>
   </v-dialog>
@@ -37,12 +35,15 @@
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    name: "creartipo",
+    name: "crearrol",
     props: {
       parentdialog: { type: Boolean },
     } /*data de llegado de componente padre creacion*/,
     data: () => ({
-      name: "",
+      name_rol: "",
+      alertsuccess: false,
+      alertproblem: false,
+      timeout: 2000,
     }),
 
     methods: {
@@ -55,11 +56,11 @@
         this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
         this.$emit("notifyproblem", false);
         let enviar = {
-          name_tipo: this.name,
+          name_rol: this.name_rol,
         };
 
         axios
-          .post("api/tipo", enviar)
+          .post("api/rol", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
               this.$emit("notifysuccess", true);
@@ -71,7 +72,7 @@
           });
       },
       clear() {
-        this.name = "";
+        this.name_rol = "";
       },
     },
   };
@@ -79,6 +80,6 @@
 
 <style scoped>
   .cont-card {
-    padding: 1rem;
+    padding: 2%;
   }
 </style>

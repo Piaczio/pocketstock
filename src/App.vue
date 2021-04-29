@@ -11,6 +11,12 @@
   };
 </script>
 <style lang="scss">
+  p {
+    text-transform: lowercase;
+  }
+  span {
+    text-transform: lowercase;
+  }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

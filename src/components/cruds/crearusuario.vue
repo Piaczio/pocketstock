@@ -1,69 +1,137 @@
 <template>
-  <div class="foodtable">
-    <div id="app">
-      <v-app id="inspire">
-        <form>
+  <v-dialog
+    content-class="elevation-0"
+    v-model="parentdialog"
+    max-width="25rem"
+    persistent
+  >
+    <v-card class="cont-card">
+      <v-toolbar light flat>
+        <v-btn icon color="dark" @click="onClose">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>Crear usuario</v-toolbar-title>
+      </v-toolbar>
+      <v-row
+        ><v-col md="10">
           <v-text-field
             v-model="name"
             :counter="10"
             label="Nombre"
             required
           ></v-text-field>
-          <v-text-field v-model="codigo" label="codigo" required></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row
+        ><v-col md="10">
+          <v-text-field v-model="email" label="Correo" required></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row
+        ><v-col md="10">
           <v-text-field
-            v-model="codigo"
-            label="repetir codigo"
+            v-model="password"
+            :counter="8"
+            :type="'password'"
+            label="Contraseña"
             required
           ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-row align="center">
+        <v-col sm="3" md="3" lx="4">
           <v-select
-            v-model="select"
-            :items="items"
-            :error-messages="selectErrors"
-            label="Puesto"
-            required
-          ></v-select>
-          <v-btn class="mr-4" @click="submit" text> submit </v-btn>
-          <v-btn @click="clear" text> Limpiar </v-btn>
-        </form>
-      </v-app>
-    </div>
-  </div>
+            v-model="selectrol"
+            :items="itemsrol"
+            item-text="name_rol"
+            item-value="rol_id"
+            label="Rol"
+          >
+          </v-select>
+        </v-col>
+      </v-row>
+      <v-card-actions>
+        <v-btn class="mr-4" @click="submit" text> Guardar </v-btn>
+        <v-btn @click="clear" text> Limpiar </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
-export default {
-  name: "crearusuario",
-  data: () => ({
-    name: "",
-    codigo: "",
-    select: null,
-    items: [
-      "Empleado bodega",
-      "Empleado tecnico",
-      "Empleado administrador",
-      "Administrador",
-    ],
-  }),
+  import axios from "axios";
+  axios.defaults.withCredentials = true;
+  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  export default {
+    name: "crearcategoria",
+    props: {
+      parentdialog: { type: Boolean },
+    } /*data de llegado de componente padre creacion*/,
+    data: () => ({
+      name: "",
+      email: "",
+      password: "",
 
-  computed: {},
+      selectrol: null,
+      itemsrol: [],
+    }),
+    mounted() {
+      axios
+        .get("api/rol")
+        .then((response) => {
+          let rol = response.data;
 
-  methods: {
-    submit() {
-      this.$v.$touch();
+          rol.forEach((element) => {
+            let datos = {
+              rol_id: element.id,
+              name_rol: element.name_rol,
+            };
+
+            if (!datos) return;
+            this.itemsrol.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
     },
-    clear() {
-      this.name = "";
-      this.codigo = "";
-      this.select = null;
+    methods: {
+      onClose() {
+        /*Envia parametro de cierre a componente creación*/
+        this.$emit("dialogFromChild", false);
+      },
+      submit() {
+        this.$emit("dialogFromChild", false);
+        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("notifyproblem", false);
+        let enviar = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          rol_id: this.selectrol,
+        };
+
+        axios
+          .post("api/user", enviar)
+          .then((response) => {
+            if (response.statusText === "Created") {
+              this.$emit("notifysuccess", true);
+            }
+          })
+          .catch((e) => {
+            console.log(e.message);
+            this.$emit("notifyproblem", true);
+          });
+      },
+      clear() {
+        (this.name = ""), (this.email = ""), (this.password = "");
+      },
     },
-  },
-};
+  };
 </script>
 
-<style>
-.foodtable {
-  padding-left: 30%;
-  padding-top: 0%;
-  padding-right: 30%;
-}
+<style scoped>
+  .cont-card {
+    padding: 2%;
+  }
 </style>

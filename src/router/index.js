@@ -39,10 +39,10 @@ const routes = [
     },
     beforeEnter: (to, from, next) => {
       let validado = to.matched.some(record => record.meta.authenticated);
-      if (validado == true && from.path !== '/') {
-        if (store.email && store.password) {
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
           next();
-          console.log("pasaste la validado con: ", store.email, " y ", store.password)
         }
       }
       else if (!validado) {
@@ -68,63 +68,33 @@ const routes = [
     name: 'crearusuario',
     component: () => import('../components/cruds/crearusuario.vue')
   },
-  {
-    path: '/crearcategoria',
-    name: 'crearcategoria',
-    component: () => import('../components/cruds/crearcategoria.vue')
-  },
 
-  {
-    path: '/crear',
-    name: 'crear',
-    component: () => import('../components/global/creacion.vue')
-  },
-  {
-    path: '/crearmarca',
-    name: 'crearmarca',
-    component: () => import('../components/cruds/crearmarca.vue')
-  },
-  {
-    path: '/crearstatus',
-    name: 'crearstatus',
-    component: () => import('../components/cruds/crearstatus.vue')
-  },
-  {
-    path: '/crearubicacion',
-    name: 'crearubicacion',
-    component: () => import('../components/cruds/crearubicacion.vue')
-  },
-  {
-    path: '/crearproveedor',
-    name: 'crearproveedor',
-    component: () => import('../components/cruds/crearproveedor.vue')
-  },
-  {
-    path: '/creartipo',
-    name: 'creartipo',
-    component: () => import('../components/cruds/creartipo.vue')
-  },
   //Listas
   {
-    path: '/userslist',
-    name: 'userslist',
-    component: () => import('../components/table-lists/userslist.vue')
+    path: '/usuarios',
+    name: 'usuarios',
+    component: () => import('../views/main-usuarios.vue')
   },
   {
-    path: '/general_articulos',
-    name: 'general_articulos',
-    component: () => import('../components/table-lists/general_articulos.vue')
+    path: '/articulos',
+    name: 'artículos',
+    component: () => import('../views/main-articulos.vue')
   },
   {
-    path: '/categoria_list',
-    name: 'categoria_list',
-    component: () => import('@/components/table-lists/categoria-list.vue')
+    path: '/categorias',
+    name: 'categorias',
+    component: () => import('../views/main-categorias.vue')
+  }, {
+    path: '/marcas',
+    name: 'marcas',
+    component: () => import('../views/main-marcas.vue')
   },
   {
-    path: '/marca_list',
-    name: 'marca_list',
-    component: () => import('@/components/table-lists/marca-list.vue')
+    path: '/proveedores',
+    name: 'proveedores',
+    component: () => import('../views/main-proveedores.vue')
   },
+
 
 
 

@@ -1,132 +1,121 @@
 <template>
-  <div id="app">
-    <v-app id="inspire">
-      <v-snackbar
-        dense
-        color="success"
-        outlined
-        :value="alertsuccess"
-        :timeout="timeout"
-        rounded="pill"
-        top
-      >
-        ¡Categoria guardada exitosamente!
-      </v-snackbar>
-      <v-snackbar
-        dense
-        color="red"
-        outlined
-        :value="alertproblem"
-        :timeout="timeout"
-        rounded="pill"
-        top
-      >
-        ¡Ups hubo un problema!
-      </v-snackbar>
-      <v-card class="v-card" elevation="2">
-        <form>
-          <v-row>
-            <v-col sm="6" md="6" lx="4">
-              <v-text-field
-                v-model="name"
-                :counter="10"
-                label="Nombre articulo"
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col sm="2" md="3" lx="4">
-              <v-text-field
-                v-model="cant"
-                type="number"
-                :counter="10"
-                label="Cantidad articulo"
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col sm="3" md="3" lx="4">
-              <v-select
-                v-model="selectc"
-                :items="itemsc"
-                item-text="nombre_categoria"
-                item-value="categoria_id"
-                label="Categoria"
-              >
-              </v-select>
-            </v-col>
-            <v-col sm="2" md="2" lx="4">
-              <v-select
-                v-model="selectt"
-                :items="itemstt"
-                item-text="name_tipo"
-                item-value="tipo_id"
-                label="Tipo"
-              >
-              </v-select>
-            </v-col>
-            <v-col sm="2" md="4" lx="4">
-              <v-select
-                v-model="selectp"
-                :items="itemsp"
-                item-text="nombre_proveedor"
-                item-value="proveedor_id"
-                label="Proveedor"
-                required
-              ></v-select>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col sm="2" md="3" lx="4">
-              <v-select
-                v-model="selectm"
-                :items="itemstm"
-                item-text="nombre_marca"
-                item-value="marca_id"
-                label="Marca"
-                required
-              ></v-select>
-            </v-col>
-            <v-col sm="2" md="3" lx="4">
-              <v-select
-                v-model="selectst"
-                :items="itemstst"
-                item-text="nombre_status"
-                item-value="status_id"
-                label="Status"
-                required
-              ></v-select>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col sm="3" md="5" lx="3">
-              <v-select
-                v-model="selectr"
-                :items="itemsr"
-                item-text="nombre_rack"
-                item-value="rack_id"
-                label="Ubicación rack"
-                required
-              ></v-select>
-            </v-col>
-            <v-col sm="3" md="5" lx="3">
-              <v-select
-                v-model="selectT"
-                :items="itemsT"
-                item-text="nombre_travesaño"
-                item-value="travesaño_id"
-                label="Ubicación travesaño"
-                required
-              ></v-select>
-            </v-col>
-          </v-row>
+  <v-dialog
+    content-class="elevation-0"
+    v-model="parentdialog"
+    max-width="36rem"
+    persistent
+  >
+    <v-card elevation="2">
+      <div class="cont-card">
+        <v-toolbar light flat>
+          <v-btn icon color="dark" @click="onClose">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>Crear artículo</v-toolbar-title>
+        </v-toolbar>
+        <v-row>
+          <v-col sm="6" md="6" lx="4">
+            <v-text-field
+              v-model="name"
+              :counter="10"
+              label="Nombre articulo"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col sm="2" md="4" lx="4">
+            <v-text-field
+              v-model="cant"
+              type="number"
+              :counter="10"
+              label="Cantidad articulo"
+              required
+            ></v-text-field>
+          </v-col>
+        </v-row>
+        <v-row align="center">
+          <v-col sm="3" md="3" lx="4">
+            <v-select
+              v-model="selectc"
+              :items="itemsc"
+              item-text="nombre_categoria"
+              item-value="categoria_id"
+              label="Categoría"
+            >
+            </v-select>
+          </v-col>
+          <v-col sm="2" md="3" lx="4">
+            <v-select
+              v-model="selectt"
+              :items="itemstt"
+              item-text="name_tipo"
+              item-value="tipo_id"
+              label="Tipo"
+            >
+            </v-select>
+          </v-col>
+          <v-col sm="2" md="4" lx="4">
+            <v-select
+              v-model="selectp"
+              :items="itemsp"
+              item-text="nombre_proveedor"
+              item-value="proveedor_id"
+              label="Proveedor"
+              required
+            ></v-select>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col sm="2" md="5" lx="4">
+            <v-select
+              v-model="selectm"
+              :items="itemstm"
+              item-text="nombre_marca"
+              item-value="marca_id"
+              label="Marca"
+              required
+            ></v-select>
+          </v-col>
+          <v-col sm="2" md="5" lx="4">
+            <v-select
+              v-model="selectst"
+              :items="itemstst"
+              item-text="nombre_status"
+              item-value="status_id"
+              label="Status"
+              required
+            ></v-select>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col sm="3" md="5" lx="3">
+            <v-select
+              v-model="selectr"
+              :items="itemsr"
+              item-text="nombre_rack"
+              item-value="rack_id"
+              label="Ubicación rack"
+              required
+            ></v-select>
+          </v-col>
+          <v-col sm="3" md="5" lx="3">
+            <v-select
+              v-model="selectT"
+              :items="itemsT"
+              item-text="nombre_travesaño"
+              item-value="travesaño_id"
+              label="Ubicación travesaño"
+              required
+            ></v-select>
+          </v-col>
+        </v-row>
 
-          <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-          <v-btn @click="clear" text> Limpiar </v-btn>
-        </form>
-      </v-card>
-    </v-app>
-  </div>
+        <v-btn color="blue darken-1" class="mr-4" v-on:click="submit" text>
+          Guardar
+        </v-btn>
+        <v-btn color="blue darken-1" @click="clear" text> Limpiar </v-btn>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script scope>
@@ -135,10 +124,13 @@
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     name: "crearusuario",
+    props: {
+      parentdialog: { type: Boolean },
+    } /*data de llegado de componente padre creacion*/,
     data: () => ({
-      name: "clavo",
-      cant: "2345",
-      //codigo: "",
+      name: "",
+      cant: "",
+
       selectc: null, //categoria
       selectt: null, //tipo
       selectp: null, //proveedor
@@ -154,9 +146,6 @@
       itemstst: [], //status
       itemsr: [], //rack
       itemsT: [], //travesaño
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
     mounted() {
       axios
@@ -260,7 +249,7 @@
               rack_id: element.id,
               nombre_rack: element.nombre_rack,
             };
-            console.log("Data en selector rack:", datos);
+
             if (!datos) return;
             this.itemsr.push(datos);
           });
@@ -278,7 +267,7 @@
               travesaño_id: element.id,
               nombre_travesaño: element.nombre_travesaño,
             };
-            console.log("Data en selector travesaño:", datos);
+
             if (!datos) return;
             this.itemsT.push(datos);
           });
@@ -290,8 +279,14 @@
     computed: {},
 
     methods: {
+      onClose() {
+        /*Envia parametro de cierre a componente creación*/
+        this.$emit("dialogFromChild", false);
+      },
       submit() {
-        //this.$v.$touch();
+        this.$emit("dialogFromChild", false);
+        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        this.$emit("notifyproblem", false);
         let enviar = {
           nombre_articulo: this.name,
           cantidad_articulo: this.cant,
@@ -309,15 +304,13 @@
           .post("api/articulo", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.alertsuccess = true;
+              this.$emit("notifysuccess", true);
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.alertproblem = true;
+            this.$emit("notifyproblem", true);
           });
-        this.alertsuccess = false;
-        this.alertproblem = false;
       },
 
       clear() {
@@ -336,20 +329,8 @@
   };
 </script>
 
-<style >
-  #app {
-    display: grid;
-    align-content: center;
-    padding-left: 10%;
-  }
-
-  .v-card {
-    display: grid;
-    align-content: center;
-    padding-left: 2%;
-    padding-top: 2%;
-    padding-right: 2%;
-    padding-bottom: 2%;
-    width: 100%;
+<style scoped>
+  .cont-card {
+    padding: 2%;
   }
 </style>

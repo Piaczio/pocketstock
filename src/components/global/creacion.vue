@@ -1,17 +1,45 @@
 <template>
-  <div>
-    <v-row class="no-scroll">
-      <v-col>
-        <creararticulos />
-      </v-col>
+  <!--
+  En esta tarjeta se encuentra el listado de componentes para crear todos los elementos
+  dentro del sistema.
+-->
+  <v-card class="list-card">
+    <v-snackbar
+      dense
+      color="success"
+      outlined
+      :value="alertsuccess"
+      :timeout="timeout"
+      rounded="pill"
+      top
+    >
+      ¡Guardado exitosamente!
+    </v-snackbar>
+    <v-snackbar
+      dense
+      color="danger"
+      outlined
+      :value="alertproblem"
+      :timeout="timeout"
+      rounded="pill"
+      top
+    >
+      ¡Oops hubo un problema!
+    </v-snackbar>
+    <v-row>
       <v-col align-self="end" cols="2">
+        <v-row>
+          <v-btn color="primary" text @click="dialogarticulo = !dialogarticulo">
+            Artículos
+          </v-btn>
+        </v-row>
         <v-row>
           <v-btn
             color="primary"
             text
             @click="dialogcategoria = !dialogcategoria"
           >
-            Categoria
+            Categoría
           </v-btn>
         </v-row>
         <v-row>
@@ -38,64 +66,130 @@
             Status
           </v-btn>
         </v-row>
+
+        <v-row><v-subheader>Ubicación</v-subheader></v-row>
+        <v-row>
+          <v-btn color="primary" text @click="dialograck = !dialograck">
+            Rack
+          </v-btn>
+        </v-row>
         <v-row>
           <v-btn
             color="primary"
             text
-            @click="dialogubicacion = !dialogubicacion"
+            @click="dialogtravesaño = !dialogtravesaño"
           >
-            Ubicación
+            Travesaño
           </v-btn>
         </v-row>
       </v-col>
     </v-row>
+
+    <creararticulo
+      :parentdialog="dialogarticulo"
+      v-on:dialogFromChild="syncFromArticulo($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
+    />
     <crearcategoria
       :parentdialog="dialogcategoria"
       v-on:dialogFromChild="syncFromCategoria($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
     />
     <crearmarca
       :parentdialog="dialogmarca"
       v-on:dialogFromChild="syncFromMarca($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
     />
     <creartipo
       :parentdialog="dialogtipo"
       v-on:dialogFromChild="syncFromTipo($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
     />
     <crearproveedor
       :parentdialog="dialogproveedor"
       v-on:dialogFromChild="syncFromProveedor($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
     />
     <crearstatus
       :parentdialog="dialogstatus"
       v-on:dialogFromChild="syncFromStatus($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
     />
-    <crearubicacion
-      :parentdialog="dialogubicacion"
-      v-on:dialogFromChild="syncFromUbicacion($event)"
+
+    <crearrack
+      :parentdialog="dialograck"
+      v-on:dialogFromChild="syncFromRack($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
     />
-  </div>
+    <creartravesaño
+      :parentdialog="dialogtravesaño"
+      v-on:dialogFromChild="syncFromTravesaño($event)"
+      :incomingsuccess="alertsuccess"
+      v-on:notifysuccess="syncToSuccess($event)"
+      :incomingproblem="alertproblem"
+      v-on:notifyproblem="syncToProblem($event)"
+    />
+  </v-card>
 </template>
 
 <script>
+  import creararticulo from "../cruds/creararticulos.vue";
   import crearcategoria from "../cruds/crearcategoria.vue";
   import crearmarca from "../cruds/crearmarca.vue";
   import creartipo from "../cruds/creartipo.vue";
   import crearproveedor from "../cruds/crearproveedor.vue";
-  import creararticulos from "../cruds/creararticulos.vue";
+
   import crearstatus from "../cruds/crearstatus.vue";
-  import crearubicacion from "../cruds/crearubicacion.vue";
+
+  import crearrack from "../cruds/crearrack.vue";
+  import creartravesaño from "../cruds/creartravesaño.vue";
   export default {
-    name: "crearusuario",
+    name: "crearlist",
+    props: {
+      incomingsuccess: { type: Boolean },
+      incomingproblem: { type: Boolean },
+    },
     components: {
-      creararticulos,
+      creararticulo,
       crearcategoria,
       crearmarca,
       creartipo,
       crearproveedor,
-      crearubicacion,
       crearstatus,
+      crearrack,
+      creartravesaño,
     },
     methods: {
+      syncToSuccess(updatedDialog) {
+        this.alertsuccess = updatedDialog;
+      },
+      syncToProblem(updatedDialog) {
+        this.alertproblem = updatedDialog;
+      },
+      syncFromArticulo(updatedDialog) {
+        this.dialogarticulo = updatedDialog;
+      },
       syncFromCategoria(updatedDialog) {
         this.dialogcategoria = updatedDialog;
       },
@@ -111,27 +205,35 @@
       syncFromStatus(updatedDialog) {
         this.dialogstatus = updatedDialog;
       },
-      syncFromUbicacion(updatedDialog) {
-        this.dialogubicacion = updatedDialog;
+      syncFromRack(updatedDialog) {
+        this.dialograck = updatedDialog;
+      },
+      syncFromTravesaño(updatedDialog) {
+        this.dialogtravesaño = updatedDialog;
       },
     },
     data: () => ({
+      dialogarticulo: false,
       dialogcategoria: false,
       dialogmarca: false,
       dialogtipo: false,
       dialogproveedor: false,
       dialogstatus: false,
-      dialogubicacion: false,
+      dialograck: false,
+      dialogtravesaño: false,
+      alertsuccess: false,
+      alertproblem: false,
+      timeout: 2000,
     }),
   };
 </script>
+<style scoped>
+  .list-card {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 1em;
 
-
-
-<style >
-  .no-scroll {
-    position: -webkit-sticky;
-    position: sticky;
-    top: 20px;
+    height: 22em;
   }
 </style>
