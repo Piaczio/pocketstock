@@ -108,7 +108,9 @@
     }),
     methods: {
       logout() {
-        (store.user = null), (store.email = null);
+        let commit = (store.state.token = null);
+
+        this.$store.dispatch("logout", commit);
         this.$router.push("/");
       },
     },

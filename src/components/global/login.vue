@@ -37,13 +37,14 @@
   import axios from "axios";
 
   import store from "@/store";
+
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     email: "crearusuario",
     data: () => ({
-      email: "a@a.com",
-      password: "1234",
+      email: "a@a.com", //a@a.com
+      password: "1234", //1234
     }),
 
     validations: {
@@ -69,7 +70,7 @@
     },
 
     methods: {
-      login() {
+      async login() {
         this.$v.$touch();
         let enviar = {
           email: this.email,
@@ -78,24 +79,18 @@
         axios
           .get("sanctum/csrf-cookie")
           .then((response) => {
-            console.log("token del api ->", response);
+            response;
             axios
               .post("api/login", enviar)
               .then((response) => {
                 let validado = response.request.withCredentials;
-                console.log("Usuario validado:", validado);
                 if (validado == true) {
-                  store.email = enviar.email;
-                  store.password = enviar.password;
-                  console.log(
-                    "usuario existente->",
-                    store.email,
-                    " clave existente->",
-                    store.password
-                  );
+                  store.state.token = response.data.token;
+                  let token = store.state.token;
+                  this.$store.dispatch("login", { token });
                   this.$router.push("/home").catch(() => {});
                 } else if (validado == false) {
-                  console.log("Cuanta no existen o incorrecta");
+                  alert("Cuanta no existen o incorrecta");
                 }
               })
               .catch((e) => {

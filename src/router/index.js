@@ -39,10 +39,10 @@ const routes = [
     },
     beforeEnter: (to, from, next) => {
       let validado = to.matched.some(record => record.meta.authenticated);
-      if (validado == true && from.path !== '/') {
-        if (store.email && store.password) {
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
           next();
-          console.log("pasaste la validado con: ", store.email, " y ", store.password)
         }
       }
       else if (!validado) {
