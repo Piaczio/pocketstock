@@ -63,7 +63,7 @@
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    name: "crearcategoria",
+    name: "crearusuario",
     props: {
       parentdialog: { type: Boolean },
     } /*data de llegado de componente padre creacion*/,
@@ -76,6 +76,9 @@
       itemsrol: [],
     }),
     mounted() {
+      window.Echo.channel("roles").listen("rolCreated", (e) => {
+        this.itemsrol = e.roles;
+      });
       axios
         .get("api/rol")
         .then((response) => {

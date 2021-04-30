@@ -88,6 +88,7 @@
 
 <script>
   import axios from "axios";
+
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -130,7 +131,7 @@
         .get("api/categoria")
         .then((response) => {
           let categoria = response.data;
-          console.log("Categoria response:", categoria);
+
           categoria.forEach((element) => {
             let datos = {
               id: element.id,
@@ -141,6 +142,9 @@
           });
         })
         .catch((error) => console.log(error));
+      window.Echo.channel("categorias").listen("categoriaCreated", (e) => {
+        this.categoriaArray = e.categorias;
+      });
     },
 
     computed: {
@@ -215,15 +219,12 @@
           Object.assign(this.categoriaArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/categoria/";
-          console.log("edit method:", url + send.id);
           url = url + send.id;
           url = `${url}?${"nombre_categoria=" + send.nombre_categoria}`;
-
-          console.log("edit method:", url);
           axios
             .put(url)
             .then((response) => {
-              console.log("Si se pudo:", response.data);
+              response;
             })
             .catch((error) => console.log(error));
         } else {

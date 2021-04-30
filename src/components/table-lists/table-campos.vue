@@ -98,7 +98,7 @@
         .get("api/categoria")
         .then((response) => {
           let categorias = response.data;
-          console.log(categorias);
+
           categorias.forEach((element) => {
             let datos = {
               categoria_id: element.id,

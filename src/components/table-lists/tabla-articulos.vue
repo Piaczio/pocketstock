@@ -242,6 +242,25 @@
       },
     }),
     mounted() {
+      window.Echo.channel("articulos").listen("articuloCreated", (e) => {
+        this.articulosArray = e.articulos;
+      });
+      window.Echo.channel("categorias").listen("categoriaCreated", (e) => {
+        this.itemsc = e.categorias;
+      });
+      window.Echo.channel("marcas").listen("marcaCreated", (e) => {
+        this.itemstm = e.marcas;
+      });
+      window.Echo.channel("proveedores").listen("proveedorCreated", (e) => {
+        this.itemsp = e.proveedores;
+      });
+      window.Echo.channel("travesaños").listen("travesañoCreated", (e) => {
+        this.itemsT = e.travesaños;
+      });
+      window.Echo.channel("racks").listen("rackCreated", (e) => {
+        this.itemsr = e.racks;
+      });
+
       axios
         .get("api/articulo")
         .then((response) => {
@@ -622,11 +641,10 @@
             "nombre_travesaño=" + this.selectT
           }`;
 
-          console.log("edit method:", url);
           axios
             .put(url)
             .then((response) => {
-              console.log("Si se pudo:", response.data);
+              response;
             })
             .catch((error) => console.log(error));
         } else {

@@ -148,11 +148,18 @@
       },
     }),
     mounted() {
+      window.Echo.channel("users").listen("userCreated", (e) => {
+        this.usersArray = e.users;
+      });
+      window.Echo.channel("roles").listen("rolCreated", (e) => {
+        this.itemsrol = e.roles;
+      });
+
       axios
         .get("api/user")
         .then((response) => {
           let user = response.data;
-          console.log("User response:", user);
+
           user.forEach((element) => {
             let datos = {
               id: element.id,
@@ -254,7 +261,6 @@
         this.editedIndex = this.usersArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
-
         let id = this.editedItem.id;
         axios.delete("api/user/" + id).catch((error) => console.log(error));
       },
@@ -285,19 +291,24 @@
           Object.assign(this.usersArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/user/";
-          console.log("edit method:", url + send.id);
+
           url = url + send.id;
           url = `${url}?${"name=" + send.name}&${"email=" + send.email}&${
             "rol_id=" + this.selectrol
           }`;
 
-          console.log("edit method:", url);
           axios
             .put(url)
             .then((response) => {
-              console.log("Si se pudo:", response.data);
+              response;
             })
             .catch((error) => console.log(error));
+          window.Echo.channel("users").listen("userCreated", (e) => {
+            this.usersArray = e.users;
+          });
+          window.Echo.channel("roles").listen("rolCreated", (e) => {
+            this.itemsrol = e.roles;
+          });
         } else {
           this.usersArray.push(this.editedItem);
         }

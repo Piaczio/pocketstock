@@ -126,11 +126,15 @@
       },
     }),
     mounted() {
+      window.Echo.channel("marcas").listen("marcaCreated", (e) => {
+        this.marcaArray = e.marcas;
+      });
+
       axios
         .get("api/marca")
         .then((response) => {
           let marca = response.data;
-          console.log("Categoria response:", marca);
+
           marca.forEach((element) => {
             let datos = {
               id: element.id,
@@ -215,15 +219,14 @@
           Object.assign(this.marcaArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/marca/";
-          console.log("edit method:", url + send.id);
+
           url = url + send.id;
           url = `${url}?${"nombre_marca=" + send.nombre_marca}`;
 
-          console.log("edit method:", url);
           axios
             .put(url)
             .then((response) => {
-              console.log("Si se pudo:", response.data);
+              response;
             })
             .catch((error) => console.log(error));
         } else {

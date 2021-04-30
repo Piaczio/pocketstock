@@ -126,6 +126,10 @@
       },
     }),
     mounted() {
+      window.Echo.channel("proveedores").listen("proveedorCreated", (e) => {
+        this.proveedorArray = e.proveedores;
+      });
+
       axios
         .get("api/proveedor")
         .then((response) => {
