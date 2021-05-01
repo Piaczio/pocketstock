@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div class="tabla" id="app">
     <v-row>
-      <v-col cols="12" sm="6" md="4">
+      <v-col cols="12" sm="4" md="5">
         <v-text-field
           v-model="search"
           label="Buscar artículo"
@@ -12,10 +12,11 @@
 
     <v-app id="inspire">
       <v-data-table
+        id="tabla"
         :headers="headers"
         :items="articulosArray"
         sort-by="cantidad_articulo"
-        class="elevation-1"
+        class="elevation-2"
         :search="search"
         :custom-filter="filterOnlyCapsText.toUpperCase"
       >
@@ -32,90 +33,83 @@
 
                 <v-card-text>
                   <v-container>
-                    <v-row>
-                      <v-col cols="12" sm="6" md="4">
+                    <v-row cols="12">
+                      <v-col sm="4" md="5">
                         <v-text-field
                           v-model="editedItem.nombre_articulo"
                           label="Nombre"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col sm="1" md="2">
                         <v-text-field
                           v-model="editedItem.cantidad_articulo"
                           type="number"
                           label="Cantidad"
                         ></v-text-field>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col sm="3" md="4">
                         <v-select
                           v-model="selectc"
                           :items="itemsc"
-                          v-on="categ()"
                           item-text="nombre_categoria"
                           item-value="categoria_id"
                           label="Categoría"
                         ></v-select>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col sm="3" md="4">
                         <v-select
                           v-model="selectt"
                           :items="itemstt"
-                          v-on="categ()"
                           item-text="name_tipo"
                           item-value="tipo_id"
                           label="Tipo"
                         >
                         </v-select>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col sm="3" md="4">
                         <v-select
                           v-model="selectm"
                           :items="itemstm"
-                          v-on="categ()"
                           item-text="nombre_marca"
                           item-value="marca_id"
                           label="Marca"
                           required
                         ></v-select>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col sm="3" md="5">
                         <v-select
                           v-model="selectp"
                           :items="itemsp"
-                          v-on="categ()"
                           item-text="nombre_proveedor"
                           item-value="proveedor_id"
                           label="Proveedor"
                           required
                         ></v-select>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col sm="3" md="3">
                         <v-select
                           v-model="selectst"
                           :items="itemstst"
-                          v-on="categ()"
                           item-text="nombre_status"
                           item-value="status_id"
                           label="Status"
                           required
                         ></v-select>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col sm="4" md="5">
                         <v-select
                           v-model="selectr"
                           :items="itemsr"
-                          v-on="categ()"
                           item-text="nombre_rack"
                           item-value="rack_id"
                           label="Ubicación rack"
                           required
                         ></v-select>
                       </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col sm="4" md="5">
                         <v-select
                           v-model="selectT"
                           :items="itemsT"
-                          v-on="categ()"
                           item-text="nombre_travesaño"
                           item-value="travesaño_id"
                           label="Ubicación travesaño"
@@ -254,13 +248,18 @@
       window.Echo.channel("proveedores").listen("proveedorCreated", (e) => {
         this.itemsp = e.proveedores;
       });
-      window.Echo.channel("travesaños").listen("travesañoCreated", (e) => {
-        this.itemsT = e.travesaños;
+      window.Echo.channel("status").listen("statusCreated", (e) => {
+        this.itemstst = e.status;
+      });
+      window.Echo.channel("tipos").listen("tipoCreated", (e) => {
+        this.itemstt = e.tipos;
       });
       window.Echo.channel("racks").listen("rackCreated", (e) => {
         this.itemsr = e.racks;
       });
-
+      window.Echo.channel("travesaños").listen("travesañoCreated", (e) => {
+        this.itemsT = e.travesaños;
+      });
       axios
         .get("api/articulo")
         .then((response) => {
@@ -323,6 +322,7 @@
         .catch((e) => {
           console.log(e.message);
         });
+
       axios
         .get("api/proveedor")
         .then((response) => {
@@ -341,6 +341,7 @@
         .catch((e) => {
           console.log(e.message);
         });
+
       axios
         .get("api/status")
         .then((response) => {
@@ -359,6 +360,7 @@
         .catch((e) => {
           console.log(e.message);
         });
+
       axios
         .get("api/tipo")
         .then((response) => {
@@ -396,6 +398,7 @@
         .catch((e) => {
           console.log(e.message);
         });
+
       axios
         .get("api/travesaño")
         .then((response) => {
@@ -446,7 +449,136 @@
           value.toString().toLocaleUpperCase().indexOf(search) !== -1
         );
       },
-      categ(recived) {
+      tiposync(recived) {
+        var tempid = null;
+        var tempname = null;
+        tempname;
+
+        if (this.itemstt) {
+          let tipo = this.itemstt;
+
+          tipo.forEach((element) => {
+            let datos = {
+              tipo_id: element.tipo_id,
+              name_tipo: element.name_tipo,
+            };
+            if (datos.name_tipo === recived) {
+              tempid = datos.tipo_id;
+              tempname = datos.name_tipo;
+              this.selectt = tempid;
+            }
+          });
+        }
+
+        return this.selectt;
+      },
+      proveedorsync(recived) {
+        var tempid = null;
+        var tempname = null;
+        tempname;
+        if (this.itemsp) {
+          let proveedor = this.itemsp;
+          proveedor.forEach((element) => {
+            let datos = {
+              proveedor_id: element.proveedor_id,
+              nombre_proveedor: element.nombre_proveedor,
+            };
+            if (datos.nombre_proveedor === recived) {
+              tempid = datos.proveedor_id;
+              tempname = datos.nombre_proveedor;
+
+              this.selectp = tempid;
+            }
+          });
+        }
+        return this.selectp;
+      },
+      marcasync(recived) {
+        var tempid = null;
+        var tempname = null;
+        tempname;
+        if (this.itemstm) {
+          let marca = this.itemstm;
+          marca.forEach((element) => {
+            let datos = {
+              marca_id: element.marca_id,
+              nombre_marca: element.nombre_marca,
+            };
+            if (datos.nombre_marca === recived) {
+              tempid = datos.marca_id;
+              tempname = datos.nombre_marca;
+
+              this.selectm = tempid;
+            }
+          });
+        }
+        return this.selectm;
+      },
+      statusync(recived) {
+        var tempid = null;
+        var tempname = null;
+        tempname;
+        if (this.itemstst) {
+          let status = this.itemstst;
+          status.forEach((element) => {
+            let datos = {
+              status_id: element.status_id,
+              nombre_status: element.nombre_status,
+            };
+
+            if (datos.nombre_status === recived) {
+              tempid = datos.status_id;
+              tempname = datos.nombre_status;
+
+              this.selectst = tempid;
+            }
+          });
+        }
+        return this.selectst;
+      },
+      racksync(recived) {
+        var tempid = null;
+        var tempname = null;
+        tempname;
+        if (this.itemsr) {
+          let rack = this.itemsr;
+          rack.forEach((element) => {
+            let datos = {
+              rack_id: element.rack_id,
+              nombre_rack: element.nombre_rack,
+            };
+            if (datos.nombre_rack === recived) {
+              tempid = datos.rack_id;
+              tempname = datos.nombre_rack;
+
+              this.selectr = tempid;
+            }
+          });
+        }
+        return this.selectr;
+      },
+      travesañosync(recived) {
+        var tempid = null;
+        var tempname = null;
+        tempname;
+        if (this.itemsT) {
+          let rack = this.itemsT;
+          rack.forEach((element) => {
+            let datos = {
+              travesaño_id: element.travesaño_id,
+              nombre_travesaño: element.nombre_travesaño,
+            };
+            if (datos.nombre_travesaño === recived) {
+              tempid = datos.travesaño_id;
+              tempname = datos.nombre_travesaño;
+
+              this.selectT = tempid;
+            }
+          });
+        }
+        return this.selectT;
+      },
+      categsync(recived) {
         var tempid = null;
         var tempname = null;
         tempname;
@@ -465,131 +597,43 @@
             }
           });
         }
-        if (this.itemstt) {
-          let tipo = this.itemstt;
-          tipo.forEach((element) => {
-            let datos = {
-              tipo_id: element.tipo_id,
-              name_tipo: element.name_tipo,
-            };
-            if (datos.name_tipo === recived) {
-              tempid = datos.tipo_id;
-              tempname = datos.name_tipo;
-              this.selectt = tempid;
-            }
-          });
-        }
-        if (this.itemsp) {
-          let proveedor = this.itemsp;
-          proveedor.forEach((element) => {
-            let datos = {
-              proveedor_id: element.proveedor_id,
-              nombre_proveedor: element.nombre_proveedor,
-            };
-            if (datos.nombre_proveedor === recived) {
-              tempid = datos.proveedor_id;
-              tempname = datos.nombre_proveedor;
-
-              this.selectp = tempid;
-            }
-          });
-        }
-        if (this.itemstm) {
-          let marca = this.itemstm;
-          marca.forEach((element) => {
-            let datos = {
-              marca_id: element.marca_id,
-              nombre_marca: element.nombre_marca,
-            };
-            if (datos.nombre_marca === recived) {
-              tempid = datos.marca_id;
-              tempname = datos.nombre_marca;
-
-              this.selectm = tempid;
-            }
-          });
-        }
-        if (this.itemstst) {
-          let status = this.itemstst;
-          status.forEach((element) => {
-            let datos = {
-              status_id: element.status_id,
-              nombre_status: element.nombre_status,
-            };
-            if (datos.nombre_status === recived) {
-              tempid = datos.status_id;
-              tempname = datos.nombre_status;
-
-              this.selectst = tempid;
-            }
-          });
-        }
-        if (this.itemsr) {
-          let rack = this.itemsr;
-          rack.forEach((element) => {
-            let datos = {
-              rack_id: element.rack_id,
-              nombre_rack: element.nombre_rack,
-            };
-            if (datos.nombre_rack === recived) {
-              tempid = datos.rack_id;
-              tempname = datos.nombre_rack;
-
-              this.selectr = tempid;
-            }
-          });
-        }
-        if (this.itemsT) {
-          let rack = this.itemsT;
-          rack.forEach((element) => {
-            let datos = {
-              travesaño_id: element.travesaño_id,
-              nombre_travesaño: element.nombre_travesaño,
-            };
-            if (datos.nombre_travesaño === recived) {
-              tempid = datos.travesaño_id;
-              tempname = datos.nombre_travesaño;
-
-              this.selectT = tempid;
-            }
-          });
-        }
-
-        return tempid;
+        return this.selectc;
       },
 
       editItem(item) {
         this.editedIndex = this.articulosArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
 
-        if (this.editedItem.nombre_categoria) {
-          //categoria
-          this.categ(this.editedItem.nombre_categoria);
-        }
-        if (this.editedItem.name_tipo) {
-          //tipo
-          this.categ(this.editedItem.name_tipo);
-        }
-        if (this.editedItem.nombre_proveedor) {
-          //proveedor
-          this.categ(this.editedItem.nombre_proveedor);
-        }
-        if (this.editedItem.nombre_marca) {
-          //marca
-          this.categ(this.editedItem.nombre_marca);
-        }
-        if (this.editedItem.nombre_status) {
-          //status
-          this.categ(this.editedItem.nombre_status);
-        }
-        if (this.editedItem.nombre_rack) {
-          //rack
-          this.categ(this.editedItem.nombre_rack);
-        }
-        if (this.editedItem.nombre_travesaño) {
-          //travesaño
-          this.categ(this.editedItem.nombre_travesaño);
-        }
+        //categoria
+        let categoriasync = this.editedItem.nombre_categoria;
+
+        this.categsync(categoriasync);
+
+        //tipo
+
+        let tiposync = this.editedItem.name_tipo;
+
+        this.tiposync(tiposync);
+
+        //proveedor
+        let proveedorsync = this.editedItem.nombre_proveedor;
+        this.proveedorsync(proveedorsync);
+
+        //marca
+        let marcasync = this.editedItem.nombre_marca;
+        this.marcasync(marcasync);
+
+        //status
+        let statusync = this.editedItem.nombre_status;
+        this.statusync(statusync);
+
+        //rack
+        let racksycn = this.editedItem.nombre_rack;
+        this.racksync(racksycn);
+
+        //travesaño
+        let travesañosync = this.editedItem.nombre_travesaño;
+        this.travesañosync(travesañosync);
 
         this.dialog = true;
       },
@@ -629,16 +673,14 @@
           Object.assign(this.articulosArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/articulo/";
-          console.log("edit method:", url + send.id);
           url = url + send.id;
           url = `${url}?${"nombre_articulo=" + send.nombre_articulo}&${
             "cantidad_articulo=" + send.cantidad_articulo
-          }&${"categoria_id=" + this.selectc}&${"name_tipo=" + this.selectt}&${
-            "nombre_marca=" + this.selectm
-          }&${"nombre_proveedor=" + this.selectp}&${
-            "nombre_status=" + this.selectst
-          }&${"nombre_rack=" + this.selectr}&${
-            "nombre_travesaño=" + this.selectT
+          }&${"categoria_id=" + this.selectc}&${"tipo_id=" + this.selectt}&${
+            "marca_id=" + this.selectm
+          }&${"proveedor_id=" + this.selectp}&${"status_id=" + this.selectst}&
+                                      ${"rack_id=" + this.selectr}&${
+            "travesaño_id=" + this.selectT
           }`;
 
           axios
@@ -657,4 +699,10 @@
 </script>
 
 <style scoped>
+  #tabla {
+    width: 60rem;
+  }
+  .tabla {
+    width: 60rem;
+  }
 </style>

@@ -134,7 +134,7 @@
         .get("api/proveedor")
         .then((response) => {
           let proveedor = response.data;
-          console.log("Categoria response:", proveedor);
+
           proveedor.forEach((element) => {
             let datos = {
               id: element.id,

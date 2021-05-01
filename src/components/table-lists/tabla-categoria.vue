@@ -127,6 +127,9 @@
       },
     }),
     mounted() {
+      window.Echo.channel("categorias").listen("categoriaCreated", (e) => {
+        this.categoriaArray = e.categorias;
+      });
       axios
         .get("api/categoria")
         .then((response) => {
@@ -142,9 +145,6 @@
           });
         })
         .catch((error) => console.log(error));
-      window.Echo.channel("categorias").listen("categoriaCreated", (e) => {
-        this.categoriaArray = e.categorias;
-      });
     },
 
     computed: {
