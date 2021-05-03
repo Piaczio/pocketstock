@@ -653,6 +653,7 @@
       deleteItemConfirm() {
         this.articulosArray.splice(this.editedIndex, 1);
         this.closeDelete();
+        store.commit("increment", 1);
       },
 
       close() {
@@ -682,11 +683,11 @@
           }&${"categoria_id=" + this.selectc}&${"tipo_id=" + this.selectt}&${
             "marca_id=" + this.selectm
           }&${"proveedor_id=" + this.selectp}&${"status_id=" + this.selectst}&
-                                                                        ${
-                                                                          "rack_id=" +
-                                                                          this
-                                                                            .selectr
-                                                                        }&${
+                                                                          ${
+                                                                            "rack_id=" +
+                                                                            this
+                                                                              .selectr
+                                                                          }&${
             "travesaño_id=" + this.selectT
           }`;
 

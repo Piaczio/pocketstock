@@ -2,7 +2,7 @@
   <div class="no-scroll">
     <v-row>
       <v-col id="table-article" md="10">
-        <tablausuarios />
+        <tablausuarios :key="count" />
       </v-col>
       <v-col id="creation" sm="2" md="2">
         <creacionuserlist />
@@ -14,9 +14,15 @@
 <script>
   import tablausuarios from "../components/table-lists/tabla-usuarios.vue";
   import creacionuserlist from "../components/global/creacion-user.vue";
+  import store from "@/store";
   export default {
     name: "artículos",
     components: { tablausuarios, creacionuserlist },
+    computed: {
+      count() {
+        return store.getters.counter;
+      },
+    },
   };
 </script>
 

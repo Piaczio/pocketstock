@@ -104,6 +104,7 @@
 
 <script>
   import axios from "axios";
+  import store from "@/store";
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -268,6 +269,7 @@
       deleteItemConfirm() {
         this.usersArray.splice(this.editedIndex, 1);
         this.closeDelete();
+        store.commit("increment", 1);
       },
 
       close() {
@@ -301,6 +303,7 @@
             .put(url)
             .then((response) => {
               response;
+              store.commit("increment", 1);
             })
             .catch((error) => console.log(error));
           window.Echo.channel("users").listen("userCreated", (e) => {
