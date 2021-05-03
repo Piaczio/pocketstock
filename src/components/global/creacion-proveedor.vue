@@ -91,6 +91,7 @@
     justify-content: center;
     padding: 1em;
 
-    height: 4em;
+    width: 7rem;
+    height: 3em;
   }
 </style>

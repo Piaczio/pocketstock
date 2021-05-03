@@ -37,6 +37,7 @@
   import axios from "axios";
 
   import store from "@/store";
+  import router from "@/router";
 
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
@@ -87,8 +88,8 @@
                 if (validado == true) {
                   store.state.token = response.data.token;
                   let token = store.state.token;
-                  this.$store.dispatch("login", { token });
-                  this.$router.push("/home").catch(() => {});
+                  store.dispatch("login", { token });
+                  router.push("/home").catch(() => {});
                 } else if (validado == false) {
                   alert("Cuanta no existen o incorrecta");
                 }

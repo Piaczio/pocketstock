@@ -112,16 +112,19 @@
         <v-btn color="blue darken-1" class="mr-4" v-on:click="submit" text>
           Guardar
         </v-btn>
+
         <v-btn color="blue darken-1" @click="clear" text> Limpiar </v-btn>
       </div>
     </v-card>
   </v-dialog>
 </template>
 
-<script scope>
+<script scoped>
   import axios from "axios";
+  import store from "@/store";
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
+
   export default {
     name: "crearusuario",
     props: {
@@ -281,6 +284,7 @@
     methods: {
       onClose() {
         /*Envia parametro de cierre a componente creación*/
+
         this.$emit("dialogFromChild", false);
       },
       submit() {
@@ -305,6 +309,7 @@
           .then((response) => {
             if (response.statusText === "Created") {
               this.$emit("notifysuccess", true);
+              store.commit("increment", 1);
             }
           })
           .catch((e) => {

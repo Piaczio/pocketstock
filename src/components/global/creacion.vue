@@ -234,6 +234,7 @@
     justify-content: center;
     padding: 1em;
 
+    width: 7rem;
     height: 22em;
   }
 </style>

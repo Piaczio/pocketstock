@@ -42,7 +42,9 @@
           <v-list-group :value="true" no-action sub-group>
             <template v-slot:activator>
               <v-list-item-content>
-                <v-list-item-title>Campos</v-list-item-title>
+                <v-list-item-title
+                  >Catalogos<v-icon> mdi-view-list</v-icon>
+                </v-list-item-title>
               </v-list-item-content>
             </template>
             <v-list-item
@@ -65,7 +67,7 @@
         <template v-slot:append>
           <div class="pa-2">
             <v-btn class="mr-6" v-on:click="logout()" text>
-              Cerrar sesión
+              Cerrar sesión<v-icon> mdi-logout</v-icon>
             </v-btn>
           </div>
         </template>

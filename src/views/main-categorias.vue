@@ -1,10 +1,10 @@
 <template>
   <div class="no-scroll">
-    <v-row>
-      <v-col id="table-article" md="10">
+    <v-row cols="12">
+      <v-col id="table-article" sm="10" md="11">
         <tablacategoria />
       </v-col>
-      <v-col id="creation" sm="2" md="2">
+      <v-col id="creation" sm="1" md="1">
         <creacionlist />
       </v-col>
     </v-row>
@@ -27,9 +27,9 @@
     top: 20rem;
   }
   #table-article {
-    padding-left: 15rem;
+    padding: 0 0 0 14rem;
   }
   #creation {
-    padding-top: 5.1rem;
+    padding: 4.5rem 0 0 0;
   }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="tabla" id="app">
     <v-row>
       <v-col cols="12" sm="6" md="4">
         <v-text-field
@@ -11,6 +11,7 @@
     </v-row>
     <v-app id="inspire">
       <v-data-table
+        id="tabla"
         :headers="headers"
         :items="usersArray"
         class="elevation-1"
@@ -104,6 +105,7 @@
 
 <script>
   import axios from "axios";
+  import store from "@/store";
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -148,11 +150,18 @@
       },
     }),
     mounted() {
+      window.Echo.channel("users").listen("userCreated", (e) => {
+        this.usersArray = e.users;
+      });
+      window.Echo.channel("roles").listen("rolCreated", (e) => {
+        this.itemsrol = e.roles;
+      });
+
       axios
         .get("api/user")
         .then((response) => {
           let user = response.data;
-          console.log("User response:", user);
+
           user.forEach((element) => {
             let datos = {
               id: element.id,
@@ -254,7 +263,6 @@
         this.editedIndex = this.usersArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
-
         let id = this.editedItem.id;
         axios.delete("api/user/" + id).catch((error) => console.log(error));
       },
@@ -285,19 +293,25 @@
           Object.assign(this.usersArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/user/";
-          console.log("edit method:", url + send.id);
+
           url = url + send.id;
           url = `${url}?${"name=" + send.name}&${"email=" + send.email}&${
             "rol_id=" + this.selectrol
           }`;
 
-          console.log("edit method:", url);
           axios
             .put(url)
             .then((response) => {
-              console.log("Si se pudo:", response.data);
+              response;
+              store.commit("increment", 1);
             })
             .catch((error) => console.log(error));
+          window.Echo.channel("users").listen("userCreated", (e) => {
+            this.usersArray = e.users;
+          });
+          window.Echo.channel("roles").listen("rolCreated", (e) => {
+            this.itemsrol = e.roles;
+          });
         } else {
           this.usersArray.push(this.editedItem);
         }
@@ -308,4 +322,10 @@
 </script>
 
 <style scoped>
+  #tabla {
+    width: 60rem;
+  }
+  .tabla {
+    width: 60rem;
+  }
 </style>

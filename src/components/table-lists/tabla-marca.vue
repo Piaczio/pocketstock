@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="tabla" id="app">
     <v-row>
       <v-col cols="12" sm="6" md="4">
         <v-text-field
@@ -11,6 +11,7 @@
     </v-row>
     <v-app id="inspire">
       <v-data-table
+        id="tabla"
         :headers="headers"
         :items="marcaArray"
         sort-by="cantidad_articulo"
@@ -126,11 +127,15 @@
       },
     }),
     mounted() {
+      window.Echo.channel("marcas").listen("marcaCreated", (e) => {
+        this.marcaArray = e.marcas;
+      });
+
       axios
         .get("api/marca")
         .then((response) => {
           let marca = response.data;
-          console.log("Categoria response:", marca);
+
           marca.forEach((element) => {
             let datos = {
               id: element.id,
@@ -215,15 +220,14 @@
           Object.assign(this.marcaArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/marca/";
-          console.log("edit method:", url + send.id);
+
           url = url + send.id;
           url = `${url}?${"nombre_marca=" + send.nombre_marca}`;
 
-          console.log("edit method:", url);
           axios
             .put(url)
             .then((response) => {
-              console.log("Si se pudo:", response.data);
+              response;
             })
             .catch((error) => console.log(error));
         } else {
@@ -236,4 +240,10 @@
 </script>
 
 <style scoped>
+  #tabla {
+    width: 60rem;
+  }
+  .tabla {
+    width: 60rem;
+  }
 </style>
