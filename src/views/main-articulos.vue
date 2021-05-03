@@ -2,7 +2,7 @@
   <div class="no-scroll">
     <v-row cols="12">
       <v-col id="table-article" sm="10" md="11">
-        <tablaArticulos />
+        <tablaArticulos :key="count" />
       </v-col>
       <v-col id="creation" sm="1" md="1">
         <creacionlist />
@@ -14,9 +14,23 @@
 <script>
   import tablaArticulos from "../components/table-lists/tabla-articulos.vue";
   import creacionlist from "../components/global/creacion.vue";
+  import store from "@/store";
   export default {
     name: "artículos",
+
     components: { tablaArticulos, creacionlist },
+    data: () => ({}),
+    methods: {
+      /*para definir metodos*/
+    },
+    created() {
+      /*para ejecutar lo que yo quiera automaticamente*/
+    },
+    computed: {
+      count() {
+        return store.getters.counter;
+      },
+    },
   };
 </script>
 

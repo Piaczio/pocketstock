@@ -10,6 +10,7 @@ Vue.use(Vuex);
 const getDefaultState = () => {
  return {
   token: null,
+  recharge: 0,
  };
 };
 
@@ -21,18 +22,27 @@ export default new Vuex.Store({
   isLoggedIn: state => {
    return state.token;
   },
+  counter(state) { return state.recharge },
 
  },
  mutations: {
   SET_TOKEN: (state, token) => {
    state.token = token;
   },
+  increment(state, payload) {
+   // mutate state
+   state.recharge += payload;
+  },
 
   RESET: state => {
    Object.assign(state, getDefaultState());
   }
  },
+
  actions: {
+  increment({ commit }) {
+   commit('increment')
+  },
   login: ({ commit, dispatch }, { token }) => {
 
    commit('SET_TOKEN', token);

@@ -164,6 +164,7 @@
 
 <script>
   import axios from "axios";
+  import store from "@/store";
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -239,6 +240,7 @@
       window.Echo.channel("articulos").listen("articuloCreated", (e) => {
         this.articulosArray = e.articulos;
       });
+
       window.Echo.channel("categorias").listen("categoriaCreated", (e) => {
         this.itemsc = e.categorias;
       });
@@ -260,6 +262,7 @@
       window.Echo.channel("travesaños").listen("travesañoCreated", (e) => {
         this.itemsT = e.travesaños;
       });
+
       axios
         .get("api/articulo")
         .then((response) => {
@@ -679,7 +682,11 @@
           }&${"categoria_id=" + this.selectc}&${"tipo_id=" + this.selectt}&${
             "marca_id=" + this.selectm
           }&${"proveedor_id=" + this.selectp}&${"status_id=" + this.selectst}&
-                                      ${"rack_id=" + this.selectr}&${
+                                                                        ${
+                                                                          "rack_id=" +
+                                                                          this
+                                                                            .selectr
+                                                                        }&${
             "travesaño_id=" + this.selectT
           }`;
 
@@ -687,6 +694,7 @@
             .put(url)
             .then((response) => {
               response;
+              store.commit("increment", 1);
             })
             .catch((error) => console.log(error));
         } else {
