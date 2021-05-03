@@ -34,6 +34,152 @@ const routes = [
     path: '/home',
     name: 'home',
     component: () => import(/*webpackChunkName: "Home" */'../views/Home.vue'),
+
+    meta: {
+      authenticated: true
+    },
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
+          next();
+        }
+      }
+      else if (!validado) {
+        next({ name: 'login' });
+      }
+      else {
+        next({ name: 'login' });
+      }
+
+    }
+  },
+  //Cruds 
+  {
+    path: '/crearusuario',
+    name: 'crearusuario',
+    component: () => import('../components/cruds/crearusuario.vue'),
+    meta: {
+      authenticated: true
+    },
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
+          next();
+        }
+      }
+      else if (!validado) {
+        next({ name: 'login' });
+      }
+      else {
+        next({ name: 'login' });
+      }
+
+    }
+  },
+
+  //Listas
+  {
+    path: '/usuarios',
+    name: 'usuarios',
+    component: () => import('../views/main-usuarios.vue'),
+    meta: {
+      authenticated: true
+    },
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
+          next();
+        }
+      }
+      else if (!validado) {
+        next({ name: 'login' });
+      }
+      else {
+        next({ name: 'login' });
+      }
+
+    }
+  },
+  {
+    path: '/articulos',
+    name: 'artículos',
+    component: () => import('../views/main-articulos.vue'), meta: {
+      authenticated: true
+    },
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
+          next();
+        }
+      }
+      else if (!validado) {
+        next({ name: 'login' });
+      }
+      else {
+        next({ name: 'login' });
+      }
+
+    }
+  },
+  {
+    path: '/categorias',
+    name: 'categorias',
+    component: () => import('../views/main-categorias.vue'),
+    meta: {
+      authenticated: true
+    },
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
+          next();
+        }
+      }
+      else if (!validado) {
+        next({ name: 'login' });
+      }
+      else {
+        next({ name: 'login' });
+      }
+
+    }
+  }, {
+    path: '/marcas',
+    name: 'marcas',
+    component: () => import('../views/main-marcas.vue'),
+    meta: {
+      authenticated: true
+    },
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
+          next();
+        }
+      }
+      else if (!validado) {
+        next({ name: 'login' });
+      }
+      else {
+        next({ name: 'login' });
+      }
+
+    }
+  },
+  {
+    path: '/proveedores',
+    name: 'proveedores',
+    component: () => import('../views/main-proveedores.vue'),
     meta: {
       authenticated: true
     },
@@ -62,42 +208,6 @@ const routes = [
       layout: 'error' // name of the layout
     }
   },
-  //Cruds 
-  {
-    path: '/crearusuario',
-    name: 'crearusuario',
-    component: () => import('../components/cruds/crearusuario.vue')
-  },
-
-  //Listas
-  {
-    path: '/usuarios',
-    name: 'usuarios',
-    component: () => import('../views/main-usuarios.vue')
-  },
-  {
-    path: '/articulos',
-    name: 'artículos',
-    component: () => import('../views/main-articulos.vue')
-  },
-  {
-    path: '/categorias',
-    name: 'categorias',
-    component: () => import('../views/main-categorias.vue')
-  }, {
-    path: '/marcas',
-    name: 'marcas',
-    component: () => import('../views/main-marcas.vue')
-  },
-  {
-    path: '/proveedores',
-    name: 'proveedores',
-    component: () => import('../views/main-proveedores.vue')
-  },
-
-
-
-
 ]
 
 
