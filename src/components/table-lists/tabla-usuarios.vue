@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div class="tabla" id="app">
     <v-row>
       <v-col cols="12" sm="6" md="4">
         <v-text-field
@@ -11,6 +11,7 @@
     </v-row>
     <v-app id="inspire">
       <v-data-table
+        id="tabla"
         :headers="headers"
         :items="usersArray"
         class="elevation-1"
@@ -269,7 +270,6 @@
       deleteItemConfirm() {
         this.usersArray.splice(this.editedIndex, 1);
         this.closeDelete();
-        store.commit("increment", 1);
       },
 
       close() {
@@ -322,4 +322,10 @@
 </script>
 
 <style scoped>
+  #tabla {
+    width: 60rem;
+  }
+  .tabla {
+    width: 60rem;
+  }
 </style>
