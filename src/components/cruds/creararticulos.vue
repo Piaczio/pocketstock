@@ -5,7 +5,7 @@
     max-width="40rem"
     persistent
   >
-    <v-card class="cont-card">
+    <v-card v-on:keyup.enter="submit()" class="cont-card">
       <v-toolbar light flat>
         <v-btn icon color="dark" @click="onClose">
           <v-icon>mdi-close</v-icon>
@@ -100,7 +100,7 @@
           <v-select
             v-model="selectT"
             :items="itemsT"
-            item-text="nombre_travesaño"
+            item-text="nombre_travesano"
             item-value="travesaño_id"
             label="Ubicación travesaño"
             required
@@ -257,14 +257,14 @@
           console.log(e.message);
         });
       axios
-        .get("api/travesaño")
+        .get("api/travesano")
         .then((response) => {
           let travesaños = response.data;
 
           travesaños.forEach((element) => {
             let datos = {
               travesaño_id: element.id,
-              nombre_travesaño: element.nombre_travesaño,
+              nombre_travesano: element.nombre_travesano,
             };
 
             if (!datos) return;

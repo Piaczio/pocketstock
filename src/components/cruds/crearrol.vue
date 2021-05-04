@@ -5,27 +5,25 @@
     max-width="20rem"
     persistent
   >
-    <v-card elevation="2">
-      <div class="cont-card">
-        <v-toolbar light flat>
-          <v-btn icon color="dark" @click="onClose">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>Crear rol</v-toolbar-title>
-        </v-toolbar>
-        <v-row justify-sm="center">
-          <v-col md="10rem">
-            <v-text-field
-              v-model="name_rol"
-              :counter="10"
-              label="Nombre rol"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-        <v-btn @click="clear" text> Limpiar </v-btn>
-      </div>
+    <v-card v-on:keyup.enter="submit()" class="cont-card" elevation="2">
+      <v-toolbar light flat>
+        <v-btn icon color="dark" @click="onClose">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
+        <v-toolbar-title>Crear rol</v-toolbar-title>
+      </v-toolbar>
+      <v-row justify-sm="center">
+        <v-col md="10rem">
+          <v-text-field
+            v-model="name_rol"
+            :counter="10"
+            label="Nombre rol"
+            required
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+      <v-btn @click="clear" text> Limpiar </v-btn>
     </v-card>
   </v-dialog>
 </template>

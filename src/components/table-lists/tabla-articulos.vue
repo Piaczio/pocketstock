@@ -110,7 +110,7 @@
                         <v-select
                           v-model="selectT"
                           :items="itemsT"
-                          item-text="nombre_travesaño"
+                          item-text="nombre_travesano"
                           item-value="travesaño_id"
                           label="Ubicación travesaño"
                           required
@@ -188,19 +188,19 @@
         { text: "Proveedor", value: "nombre_proveedor" },
         { text: "Status", value: "nombre_status" },
         { text: "Rack", value: "nombre_rack" },
-        { text: "Travesaño", value: "nombre_travesaño" },
+        { text: "Travesaño", value: "nombre_travesano" },
         { text: "Acciones", value: "actions", sortable: false },
       ],
 
       articulosArray: [],
       //variable en la que se deposita la posicion en el selector
-      selectc: null, //categoria
-      selectt: null, //tipo
-      selectp: null, //proveedor
-      selectm: null, //marca
-      selectst: null, //status
-      selectr: null, //rack
-      selectT: null, //travesaño
+      selectc: "", //categoria
+      selectt: "", //tipo
+      selectp: "", //proveedor
+      selectm: "", //marca
+      selectst: "", //status
+      selectr: "", //rack
+      selectT: "", //travesaño
       //Array en el que se deposita de los selectores.
       itemsc: [], //categoria
       itemstt: [], //tipo
@@ -215,13 +215,13 @@
         id: "",
         nombre_articulo: "",
         cantidad_articulo: 0,
-        nombre_categoria: null,
+        nombre_categoria: "",
         name_tipo: "",
         nombre_marca: "",
         nombre_proveedor: "",
         nombre_status: "",
         nombre_rack: "",
-        nombre_travesaño: "",
+        nombre_travesano: "",
       },
       defaultItem: {
         id: "",
@@ -233,7 +233,7 @@
         nombre_proveedor: "",
         nombre_status: "",
         nombre_rack: "",
-        nombre_travesaño: "",
+        nombre_travesano: "",
       },
     }),
     mounted() {
@@ -259,8 +259,8 @@
       window.Echo.channel("racks").listen("rackCreated", (e) => {
         this.itemsr = e.racks;
       });
-      window.Echo.channel("travesaños").listen("travesañoCreated", (e) => {
-        this.itemsT = e.travesaños;
+      window.Echo.channel("travesanos").listen("travesañoCreated", (e) => {
+        this.itemsT = e.travesanos;
       });
 
       axios
@@ -280,7 +280,7 @@
               nombre_status: element.nombre_status,
               //campos de ubicación
               nombre_rack: element.nombre_rack,
-              nombre_travesaño: element.nombre_travesaño,
+              nombre_travesano: element.nombre_travesano,
             };
             if (!datos) return;
             this.articulosArray.push(datos);
@@ -403,14 +403,14 @@
         });
 
       axios
-        .get("api/travesaño")
+        .get("api/travesano")
         .then((response) => {
           let travesaños = response.data;
 
           travesaños.forEach((element) => {
             let datos = {
               travesaño_id: element.id,
-              nombre_travesaño: element.nombre_travesaño,
+              nombre_travesano: element.nombre_travesano,
             };
 
             if (!datos) return;
@@ -453,10 +453,10 @@
         );
       },
       tiposync(recived) {
-        var tempid = null;
-        var tempname = null;
+        var tempid = "";
+        var tempname = "";
         tempname;
-
+        console.log("tipo nombre:", recived);
         if (this.itemstt) {
           let tipo = this.itemstt;
 
@@ -476,9 +476,10 @@
         return this.selectt;
       },
       proveedorsync(recived) {
-        var tempid = null;
-        var tempname = null;
+        var tempid = "";
+        var tempname = "";
         tempname;
+        console.log("proveedor nombre", recived);
         if (this.itemsp) {
           let proveedor = this.itemsp;
           proveedor.forEach((element) => {
@@ -497,9 +498,10 @@
         return this.selectp;
       },
       marcasync(recived) {
-        var tempid = null;
-        var tempname = null;
+        var tempid = "";
+        var tempname = "";
         tempname;
+        console.log("marcas nombre", recived);
         if (this.itemstm) {
           let marca = this.itemstm;
           marca.forEach((element) => {
@@ -518,8 +520,9 @@
         return this.selectm;
       },
       statusync(recived) {
-        var tempid = null;
-        var tempname = null;
+        var tempid = "";
+        var tempname = "";
+        console.log("status nombre", recived);
         tempname;
         if (this.itemstst) {
           let status = this.itemstst;
@@ -540,8 +543,9 @@
         return this.selectst;
       },
       racksync(recived) {
-        var tempid = null;
-        var tempname = null;
+        console.log("rack nombre", recived);
+        var tempid = "";
+        var tempname = "";
         tempname;
         if (this.itemsr) {
           let rack = this.itemsr;
@@ -561,19 +565,20 @@
         return this.selectr;
       },
       travesañosync(recived) {
-        var tempid = null;
-        var tempname = null;
+        console.log("travesaño nombre", recived);
+        var tempid = "";
+        var tempname = "";
         tempname;
         if (this.itemsT) {
           let rack = this.itemsT;
           rack.forEach((element) => {
             let datos = {
               travesaño_id: element.travesaño_id,
-              nombre_travesaño: element.nombre_travesaño,
+              nombre_travesano: element.nombre_travesano,
             };
-            if (datos.nombre_travesaño === recived) {
+            if (datos.nombre_travesano === recived) {
               tempid = datos.travesaño_id;
-              tempname = datos.nombre_travesaño;
+              tempname = datos.nombre_travesano;
 
               this.selectT = tempid;
             }
@@ -582,8 +587,8 @@
         return this.selectT;
       },
       categsync(recived) {
-        var tempid = null;
-        var tempname = null;
+        var tempid = "";
+        var tempname = "";
         tempname;
         if (this.itemsc) {
           let categoria = this.itemsc;
@@ -595,7 +600,7 @@
             if (datos.nombre_categoria === recived) {
               tempid = datos.categoria_id;
               tempname = datos.nombre_categoria;
-
+              console.log("categoria id", tempid);
               this.selectc = tempid;
             }
           });
@@ -608,15 +613,18 @@
         this.editedItem = Object.assign({}, item);
 
         //categoria
-        let categoriasync = this.editedItem.nombre_categoria;
-
-        this.categsync(categoriasync);
+        if (this.editedItem.nombre_categoria) {
+          let categoriasync = this.editedItem.nombre_categoria;
+          console.log("antes entrar sync", categoriasync);
+          this.categsync(categoriasync);
+        }
 
         //tipo
-
-        let tiposync = this.editedItem.name_tipo;
-
-        this.tiposync(tiposync);
+        if (this.editedItem.name_tipo) {
+          let tiposync = this.editedItem.name_tipo;
+          console.log("antes entrar sync", tiposync);
+          this.tiposync(tiposync);
+        }
 
         //proveedor
         let proveedorsync = this.editedItem.nombre_proveedor;
@@ -635,7 +643,7 @@
         this.racksync(racksycn);
 
         //travesaño
-        let travesañosync = this.editedItem.nombre_travesaño;
+        let travesañosync = this.editedItem.nombre_travesano;
         this.travesañosync(travesañosync);
 
         this.dialog = true;
@@ -675,25 +683,22 @@
         if (this.editedIndex > -1) {
           Object.assign(this.articulosArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
+
           let url = "api/articulo/";
           url = url + send.id;
           url = `${url}?${"nombre_articulo=" + send.nombre_articulo}&${
             "cantidad_articulo=" + send.cantidad_articulo
           }&${"categoria_id=" + this.selectc}&${"tipo_id=" + this.selectt}&${
             "marca_id=" + this.selectm
-          }&${"proveedor_id=" + this.selectp}&${"status_id=" + this.selectst}&
-                                                                            ${
-                                                                              "rack_id=" +
-                                                                              this
-                                                                                .selectr
-                                                                            }&${
-            "travesaño_id=" + this.selectT
-          }`;
-
+          }&${"proveedor_id=" + this.selectp}&${"status_id=" + this.selectst}&${
+            "rack_id=" + this.selectr
+          }&${"travesano_id=" + this.selectT}`;
+          console.log("antes de editar:", url);
           axios
             .put(url)
             .then((response) => {
               response;
+              console.log("dentro de la edicion:", response);
               store.commit("increment", 1);
             })
             .catch((error) => console.log(error));

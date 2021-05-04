@@ -5,29 +5,27 @@
     max-width="20rem"
     persistent
   >
-    <v-card elevation="2">
-      <div class="cont-card">
-        <v-toolbar light flat>
-          <v-btn icon color="dark" @click="onClose">
-            <v-icon> mdi-close </v-icon>
-          </v-btn>
-          <v-toolbar-title>Crear tipo</v-toolbar-title>
-        </v-toolbar>
-        <v-row>
-          <v-col md="10">
-            <v-text-field
-              v-model="name"
-              :counter="10"
-              label="Nombre tipo"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-card-actions>
-          <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-          <v-btn @click="clear" text> Limpiar </v-btn>
-        </v-card-actions>
-      </div>
+    <v-card v-on:keyup.enter="submit()" class="cont-card" elevation="2">
+      <v-toolbar light flat>
+        <v-btn icon color="dark" @click="onClose">
+          <v-icon> mdi-close </v-icon>
+        </v-btn>
+        <v-toolbar-title>Crear tipo</v-toolbar-title>
+      </v-toolbar>
+      <v-row>
+        <v-col md="10">
+          <v-text-field
+            v-model="name"
+            :counter="10"
+            label="Nombre tipo"
+            required
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-card-actions>
+        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+        <v-btn @click="clear" text> Limpiar </v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>

@@ -5,7 +5,7 @@
     max-width="25rem"
     persistent
   >
-    <v-card class="cont-card">
+    <v-card v-on:keyup.enter="submit()" class="cont-card">
       <v-toolbar light flat>
         <v-btn icon color="dark" @click="onClose">
           <v-icon>mdi-close</v-icon>
