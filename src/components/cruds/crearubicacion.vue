@@ -5,35 +5,33 @@
     max-width="28rem"
     persistent
   >
-    <v-card elevation="2">
-      <div class="cont-card">
-        <v-toolbar light flat>
-          <v-btn icon color="dark" @click="onClose">
-            <v-icon> mdi-close </v-icon>
-          </v-btn>
-          <v-toolbar-title>Crear ubicación</v-toolbar-title>
-        </v-toolbar>
-        <v-row>
-          <v-col sm="3" md="6">
-            <v-text-field
-              v-model="rack"
-              :counter="10"
-              label="Rack"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col sm="3" md="6">
-            <v-text-field
-              v-model="travesaño"
-              :counter="10"
-              label="Travesaño"
-              required
-            ></v-text-field>
-          </v-col>
-        </v-row>
-        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
-        <v-btn @click="clear" text> Limpiar </v-btn>
-      </div>
+    <v-card v-on:keyup.enter="submit()" class="cont-card" elevation="2">
+      <v-toolbar light flat>
+        <v-btn icon color="dark" @click="onClose">
+          <v-icon> mdi-close </v-icon>
+        </v-btn>
+        <v-toolbar-title>Crear ubicación</v-toolbar-title>
+      </v-toolbar>
+      <v-row>
+        <v-col sm="3" md="6">
+          <v-text-field
+            v-model="rack"
+            :counter="10"
+            label="Rack"
+            required
+          ></v-text-field>
+        </v-col>
+        <v-col sm="3" md="6">
+          <v-text-field
+            v-model="travesaño"
+            :counter="10"
+            label="Travesaño"
+            required
+          ></v-text-field>
+        </v-col>
+      </v-row>
+      <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+      <v-btn @click="clear" text> Limpiar </v-btn>
     </v-card>
   </v-dialog>
 </template>
@@ -58,14 +56,14 @@
         this.$emit("dialogFromChild", false);
       },
       submit() {
-        this.$emit("dialogFromChild", false);
+        //this.$emit("dialogFromChild", false);
         this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
         this.$emit("notifyproblem", false);
         let enviar_rack = {
           nombre_rack: this.rack,
         };
         let enviar_travesaño = {
-          nombre_travesaño: this.travesaño,
+          nombre_travesano: this.travesaño,
         };
 
         axios
@@ -80,7 +78,7 @@
             this.$emit("notifyproblem", true);
           });
         axios
-          .post("api/travesaño", enviar_travesaño)
+          .post("api/travesano", enviar_travesaño)
           .then((response) => {
             if (response.statusText === "Created") {
               this.$emit("notifysuccess", true);

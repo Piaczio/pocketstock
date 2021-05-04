@@ -11,6 +11,7 @@ const getDefaultState = () => {
  return {
   token: null,
   recharge: 0,
+  rol: null,
  };
 };
 
@@ -18,13 +19,15 @@ export default new Vuex.Store({
  strict: false,
  plugins: [createPersistedState()],
  state: getDefaultState(),
+
  getters: {
   isLoggedIn: state => {
    return state.token;
   },
   counter(state) { return state.recharge },
-
+  hasrol(state) { return state.rol },
  },
+
  mutations: {
   SET_TOKEN: (state, token) => {
    state.token = token;
@@ -33,6 +36,7 @@ export default new Vuex.Store({
    // mutate state
    state.recharge += payload;
   },
+  setrol(state, payload) { state.rol = payload },
 
   RESET: state => {
    Object.assign(state, getDefaultState());

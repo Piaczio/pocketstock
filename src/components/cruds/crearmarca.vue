@@ -5,7 +5,7 @@
     max-width="20rem"
     persistent
   >
-    <v-card class="cont-card" elevation="2">
+    <v-card v-on:keyup.enter="submit()" class="cont-card" elevation="2">
       <v-toolbar light flat>
         <v-btn icon color="dark" @click="onClose">
           <v-icon>mdi-close</v-icon>
@@ -23,7 +23,7 @@
         </v-col>
       </v-row>
       <v-card-actions>
-        <v-btn class="mr-4" v-on:click="submit" text> Guardar </v-btn>
+        <v-btn class="mr-4" @click="submit()" text> Guardar </v-btn>
         <v-btn @click="clear" text> Limpiar </v-btn>
       </v-card-actions>
     </v-card>
@@ -49,7 +49,7 @@
         this.$emit("dialogFromChild", false);
       },
       submit() {
-        this.$emit("dialogFromChild", false);
+        //this.$emit("dialogFromChild", false);
         this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
         this.$emit("notifyproblem", false);
         let enviar = {
@@ -60,6 +60,7 @@
           .post("api/marca", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
+              this.name = "";
               this.$emit("notifysuccess", true);
             }
           })

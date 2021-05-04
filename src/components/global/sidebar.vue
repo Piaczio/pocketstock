@@ -22,9 +22,24 @@
             </v-list-item>
             <v-divider></v-divider>
 
-            <v-list dense flat>
+            <v-list v-if="hasrol === 1" dense flat>
               <v-list-item
                 v-for="item in itemsmain"
+                :key="item.title"
+                link
+                :to="item.path"
+              >
+                <v-list-item-icon>
+                  <v-icon>{{ item.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+            <v-list v-else-if="hasrol === 2" dense flat>
+              <v-list-item
+                v-for="item in itemsemp"
                 :key="item.title"
                 link
                 :to="item.path"
@@ -82,8 +97,15 @@
     components: {},
     data: () => ({
       itemsmain: [
-        { path: "/home", title: "Home", icon: "mdi-home" },
+        //{ path: "/home", title: "Home", icon: "mdi-home" },
         { path: "/usuarios", title: "Usuarios", icon: "mdi-account-multiple" },
+        {
+          path: "/articulos",
+          title: "Artículos",
+          icon: "mdi-folder-multiple",
+        },
+      ],
+      itemsemp: [
         {
           path: "/articulos",
           title: "Artículos",
@@ -108,6 +130,11 @@
         },
       ],
     }),
+    computed: {
+      hasrol() {
+        return store.getters.hasrol;
+      },
+    },
     methods: {
       logout() {
         let commit = (store.state.token = null);

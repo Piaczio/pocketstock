@@ -30,6 +30,9 @@
       count() {
         return store.getters.counter;
       },
+      hasrol() {
+        return store.getters.hasrol;
+      },
     },
   };
 </script>

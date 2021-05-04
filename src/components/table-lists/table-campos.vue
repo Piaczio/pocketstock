@@ -204,14 +204,14 @@
           console.log(e.message);
         });
       axios
-        .get("api/travesaño")
+        .get("api/travesano")
         .then((response) => {
           let travesaños = response.data;
 
           travesaños.forEach((element) => {
             let datos = {
               travesaño_id: element.id,
-              nombre_travesaño: element.nombre_travesaño,
+              nombre_travesano: element.nombre_travesano,
             };
 
             if (!datos) return;
