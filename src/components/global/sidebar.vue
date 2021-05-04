@@ -35,10 +35,9 @@
                     v-else-if="
                       hasrol === 2 &&
                       (item.title === 'Home' ||
+                        item.path === '/home' ||
                         item.title === 'Artículos' ||
-                        item.title === 'Categorias' ||
-                        item.title === 'Marcas' ||
-                        item.title === 'Proveedores')
+                        item.path === '/articulos')
                     "
                     >{{ item.icon }}</v-icon
                   >
@@ -51,10 +50,9 @@
                     v-else-if="
                       hasrol === 2 &&
                       (item.title === 'Home' ||
+                        item.path === '/home' ||
                         item.title === 'Artículos' ||
-                        item.title === 'Categorias' ||
-                        item.title === 'Marcas' ||
-                        item.title === 'Proveedores')
+                        item.path === '/articulos')
                     "
                     >{{ item.title }}</v-list-item-title
                   >
