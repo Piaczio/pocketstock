@@ -92,7 +92,11 @@
                   store.state.token = response.data.token;
                   let token = store.state.token;
                   store.dispatch("login", { token });
-                  router.push("/home").catch(() => {});
+                  if (rol === 1) {
+                    router.push("/usuarios").catch(() => {});
+                  } else if (rol === 2) {
+                    router.push("/articulos").catch(() => {});
+                  }
                 } else if (validado == false) {
                   alert("Cuanta no existen o incorrecta");
                 }
