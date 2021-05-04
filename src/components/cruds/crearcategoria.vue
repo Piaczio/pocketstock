@@ -71,7 +71,7 @@
           .then((response) => {
             if (response.statusText === "Created") {
               this.$emit("notifysuccess", true);
-              (this.name = null), (this.descripcion = null);
+              (this.name = ""), (this.descripcion = "");
             }
           })
           .catch((e) => {

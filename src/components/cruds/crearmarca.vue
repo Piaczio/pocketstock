@@ -60,6 +60,7 @@
           .post("api/marca", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
+              this.name = "";
               this.$emit("notifysuccess", true);
             }
           })

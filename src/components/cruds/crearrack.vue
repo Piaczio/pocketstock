@@ -57,6 +57,7 @@
           .post("api/rack", enviar_rack)
           .then((response) => {
             if (response.statusText === "Created") {
+              this.rack = "";
               this.$emit("notifysuccess", true);
             }
           })

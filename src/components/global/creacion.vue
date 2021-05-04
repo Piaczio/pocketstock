@@ -61,11 +61,11 @@
             Proveedor
           </v-btn>
         </v-row>
-        <v-row>
+        <!--<v-row>
           <v-btn color="primary" text @click="dialogstatus = !dialogstatus">
             Status
           </v-btn>
-        </v-row>
+        </v-row>-->
 
         <v-row><v-subheader>Ubicación</v-subheader></v-row>
         <v-row>
@@ -125,14 +125,14 @@
       :incomingproblem="alertproblem"
       v-on:notifyproblem="syncToProblem($event)"
     />
-    <crearstatus
+    <!--<crearstatus
       :parentdialog="dialogstatus"
       v-on:dialogFromChild="syncFromStatus($event)"
       :incomingsuccess="alertsuccess"
       v-on:notifysuccess="syncToSuccess($event)"
       :incomingproblem="alertproblem"
       v-on:notifyproblem="syncToProblem($event)"
-    />
+    />-->
 
     <crearrack
       :parentdialog="dialograck"
@@ -160,7 +160,7 @@
   import creartipo from "../cruds/creartipo.vue";
   import crearproveedor from "../cruds/crearproveedor.vue";
 
-  import crearstatus from "../cruds/crearstatus.vue";
+  //import crearstatus from "../cruds/crearstatus.vue";
 
   import crearrack from "../cruds/crearrack.vue";
   import creartravesaño from "../cruds/creartravesaño.vue";
@@ -176,7 +176,7 @@
       crearmarca,
       creartipo,
       crearproveedor,
-      crearstatus,
+      //crearstatus,
       crearrack,
       creartravesaño,
     },
@@ -202,9 +202,9 @@
       syncFromProveedor(updatedDialog) {
         this.dialogproveedor = updatedDialog;
       },
-      syncFromStatus(updatedDialog) {
-        this.dialogstatus = updatedDialog;
-      },
+      /*syncFromStatus(updatedDialog) {
+            this.dialogstatus = updatedDialog;
+          },*/
       syncFromRack(updatedDialog) {
         this.dialograck = updatedDialog;
       },
@@ -218,7 +218,7 @@
       dialogmarca: false,
       dialogtipo: false,
       dialogproveedor: false,
-      dialogstatus: false,
+      //dialogstatus: false,
       dialograck: false,
       dialogtravesaño: false,
       alertsuccess: false,

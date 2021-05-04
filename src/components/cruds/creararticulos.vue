@@ -130,13 +130,13 @@
       name: "",
       cant: "",
 
-      selectc: null, //categoria
-      selectt: null, //tipo
-      selectp: null, //proveedor
-      selectm: null, //marca
-      selectst: null, //status
-      selectr: null, //rack
-      selectT: null, //travesaño
+      selectc: "", //categoria
+      selectt: "", //tipo
+      selectp: "", //proveedor
+      selectm: "", //marca
+      selectst: "", //status
+      selectr: "", //rack
+      selectT: "", //travesaño
 
       itemsc: [], //categoria
       itemstt: [], //tipo
@@ -303,13 +303,13 @@
               store.commit("increment", 1);
               (this.name = ""),
                 (this.cant = ""),
-                (this.selectc = null),
-                (this.selectp = null),
-                (this.selectt = null),
-                (this.selectst = null),
-                (this.selectr = null),
-                (this.selectT = null),
-                (this.selectm = null);
+                (this.selectc = ""),
+                (this.selectp = ""),
+                (this.selectt = ""),
+                (this.selectst = ""),
+                (this.selectr = ""),
+                (this.selectT = ""),
+                (this.selectm = "");
             }
           })
           .catch((e) => {
@@ -319,15 +319,14 @@
       },
       clear() {
         this.name = "";
-
         this.cant = "";
-        this.selectc = null;
-        this.selectp = null;
-        this.selectt = null;
-        this.selectst = null;
-        this.selectr = null;
-        this.selectT = null;
-        this.selectm = null;
+        this.selectc = "";
+        this.selectp = "";
+        this.selectt = "";
+        this.selectst = "";
+        this.selectr = "";
+        this.selectT = "";
+        this.selectm = "";
       },
     },
   };

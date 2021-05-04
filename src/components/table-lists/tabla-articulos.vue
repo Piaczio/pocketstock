@@ -148,6 +148,11 @@
             </v-dialog>
           </v-toolbar>
         </template>
+        <template v-slot:[`item.nombre_status`]="{ item }">
+          <v-chip :color="getColor(item.nombre_status)" dark>
+            {{ item.nombre_status }}
+          </v-chip>
+        </template>
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
@@ -443,7 +448,11 @@
 
     methods: {
       initialize() {},
-
+      getColor(status) {
+        if (status === "Agotado") return "red";
+        else if (status === "Disponible") return "orange";
+        else if (status === "En uso") return "blue";
+      },
       filterOnlyCapsText(value, search) {
         return (
           value != null &&

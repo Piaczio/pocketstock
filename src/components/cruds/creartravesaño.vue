@@ -58,6 +58,7 @@
           .post("api/travesano/", enviar_travesaño)
           .then((response) => {
             if (response.statusText === "Created") {
+              this.travesaño = "";
               this.$emit("notifysuccess", true);
             }
           })

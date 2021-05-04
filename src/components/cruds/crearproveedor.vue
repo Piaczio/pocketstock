@@ -60,6 +60,7 @@
           .post("api/proveedor", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
+              this.name = "";
               this.$emit("notifysuccess", true);
             }
           })
