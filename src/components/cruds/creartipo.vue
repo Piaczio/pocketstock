@@ -51,7 +51,7 @@
         this.$emit("dialogFromChild", false);
       },
       submit() {
-        this.$emit("dialogFromChild", false);
+        //this.$emit("dialogFromChild", false);
         this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
         this.$emit("notifyproblem", false);
         let enviar = {

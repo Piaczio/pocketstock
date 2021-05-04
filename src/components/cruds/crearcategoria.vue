@@ -32,7 +32,7 @@
         </v-col>
       </v-row>
       <v-card-actions>
-        <v-btn class="mr-4" @click="submit" text> Guardar </v-btn>
+        <v-btn color="green" class="mr-4" @click="submit" text> Guardar </v-btn>
         <v-btn @click="clear" text> Limpiar </v-btn>
       </v-card-actions>
     </v-card>
@@ -59,7 +59,6 @@
         this.$emit("dialogFromChild", false);
       },
       submit() {
-        this.$emit("dialogFromChild", false);
         this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
         this.$emit("notifyproblem", false);
         let enviar = {
@@ -72,6 +71,7 @@
           .then((response) => {
             if (response.statusText === "Created") {
               this.$emit("notifysuccess", true);
+              (this.name = null), (this.descripcion = null);
             }
           })
           .catch((e) => {

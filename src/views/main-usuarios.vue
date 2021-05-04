@@ -2,10 +2,10 @@
   <div class="no-scroll">
     <v-row cols="12">
       <v-col id="table-article" sm="10" md="11">
-        <tablausuarios v-if="hasrol === 1" :key="count" />
+        <tablausuarios v-show="hasrol === 1" :key="count" />
       </v-col>
       <v-col id="creation" sm="1" md="1">
-        <creacionuserlist v-if="hasrol === 1" />
+        <creacionuserlist v-show="hasrol === 1" />
       </v-col>
     </v-row>
   </div>
@@ -20,9 +20,11 @@
     components: { tablausuarios, creacionuserlist },
     computed: {
       count() {
+        /*contador que apoya en actualizar la tabla en cada cambion en la numeracion*/
         return store.getters.counter;
       },
       hasrol() {
+        /*para obtener el rol al que pertenece el usuario y dependiendo de eso podra observar el componente */
         return store.getters.hasrol;
       },
     },
