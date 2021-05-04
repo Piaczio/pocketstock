@@ -30,10 +30,34 @@
                 :to="item.path"
               >
                 <v-list-item-icon>
-                  <v-icon>{{ item.icon }}</v-icon>
+                  <v-icon v-if="hasrol === 1">{{ item.icon }}</v-icon>
+                  <v-icon
+                    v-else-if="
+                      hasrol === 2 &&
+                      (item.title === 'Home' ||
+                        item.title === 'Artículos' ||
+                        item.title === 'Categorias' ||
+                        item.title === 'Marcas' ||
+                        item.title === 'Proveedores')
+                    "
+                    >{{ item.icon }}</v-icon
+                  >
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>{{ item.title }}</v-list-item-title>
+                  <v-list-item-title v-if="hasrol === 1">{{
+                    item.title
+                  }}</v-list-item-title>
+                  <v-list-item-title
+                    v-else-if="
+                      hasrol === 2 &&
+                      (item.title === 'Home' ||
+                        item.title === 'Artículos' ||
+                        item.title === 'Categorias' ||
+                        item.title === 'Marcas' ||
+                        item.title === 'Proveedores')
+                    "
+                    >{{ item.title }}</v-list-item-title
+                  >
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -108,6 +132,11 @@
         },
       ],
     }),
+    computed: {
+      hasrol() {
+        return store.getters.hasrol;
+      },
+    },
     methods: {
       logout() {
         let commit = (store.state.token = null);

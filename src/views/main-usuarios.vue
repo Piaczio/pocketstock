@@ -2,10 +2,10 @@
   <div class="no-scroll">
     <v-row cols="12">
       <v-col id="table-article" sm="10" md="11">
-        <tablausuarios :key="count" />
+        <tablausuarios v-if="hasrol === 1" :key="count" />
       </v-col>
       <v-col id="creation" sm="1" md="1">
-        <creacionuserlist />
+        <creacionuserlist v-if="hasrol === 1" />
       </v-col>
     </v-row>
   </div>
@@ -21,6 +21,9 @@
     computed: {
       count() {
         return store.getters.counter;
+      },
+      hasrol() {
+        return store.getters.hasrol;
       },
     },
   };

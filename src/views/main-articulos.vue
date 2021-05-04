@@ -5,7 +5,7 @@
         <tablaArticulos :key="count" />
       </v-col>
       <v-col id="creation" sm="1" md="1">
-        <creacionlist />
+        <creacionlist v-if="hasrol === 1" />
       </v-col>
     </v-row>
   </div>
@@ -29,6 +29,9 @@
     computed: {
       count() {
         return store.getters.counter;
+      },
+      hasrol() {
+        return store.getters.hasrol;
       },
     },
   };

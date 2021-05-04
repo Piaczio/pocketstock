@@ -84,6 +84,9 @@
             axios
               .post("api/login", enviar)
               .then((response) => {
+                let rol = response.data.user.rol_id;
+                store.commit("setrol", rol);
+
                 let validado = response.request.withCredentials;
                 if (validado == true) {
                   store.state.token = response.data.token;
