@@ -299,6 +299,8 @@
           .post("api/articulo", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
+              this.$emit("dialogFromChild", false);
+
               this.$emit("notifysuccess", true);
               store.commit("increment", 1);
               (this.name = ""),

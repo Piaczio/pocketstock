@@ -44,8 +44,8 @@
   export default {
     email: "crearusuario",
     data: () => ({
-      email: "a@a.com", //a@a.com
-      password: "1234", //1234
+      email: "", //a@a.com//b@b.com
+      password: "", //1234
     }),
 
     validations: {
