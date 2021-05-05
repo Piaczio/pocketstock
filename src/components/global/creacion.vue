@@ -29,7 +29,11 @@
     <v-row>
       <v-col align-self="end" cols="2">
         <v-row>
-          <v-btn color="primary" text @click="dialogarticulo = !dialogarticulo">
+          <v-btn
+            color="primary"
+            text
+            @click.native="dialogarticulo = !dialogarticulo"
+          >
             Artículos
           </v-btn>
         </v-row>
@@ -86,12 +90,13 @@
     </v-row>
 
     <creararticulo
+      :key="count"
       :parentdialog="dialogarticulo"
-      v-on:dialogFromChild="syncFromArticulo($event)"
+      @dialogFromChild="syncFromArticulo($event)"
       :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
+      @notifysuccess="syncToSuccess($event)"
       :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
+      @notifyproblem="syncToProblem($event)"
     />
     <crearcategoria
       :parentdialog="dialogcategoria"
@@ -164,6 +169,7 @@
 
   import crearrack from "../cruds/crearrack.vue";
   import creartravesaño from "../cruds/creartravesaño.vue";
+  import store from "@/store";
   export default {
     name: "crearlist",
     props: {
@@ -179,6 +185,11 @@
       //crearstatus,
       crearrack,
       creartravesaño,
+    },
+    computed: {
+      count() {
+        return store.getters.counter;
+      },
     },
     methods: {
       syncToSuccess(updatedDialog) {
@@ -203,8 +214,8 @@
         this.dialogproveedor = updatedDialog;
       },
       /*syncFromStatus(updatedDialog) {
-            this.dialogstatus = updatedDialog;
-          },*/
+                      this.dialogstatus = updatedDialog;
+                    },*/
       syncFromRack(updatedDialog) {
         this.dialograck = updatedDialog;
       },

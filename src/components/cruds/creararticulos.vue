@@ -107,10 +107,10 @@
           ></v-select>
         </v-col>
       </v-row>
-
-      <v-btn color="green" class="mr-4" @click="submit()" text> Guardar </v-btn>
-
-      <v-btn color="blue darken-1" @click="clear()" text> Limpiar </v-btn>
+      <v-card-actions>
+        <v-btn color="green" class="mr-4" @click="submit" text> Guardar </v-btn>
+        <v-btn color="blue darken-1" @click="clear" text> Limpiar </v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -122,7 +122,7 @@
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
 
   export default {
-    name: "crearusuario",
+    name: "creararticulos",
     props: {
       parentdialog: { type: Boolean },
     } /*data de llegado de componente padre creacion*/,
@@ -282,6 +282,7 @@
         this.$emit("dialogFromChild", false);
       },
       submit() {
+        this.$emit("dialogFromChild", true);
         this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
         this.$emit("notifyproblem", false); //para resetear el valor de la notificion en una nueva entrada
         let enviar = {
@@ -298,11 +299,9 @@
         axios
           .post("api/articulo", enviar)
           .then((response) => {
+            this.$emit("dialogFromChild", true);
             if (response.statusText === "Created") {
-              this.$emit("dialogFromChild", false);
-
               this.$emit("notifysuccess", true);
-              store.commit("increment", 1);
               (this.name = ""),
                 (this.cant = ""),
                 (this.selectc = ""),
@@ -313,6 +312,7 @@
                 (this.selectT = ""),
                 (this.selectm = "");
             }
+            store.commit("increment", 1);
           })
           .catch((e) => {
             console.log(e.message);
@@ -320,15 +320,15 @@
           });
       },
       clear() {
-        this.name = "";
-        this.cant = "";
-        this.selectc = "";
-        this.selectp = "";
-        this.selectt = "";
-        this.selectst = "";
-        this.selectr = "";
-        this.selectT = "";
-        this.selectm = "";
+        (this.name = ""),
+          (this.cant = ""),
+          (this.selectc = ""),
+          (this.selectp = ""),
+          (this.selectt = ""),
+          (this.selectst = ""),
+          (this.selectr = ""),
+          (this.selectT = ""),
+          (this.selectm = "");
       },
     },
   };
