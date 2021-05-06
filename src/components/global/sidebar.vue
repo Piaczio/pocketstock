@@ -58,7 +58,7 @@
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title
-                  >Catalogos<v-icon> mdi-view-list</v-icon>
+                  >Catálogos<v-icon> mdi-view-list</v-icon>
                 </v-list-item-title>
               </v-list-item-content>
             </template>

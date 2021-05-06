@@ -92,7 +92,7 @@
                           :items="itemstst"
                           item-text="nombre_status"
                           item-value="status_id"
-                          label="Status"
+                          label="Estatus"
                           required
                         ></v-select>
                       </v-col>
@@ -191,7 +191,7 @@
         { text: "Tipo", value: "name_tipo" },
         { text: "Marca", value: "nombre_marca" },
         { text: "Proveedor", value: "nombre_proveedor" },
-        { text: "Status", value: "nombre_status" },
+        { text: "estatus", value: "nombre_status" },
         { text: "Rack", value: "nombre_rack" },
         { text: "Travesaño", value: "nombre_travesano" },
         { text: "Acciones", value: "actions", sortable: false },

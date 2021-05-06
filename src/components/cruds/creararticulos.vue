@@ -80,7 +80,7 @@
             :items="itemstst"
             item-text="nombre_status"
             item-value="status_id"
-            label="Status"
+            label="Estatus"
             required
           ></v-select>
         </v-col>
