@@ -2,30 +2,30 @@
   <div class="logcard">
     <div id="app">
       <v-app id="inspire">
-        <v-card class="cont-card" elevation="2">
-          <form>
-            <v-text-field
-              v-model="email"
-              label="correo"
-              :error-messages="emailErrors"
-              required
-              @input="$v.email.$touch()"
-              @blur="$v.email.$touch()"
-            ></v-text-field>
-            <v-text-field
-              v-model="password"
-              :counter="4"
-              label="contraseña"
-              :error-messages="passwordErrors"
-              required
-              @input="$v.password.$touch()"
-              @blur="$v.password.$touch()"
-            ></v-text-field>
-            <v-btn class="mr-4" v-on:click="login()" text>
-              Iniciar sesión
-            </v-btn>
-            <v-btn @click="clear" text> limpiar </v-btn>
-          </form>
+        <v-card v-on:keyup.enter="login()" class="cont-card" elevation="2">
+          <v-card-title class="fade-in-title" style="font-size: 3rem"
+            ><code class="font-weight-light">Pocket</code
+            ><strong>stock</strong></v-card-title
+          >
+          <v-text-field
+            v-model="email"
+            label="correo"
+            :error-messages="emailErrors"
+            required
+            @input="$v.email.$touch()"
+            @blur="$v.email.$touch()"
+          ></v-text-field>
+          <v-text-field
+            v-model="password"
+            :counter="8"
+            label="contraseña"
+            :error-messages="passwordErrors"
+            required
+            @input="$v.password.$touch()"
+            @blur="$v.password.$touch()"
+          ></v-text-field>
+          <v-btn class="mr-4" v-on:click="login()" text> Iniciar sesión </v-btn>
+          <v-btn @click="clear" text> limpiar </v-btn>
         </v-card>
       </v-app>
     </div>
@@ -57,15 +57,15 @@
         const errors = [];
         if (!this.$v.password.$dirty) return errors;
         !this.$v.password.minLength &&
-          errors.push("Password must be at 4 characters long");
-        !this.$v.password.required && errors.push("Password is required.");
+          errors.push("La contraseña debe ser 4 caracteres de largo, minimo.");
+        !this.$v.password.required && errors.push("Contaseña requerida.");
         return errors;
       },
       emailErrors() {
         const errors = [];
         if (!this.$v.email.$dirty) return errors;
-        !this.$v.email.email && errors.push("Must be valid e-mail");
-        !this.$v.email.required && errors.push("E-mail is required");
+        !this.$v.email.email && errors.push("Debe ingresar un correo valido");
+        !this.$v.email.required && errors.push("Ingresar un correo es requerido");
         return errors;
       },
     },
@@ -132,5 +132,57 @@
     padding-right: 2%;
     padding-bottom: 2%;
     width: 24em;
+  }
+
+  .fade-in-title {
+    animation: fadeIn 5s;
+    -webkit-animation: fadeIn 5s;
+    -moz-animation: fadeIn 5s;
+    -o-animation: fadeIn 5s;
+    -ms-animation: fadeIn 5s;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-moz-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-webkit-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-o-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @-ms-keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 </style>
