@@ -31,6 +31,8 @@
       <v-col align-self="end" cols="2">
         <v-row>
           <v-btn
+            v-shortkey="['ctrl', 'shift', 'p']"
+            @shortkey="dialogproveedor = !dialogproveedor"
             color="primary"
             text
             @click="dialogproveedor = !dialogproveedor"

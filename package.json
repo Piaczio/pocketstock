@@ -17,6 +17,7 @@
     "vue-axios": "^3.2.4",
     "vue-extend-layout": "^2.0.6",
     "vue-router": "^3.0.0",
+    "vue-shortkey": "^3.1.7",
     "vue-types": "^2.0.3",
     "vuelidate": "^0.7.6",
     "vuetify": "^2.4.4",

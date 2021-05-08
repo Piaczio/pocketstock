@@ -29,7 +29,13 @@
     <v-row>
       <v-col align-self="end" cols="2">
         <v-row>
-          <v-btn color="primary" text @click="dialogusuarios = !dialogusuarios">
+          <v-btn
+            v-shortkey="['ctrl', 'shift', 'u']"
+            @shortkey="dialogusuarios = !dialogusuarios"
+            color="primary"
+            text
+            @click="dialogusuarios = !dialogusuarios"
+          >
             Usuarios
           </v-btn>
         </v-row>

@@ -3,6 +3,7 @@ import App from './App.vue';
 import vuetify from './plugins/vuetify';
 import router from './router';
 import Axios from 'axios';
+import shortkey from "vue-shortkey";
 import VueAxios from "vue-axios";
 import Vuelidate from 'vuelidate';
 import Vuex from 'vuex';
@@ -13,6 +14,7 @@ Vue.use(Vuelidate)
 Vue.use(VueAxios, Axios)
 Vue.use(Vuex)
 Vue.use(store)
+Vue.use(shortkey)
 Vue.config.productionTip = false
 
 window.Axios = require('axios')
@@ -41,7 +43,7 @@ window.Echo = new Echo({
 new Vue({
   vuetify,
   router,
-  Vuex,
+  Vuex, Echo, shortkey,
   VueAxios, Axios, Vuelidate, store,
   render: h => h(App),
 

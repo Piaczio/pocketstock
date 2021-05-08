@@ -30,6 +30,8 @@
       <v-col align-self="end" cols="2">
         <v-row>
           <v-btn
+            v-shortkey="['ctrl', 'shift', 'a']"
+            @shortkey="dialogarticulo = !dialogarticulo"
             color="primary"
             text
             @click.native="dialogarticulo = !dialogarticulo"
@@ -39,6 +41,8 @@
         </v-row>
         <v-row>
           <v-btn
+            v-shortkey="['ctrl', 'shift', 'c']"
+            @shortkey="dialogcategoria = !dialogcategoria"
             color="primary"
             text
             @click="dialogcategoria = !dialogcategoria"
@@ -47,17 +51,31 @@
           </v-btn>
         </v-row>
         <v-row>
-          <v-btn color="primary" text @click="dialogmarca = !dialogmarca">
+          <v-btn
+            v-shortkey="['ctrl', 'shift', 'm']"
+            @shortkey="dialogmarca = !dialogmarca"
+            color="primary"
+            text
+            @click="dialogmarca = !dialogmarca"
+          >
             Marca
           </v-btn>
         </v-row>
         <v-row>
-          <v-btn color="primary" text @click="dialogtipo = !dialogtipo">
+          <v-btn
+            v-shortkey="['ctrl', 'shift', 't']"
+            @shortkey="dialogtipo = !dialogtipo"
+            color="primary"
+            text
+            @click="dialogtipo = !dialogtipo"
+          >
             Tipo
           </v-btn>
         </v-row>
         <v-row>
           <v-btn
+            v-shortkey="['ctrl', 'shift', 'p']"
+            @shortkey="dialogproveedor = !dialogproveedor"
             color="primary"
             text
             @click="dialogproveedor = !dialogproveedor"
@@ -73,12 +91,20 @@
 
         <v-row><v-subheader>Ubicación</v-subheader></v-row>
         <v-row>
-          <v-btn color="primary" text @click="dialograck = !dialograck">
+          <v-btn
+            v-shortkey="['ctrl', 'shift', 'r']"
+            @shortkey="dialograck = !dialograck"
+            color="primary"
+            text
+            @click="dialograck = !dialograck"
+          >
             Rack
           </v-btn>
         </v-row>
         <v-row>
           <v-btn
+            v-shortkey="['ctrl', 'shift', 'e']"
+            @shortkey="dialogtravesaño = !dialogtravesaño"
             color="primary"
             text
             @click="dialogtravesaño = !dialogtravesaño"
@@ -170,6 +196,7 @@
   import crearrack from "../cruds/crearrack.vue";
   import creartravesaño from "../cruds/creartravesaño.vue";
   import store from "@/store";
+
   export default {
     name: "crearlist",
     props: {
@@ -214,8 +241,8 @@
         this.dialogproveedor = updatedDialog;
       },
       /*syncFromStatus(updatedDialog) {
-                      this.dialogstatus = updatedDialog;
-                    },*/
+                                              this.dialogstatus = updatedDialog;
+                                            },*/
       syncFromRack(updatedDialog) {
         this.dialograck = updatedDialog;
       },

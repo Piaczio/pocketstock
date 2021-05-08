@@ -30,6 +30,8 @@
       <v-col align-self="end" cols="2">
         <v-row>
           <v-btn
+            v-shortkey="['ctrl', 'shift', 'c']"
+            @shortkey="dialogcategoria = !dialogcategoria"
             color="primary"
             text
             @click="dialogcategoria = !dialogcategoria"

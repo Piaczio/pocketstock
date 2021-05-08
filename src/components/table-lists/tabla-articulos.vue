@@ -2,11 +2,8 @@
   <div class="tabla" id="app">
     <v-row>
       <v-col cols="12" sm="4" md="5">
-        <v-text-field
-          v-model="search"
-          label="Buscar artículo"
-          class="mx-4"
-        ></v-text-field>
+        <v-text-field label="Buscar artículo" class="mx-4" v-model="search" />
+        ,
       </v-col>
     </v-row>
 
@@ -170,6 +167,7 @@
 <script>
   import axios from "axios";
   import store from "@/store";
+
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -447,6 +445,9 @@
     },
 
     methods: {
+      onFocus() {
+        this.search = "";
+      },
       initialize() {},
       getColor(status) {
         if (status === "Agotado") return "red";
