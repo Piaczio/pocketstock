@@ -3,8 +3,10 @@
     <v-row>
       <v-col cols="12" sm="6" md="4">
         <v-text-field
+          solo-inverted
           v-model="search"
           label="Buscar usuario"
+          placeholder="Buscar usuario"
           class="mx-4"
         ></v-text-field>
       </v-col>
@@ -49,11 +51,32 @@
                         <v-select
                           v-model="selectrol"
                           :items="itemsrol"
-                          v-on="categ()"
+                          v-on="usersync()"
                           item-text="name_rol"
                           item-value="rol_id"
                           label="Rol"
                         ></v-select>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12" sm="6" md="4">
+                        <v-text-field
+                          v-model="editedItem.password"
+                          hint="Minimo 8 caracteres"
+                          :counter="8"
+                          :rules="[rules.required, rules.min]"
+                          type="password"
+                          label="Contraseña"
+                          loading
+                        >
+                          <template v-slot:progress>
+                            <v-progress-linear
+                              :value="progress"
+                              :color="color"
+                              absolute
+                              height="7"
+                            ></v-progress-linear> </template
+                        ></v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -89,6 +112,11 @@
             </v-dialog>
           </v-toolbar>
         </template>
+        <template v-slot:[`item.name_rol`]="{ item }">
+          <v-chip :color="getColor(item.name_rol)" dark>
+            {{ item.name_rol }}
+          </v-chip>
+        </template>
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
@@ -114,7 +142,12 @@
       dialog: false,
       dialogDelete: false,
       search: "",
+      password: "",
 
+      rules: {
+        required: (value) => !!value || "Required.",
+        min: (v) => v.length >= 8 || "Necesitas 8 caracteres minimo",
+      },
       headers: [
         {
           text: "Usuarios",
@@ -140,15 +173,18 @@
         id: "",
         name: "",
         email: "",
+        password: "",
         name_rol: "",
       },
       defaultItem: {
         id: "",
         name: "",
         email: "",
+        password: "",
         name_rol: "",
       },
     }),
+
     mounted() {
       window.Echo.channel("users").listen("userCreated", (e) => {
         this.usersArray = e.users;
@@ -199,6 +235,12 @@
       formTitle() {
         return this.editedIndex === -1 ? "New Item" : "Editar usuario";
       },
+      progress() {
+        return Math.min(100, this.editedItem.password.length * 13);
+      },
+      color() {
+        return ["error", "warning", "success"][Math.floor(this.progress / 40)];
+      },
     },
 
     watch: {
@@ -216,6 +258,10 @@
 
     methods: {
       initialize() {},
+      getColor(status) {
+        if (status === "Adminstrador") return "cyan darken-1";
+        else if (status === "Empleado") return "cyan lighten-3";
+      },
       filterOnlyCapsText(value, search) {
         return (
           value != null &&
@@ -224,7 +270,7 @@
           value.toString().toLocaleUpperCase().indexOf(search) !== -1
         );
       },
-      categ(recived) {
+      usersync(recived) {
         var tempid = null;
         var tempname = null;
         tempname;
@@ -253,7 +299,7 @@
 
         if (this.editedItem.name_rol) {
           //categoria
-          this.categ(this.editedItem.name_rol);
+          this.usersync(this.editedItem.name_rol);
         }
 
         this.dialog = true;
@@ -296,8 +342,8 @@
 
           url = url + send.id;
           url = `${url}?${"name=" + send.name}&${"email=" + send.email}&${
-            "rol_id=" + this.selectrol
-          }`;
+            "password=" + send.password
+          }&${"rol_id=" + this.selectrol}`;
 
           axios
             .put(url)

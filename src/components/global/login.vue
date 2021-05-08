@@ -16,14 +16,28 @@
             @blur="$v.email.$touch()"
           ></v-text-field>
           <v-text-field
+            :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
             v-model="password"
+            :type="show3 ? 'text' : 'password'"
+            class="input-group--focused"
             :counter="8"
             label="contraseña"
             :error-messages="passwordErrors"
             required
+            @click:append="show3 = !show3"
             @input="$v.password.$touch()"
             @blur="$v.password.$touch()"
-          ></v-text-field>
+            loading
+          >
+            <template v-slot:progress>
+              <v-progress-linear
+                :value="progress"
+                :color="color"
+                absolute
+                height="7"
+              ></v-progress-linear>
+            </template>
+          </v-text-field>
           <v-btn class="mr-4" v-on:click="login()" text> Iniciar sesión </v-btn>
           <v-btn @click="clear" text> limpiar </v-btn>
         </v-card>
@@ -46,11 +60,12 @@
     data: () => ({
       email: "", //a@a.com//b@b.com
       password: "", //1234
+      show3: false,
     }),
 
     validations: {
       email: { required, email },
-      password: { required, minLength: minLength(4) },
+      password: { required, minLength: minLength(8) },
     },
     computed: {
       passwordErrors() {
@@ -67,6 +82,12 @@
         !this.$v.email.email && errors.push("Debe ingresar un correo valido");
         !this.$v.email.required && errors.push("Ingresar un correo es requerido");
         return errors;
+      },
+      progress() {
+        return Math.min(100, this.password.length * 13);
+      },
+      color() {
+        return ["error", "warning", "success"][Math.floor(this.progress / 40)];
       },
     },
 

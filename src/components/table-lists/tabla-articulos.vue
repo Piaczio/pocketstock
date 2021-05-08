@@ -2,7 +2,12 @@
   <div class="tabla" id="app">
     <v-row>
       <v-col cols="12" sm="4" md="5">
-        <v-text-field label="Buscar artículo" class="mx-4" v-model="search" />
+        <v-text-field
+          solo-inverted
+          label="Buscar artículo"
+          class="mx-4"
+          v-model="search"
+        />
         ,
       </v-col>
     </v-row>
@@ -450,9 +455,10 @@
       },
       initialize() {},
       getColor(status) {
-        if (status === "Agotado") return "red";
-        else if (status === "Disponible") return "orange";
-        else if (status === "En uso") return "blue";
+        if (status === "Agotado") return "red lighten-2";
+        else if (status === "Disponible") return "orange lighten-2";
+        else if (status === "En uso") return "blue lighten-2";
+        else return "withe";
       },
       filterOnlyCapsText(value, search) {
         return (
