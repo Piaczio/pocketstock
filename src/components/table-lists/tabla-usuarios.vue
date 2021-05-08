@@ -74,7 +74,7 @@
                               :value="progress"
                               :color="color"
                               absolute
-                              height="7"
+                              height="2"
                             ></v-progress-linear> </template
                         ></v-text-field>
                       </v-col>

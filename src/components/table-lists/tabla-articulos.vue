@@ -5,6 +5,7 @@
         <v-text-field
           solo-inverted
           label="Buscar artículo"
+          placeholder="Buscar artículo"
           class="mx-4"
           v-model="search"
         />
