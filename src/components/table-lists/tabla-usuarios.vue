@@ -59,7 +59,7 @@
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col cols="12" sm="6" md="4">
+                      <v-col cols="12" sm="4" md="6">
                         <v-text-field
                           v-model="editedItem.password"
                           hint="Minimo 8 caracteres"
@@ -145,7 +145,6 @@
       password: "",
 
       rules: {
-        required: (value) => !!value || "Required.",
         min: (v) => v.length >= 8 || "Necesitas 8 caracteres minimo",
       },
       headers: [
