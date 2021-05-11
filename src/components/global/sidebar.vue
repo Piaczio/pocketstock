@@ -5,6 +5,12 @@
         <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
 
         <v-spacer></v-spacer>
+
+        <div class="pa-2">
+          <v-btn class="mr-6" v-on:click="logout()" outlined>
+            Cerrar sesión<v-icon> mdi-logout</v-icon>
+          </v-btn>
+        </div>
       </v-toolbar>
       <v-navigation-drawer permanent app>
         <v-list>
@@ -79,13 +85,13 @@
           </v-list-group>
         </v-list>
         <v-divider></v-divider>
-        <template v-slot:append>
+        <!--<template v-slot:append>
           <div class="pa-2">
             <v-btn class="mr-6" v-on:click="logout()" text>
               Cerrar sesión<v-icon> mdi-logout</v-icon>
             </v-btn>
           </div>
-        </template>
+        </template>-->
       </v-navigation-drawer>
     </div>
   </div>

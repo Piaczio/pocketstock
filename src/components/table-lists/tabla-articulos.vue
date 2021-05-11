@@ -3,17 +3,22 @@
     <v-row>
       <v-col cols="12" sm="4" md="5">
         <v-text-field
-          solo-inverted
           label="Buscar artículo"
-          placeholder="Buscar artículo"
+          placeholder="Nombre, cantidad, categoria, tipo ...."
           class="mx-4"
           v-model="search"
+          id="onsearch"
         />
-        ,
       </v-col>
     </v-row>
 
     <v-app id="inspire">
+      <v-progress-linear
+        height="6"
+        indeterminate
+        color="cyan"
+        :active="cargando"
+      ></v-progress-linear>
       <v-data-table
         id="tabla"
         :headers="headers"
@@ -182,10 +187,11 @@
       search: "",
       dialog: false,
       dialogDelete: false,
+      cargando: true,
 
       headers: [
         {
-          text: "Artículo",
+          text: "Nombre",
           align: "start",
           sortable: false,
           value: "nombre_articulo",
@@ -246,6 +252,7 @@
       },
     }),
     mounted() {
+      this.onFocus();
       window.Echo.channel("articulos").listen("articuloCreated", (e) => {
         this.articulosArray = e.articulos;
       });
@@ -294,6 +301,7 @@
             if (!datos) return;
             this.articulosArray.push(datos);
           });
+          this.cargando = false;
         })
         .catch((error) => console.log(error));
 
@@ -446,15 +454,18 @@
       },
     },
 
-    created() {
-      this.initialize();
-    },
+    created() {},
 
     methods: {
       onFocus() {
-        this.search = "";
+        let stext = document.getElementById("onsearch");
+        stext;
+        stext = addEventListener("keydown", (e) => {
+          if (e.shiftKey) {
+            document.getElementById("onsearch").focus();
+          }
+        });
       },
-      initialize() {},
       getColor(status) {
         if (status === "Agotado") return "red lighten-2";
         else if (status === "Disponible") return "orange lighten-2";

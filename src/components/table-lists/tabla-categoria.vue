@@ -6,10 +6,17 @@
           v-model="search"
           label="Buscar categoria"
           class="mx-4"
+          id="onsearch"
         ></v-text-field>
       </v-col>
     </v-row>
     <v-app id="inspire">
+      <v-progress-linear
+        height="6"
+        indeterminate
+        color="cyan"
+        :active="cargando"
+      ></v-progress-linear>
       <v-data-table
         id="tabla"
         :headers="headers"
@@ -98,7 +105,7 @@
       dialog: false,
       dialogDelete: false,
       search: "",
-
+      cargando: true,
       headers: [
         {
           text: "Categorias",
@@ -128,6 +135,7 @@
       },
     }),
     mounted() {
+      this.onFocus();
       window.Echo.channel("categorias").listen("categoriaCreated", (e) => {
         this.categoriaArray = e.categorias;
       });
@@ -144,6 +152,7 @@
             if (!datos) return;
             this.categoriaArray.push(datos);
           });
+          this.cargando = false;
         })
         .catch((error) => console.log(error));
     },
@@ -163,12 +172,18 @@
       },
     },
 
-    created() {
-      this.initialize();
-    },
+    created() {},
 
     methods: {
-      initialize() {},
+      onFocus() {
+        let stext = document.getElementById("onsearch");
+        stext;
+        stext = addEventListener("keydown", (e) => {
+          if (e.shiftKey) {
+            document.getElementById("onsearch").focus();
+          }
+        });
+      },
       filterOnlyCapsText(value, search) {
         return (
           value != null &&

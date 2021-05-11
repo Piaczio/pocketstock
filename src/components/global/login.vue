@@ -72,7 +72,7 @@
         const errors = [];
         if (!this.$v.password.$dirty) return errors;
         !this.$v.password.minLength &&
-          errors.push("La contraseña debe ser 4 caracteres de largo, minimo.");
+          errors.push("La contraseña debe ser 8 caracteres de largo, minimo.");
         !this.$v.password.required && errors.push("Contaseña requerida.");
         return errors;
       },
