@@ -1,4 +1,4 @@
-<template>
+<template >
   <!--
   En esta tarjeta se encuentra el listado de componentes para crear todos los elementos
   dentro del sistema.
@@ -241,8 +241,8 @@
         this.dialogproveedor = updatedDialog;
       },
       /*syncFromStatus(updatedDialog) {
-                                                this.dialogstatus = updatedDialog;
-                                              },*/
+                                                        this.dialogstatus = updatedDialog;
+                                                      },*/
       syncFromRack(updatedDialog) {
         this.dialograck = updatedDialog;
       },

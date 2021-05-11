@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <div id="nav">
-      <v-toolbar dense flat>
-        <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
+      <v-app-bar dense flat fixed>
+        <v-toolbar dense flat>
+          <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
 
-        <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
 
-        <div class="pa-2">
-          <v-btn class="mr-6" v-on:click="logout()" outlined>
-            Cerrar sesión<v-icon> mdi-logout</v-icon>
-          </v-btn>
-        </div>
-      </v-toolbar>
+          <div class="pa-2">
+            <v-btn class="mr-6" v-on:click="logout()" outlined>
+              Cerrar sesión<v-icon> mdi-logout</v-icon>
+            </v-btn>
+          </div>
+        </v-toolbar>
+      </v-app-bar>
       <v-navigation-drawer permanent app>
         <v-list>
           <v-list-item-group color="primary">
