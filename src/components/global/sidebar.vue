@@ -1,35 +1,27 @@
 <template>
   <div id="app">
     <div id="nav">
-      <v-app-bar dense flat fixed>
-        <v-toolbar dense flat>
-          <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
+      <v-app-bar outlined flat fixed>
+        <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
 
-          <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
 
-          <div class="pa-2">
-            <v-btn class="mr-6" v-on:click="logout()" outlined>
-              Cerrar sesión<v-icon> mdi-logout</v-icon>
-            </v-btn>
-          </div>
-        </v-toolbar>
+        <div class="pa-2">
+          <v-btn class="mr-6" v-on:click="logout()" text outlined>
+            Cerrar sesión<v-icon> mdi-logout</v-icon>
+          </v-btn>
+        </div>
       </v-app-bar>
       <v-navigation-drawer permanent app>
         <v-list>
-          <v-list-item-group color="primary">
-            <v-list-item>
-              <v-list-item-content>
-                <v-list-item-title
-                  style="font-size: 30px"
-                  class="text-uppercase grey--text title"
-                >
-                  <code class="font-weight-light">Pocket</code
-                  ><strong>stock</strong>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+          <v-list-item-title
+            style="font-size: 29px"
+            class="text-uppercase grey--text title"
+          >
+            <code class="font-weight-light">Pocket</code><strong>stock</strong>
             <v-divider></v-divider>
-
+          </v-list-item-title>
+          <v-list-item-group color="primary">
             <v-list v-if="hasrol === 1" dense flat>
               <v-list-item
                 v-for="item in itemsmain"
