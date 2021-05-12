@@ -36,6 +36,11 @@
                 :key="item.title"
                 link
                 :to="item.path"
+                v-shortkey="{
+                  usuarios: ['ctrl', 'u'],
+                  articulos: ['ctrl', 'a'],
+                }"
+                @shortkey="paths"
               >
                 <v-list-item-icon>
                   <v-icon>{{ item.icon }}</v-icon>
@@ -51,6 +56,10 @@
                 :key="item.title"
                 link
                 :to="item.path"
+                v-shortkey="{
+                  articulos: ['ctrl', 'a'],
+                }"
+                @shortkey="paths"
               >
                 <v-list-item-icon>
                   <v-icon>{{ item.icon }}</v-icon>
@@ -77,6 +86,12 @@
               dense
               flat
               :to="item.path"
+              v-shortkey="{
+                categorias: ['ctrl', 'c'],
+                marcas: ['ctrl', 'm'],
+                proveedores: ['ctrl', 'p'],
+              }"
+              @shortkey="paths"
             >
               <v-list-item-title>{{ item.title }}</v-list-item-title>
 
@@ -100,6 +115,7 @@
 </template>
 <script>
   import store from "@/store.js";
+  import router from "@/router";
   export default {
     name: "sidebar",
     components: {},
@@ -144,6 +160,27 @@
       },
     },
     methods: {
+      paths(event) {
+        switch (event.srcKey) {
+          case "usuarios":
+            router.push("/usuarios").catch(() => {});
+            break;
+          case "articulos":
+            router.push("/articulos").catch(() => {});
+            break;
+          case "categorias":
+            router.push("/categorias").catch(() => {});
+            break;
+          case "marcas":
+            router.push("/marcas").catch(() => {});
+            break;
+          case "proveedores":
+            router.push("/proveedores").catch(() => {});
+            break;
+          default:
+            break;
+        }
+      },
       logout() {
         let commit = (store.state.token = null);
 
