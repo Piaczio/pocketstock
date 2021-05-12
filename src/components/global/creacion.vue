@@ -1,4 +1,4 @@
-<template>
+<template >
   <!--
   En esta tarjeta se encuentra el listado de componentes para crear todos los elementos
   dentro del sistema.
@@ -29,37 +29,94 @@
     <v-row>
       <v-col align-self="end" cols="2">
         <v-row>
-          <v-btn color="primary" text @click="dialogarticulo = !dialogarticulo">
-            Artículos
-          </v-btn>
+          <v-tooltip open-delay="500" left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-shortkey="['ctrl', 'shift', 'a']"
+                @shortkey="dialogarticulo = !dialogarticulo"
+                color="primary"
+                text
+                @click.native="dialogarticulo = !dialogarticulo"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Artículos
+              </v-btn>
+            </template>
+            <code>abrir y cerrar:ctrl+shift+a</code>
+          </v-tooltip>
         </v-row>
         <v-row>
-          <v-btn
-            color="primary"
-            text
-            @click="dialogcategoria = !dialogcategoria"
-          >
-            Categoría
-          </v-btn>
+          <v-tooltip open-delay="500" left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-shortkey="['ctrl', 'shift', 'c']"
+                @shortkey="dialogcategoria = !dialogcategoria"
+                color="primary"
+                text
+                @click="dialogcategoria = !dialogcategoria"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Categoría
+              </v-btn>
+            </template>
+            <code>abrir y cerrar:ctrl+shift+c</code>
+          </v-tooltip>
         </v-row>
         <v-row>
-          <v-btn color="primary" text @click="dialogmarca = !dialogmarca">
-            Marca
-          </v-btn>
+          <v-tooltip open-delay="500" left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-shortkey="['ctrl', 'shift', 'm']"
+                @shortkey="dialogmarca = !dialogmarca"
+                color="primary"
+                text
+                @click="dialogmarca = !dialogmarca"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Marca
+              </v-btn>
+            </template>
+            <code>abrir y cerrar:ctrl+shift+m</code>
+          </v-tooltip>
         </v-row>
         <v-row>
-          <v-btn color="primary" text @click="dialogtipo = !dialogtipo">
-            Tipo
-          </v-btn>
+          <v-tooltip open-delay="500" left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-shortkey="['ctrl', 'shift', 't']"
+                @shortkey="dialogtipo = !dialogtipo"
+                color="primary"
+                text
+                @click="dialogtipo = !dialogtipo"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Tipo
+              </v-btn>
+            </template>
+            <code>abrir y cerrar:ctrl+shift+t</code>
+          </v-tooltip>
         </v-row>
         <v-row>
-          <v-btn
-            color="primary"
-            text
-            @click="dialogproveedor = !dialogproveedor"
-          >
-            Proveedor
-          </v-btn>
+          <v-tooltip open-delay="500" left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-shortkey="['ctrl', 'shift', 'p']"
+                @shortkey="dialogproveedor = !dialogproveedor"
+                color="primary"
+                text
+                @click="dialogproveedor = !dialogproveedor"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Proveedor
+              </v-btn>
+            </template>
+            <code>abrir y cerrar:ctrl+shift+p</code>
+          </v-tooltip>
         </v-row>
         <!--<v-row>
           <v-btn color="primary" text @click="dialogstatus = !dialogstatus">
@@ -69,29 +126,52 @@
 
         <v-row><v-subheader>Ubicación</v-subheader></v-row>
         <v-row>
-          <v-btn color="primary" text @click="dialograck = !dialograck">
-            Rack
-          </v-btn>
+          <v-tooltip open-delay="500" left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-shortkey="['ctrl', 'shift', 'r']"
+                @shortkey="dialograck = !dialograck"
+                color="primary"
+                text
+                @click="dialograck = !dialograck"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Rack
+              </v-btn>
+            </template>
+            <code>abrir y cerrar:ctrl+shift+r</code>
+          </v-tooltip>
         </v-row>
         <v-row>
-          <v-btn
-            color="primary"
-            text
-            @click="dialogtravesaño = !dialogtravesaño"
-          >
-            Travesaño
-          </v-btn>
+          <v-tooltip open-delay="500" left>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                v-shortkey="['ctrl', 'shift', 'e']"
+                @shortkey="dialogtravesaño = !dialogtravesaño"
+                color="primary"
+                text
+                @click="dialogtravesaño = !dialogtravesaño"
+                v-bind="attrs"
+                v-on="on"
+              >
+                Travesaño
+              </v-btn>
+            </template>
+            <code>abrir y cerrar:ctrl+shift+e</code>
+          </v-tooltip>
         </v-row>
       </v-col>
     </v-row>
 
     <creararticulo
+      :key="count"
       :parentdialog="dialogarticulo"
-      v-on:dialogFromChild="syncFromArticulo($event)"
+      @dialogFromChild="syncFromArticulo($event)"
       :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
+      @notifysuccess="syncToSuccess($event)"
       :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
+      @notifyproblem="syncToProblem($event)"
     />
     <crearcategoria
       :parentdialog="dialogcategoria"
@@ -164,6 +244,8 @@
 
   import crearrack from "../cruds/crearrack.vue";
   import creartravesaño from "../cruds/creartravesaño.vue";
+  import store from "@/store";
+
   export default {
     name: "crearlist",
     props: {
@@ -179,6 +261,11 @@
       //crearstatus,
       crearrack,
       creartravesaño,
+    },
+    computed: {
+      count() {
+        return store.getters.counter;
+      },
     },
     methods: {
       syncToSuccess(updatedDialog) {
@@ -203,8 +290,8 @@
         this.dialogproveedor = updatedDialog;
       },
       /*syncFromStatus(updatedDialog) {
-            this.dialogstatus = updatedDialog;
-          },*/
+                                                                                                            this.dialogstatus = updatedDialog;
+                                                                                                          },*/
       syncFromRack(updatedDialog) {
         this.dialograck = updatedDialog;
       },

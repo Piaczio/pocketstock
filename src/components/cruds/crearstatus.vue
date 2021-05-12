@@ -10,14 +10,14 @@
         <v-btn icon color="dark" @click="onClose">
           <v-icon>mdi-close</v-icon>
         </v-btn>
-        <v-toolbar-title>Crear status</v-toolbar-title>
+        <v-toolbar-title>Crear estatus</v-toolbar-title>
       </v-toolbar>
       <v-row justify-sm="center">
         <v-col md="10rem">
           <v-text-field
             v-model="name"
             :counter="10"
-            label="Nombre status"
+            label="Nombre estatus"
             required
           ></v-text-field>
         </v-col>

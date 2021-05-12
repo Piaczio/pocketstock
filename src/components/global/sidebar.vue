@@ -1,11 +1,19 @@
 <template>
   <div id="app">
     <div id="nav">
-      <v-toolbar dense flat>
-        <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
+      <v-app-bar dense flat fixed>
+        <v-toolbar dense flat>
+          <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
 
-        <v-spacer></v-spacer>
-      </v-toolbar>
+          <v-spacer></v-spacer>
+
+          <div class="pa-2">
+            <v-btn class="mr-6" v-on:click="logout()" outlined>
+              Cerrar sesión<v-icon> mdi-logout</v-icon>
+            </v-btn>
+          </div>
+        </v-toolbar>
+      </v-app-bar>
       <v-navigation-drawer permanent app>
         <v-list>
           <v-list-item-group color="primary">
@@ -28,6 +36,11 @@
                 :key="item.title"
                 link
                 :to="item.path"
+                v-shortkey="{
+                  usuarios: ['ctrl', 'u'],
+                  articulos: ['ctrl', 'a'],
+                }"
+                @shortkey="paths"
               >
                 <v-list-item-icon>
                   <v-icon>{{ item.icon }}</v-icon>
@@ -43,6 +56,10 @@
                 :key="item.title"
                 link
                 :to="item.path"
+                v-shortkey="{
+                  articulos: ['ctrl', 'a'],
+                }"
+                @shortkey="paths"
               >
                 <v-list-item-icon>
                   <v-icon>{{ item.icon }}</v-icon>
@@ -58,7 +75,7 @@
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title
-                  >Catalogos<v-icon> mdi-view-list</v-icon>
+                  >Catálogos<v-icon> mdi-view-list</v-icon>
                 </v-list-item-title>
               </v-list-item-content>
             </template>
@@ -69,6 +86,12 @@
               dense
               flat
               :to="item.path"
+              v-shortkey="{
+                categorias: ['ctrl', 'c'],
+                marcas: ['ctrl', 'm'],
+                proveedores: ['ctrl', 'p'],
+              }"
+              @shortkey="paths"
             >
               <v-list-item-title>{{ item.title }}</v-list-item-title>
 
@@ -79,19 +102,20 @@
           </v-list-group>
         </v-list>
         <v-divider></v-divider>
-        <template v-slot:append>
+        <!--<template v-slot:append>
           <div class="pa-2">
             <v-btn class="mr-6" v-on:click="logout()" text>
               Cerrar sesión<v-icon> mdi-logout</v-icon>
             </v-btn>
           </div>
-        </template>
+        </template>-->
       </v-navigation-drawer>
     </div>
   </div>
 </template>
 <script>
   import store from "@/store.js";
+  import router from "@/router";
   export default {
     name: "sidebar",
     components: {},
@@ -136,6 +160,27 @@
       },
     },
     methods: {
+      paths(event) {
+        switch (event.srcKey) {
+          case "usuarios":
+            router.push("/usuarios").catch(() => {});
+            break;
+          case "articulos":
+            router.push("/articulos").catch(() => {});
+            break;
+          case "categorias":
+            router.push("/categorias").catch(() => {});
+            break;
+          case "marcas":
+            router.push("/marcas").catch(() => {});
+            break;
+          case "proveedores":
+            router.push("/proveedores").catch(() => {});
+            break;
+          default:
+            break;
+        }
+      },
       logout() {
         let commit = (store.state.token = null);
 

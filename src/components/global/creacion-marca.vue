@@ -29,7 +29,13 @@
     <v-row>
       <v-col align-self="end" cols="2">
         <v-row>
-          <v-btn color="primary" text @click="dialogmarca = !dialogmarca">
+          <v-btn
+            v-shortkey="['ctrl', 'shift', 'm']"
+            @shortkey="dialogmarca = !dialogmarca"
+            color="primary"
+            text
+            @click="dialogmarca = !dialogmarca"
+          >
             Marca
           </v-btn>
         </v-row>

@@ -118,10 +118,12 @@
         axios
           .post("api/user", enviar)
           .then((response) => {
+            this.$emit("dialogFromChild", true);
             if (response.statusText === "Created") {
               this.$emit("notifysuccess", true);
               store.commit("increment", 1);
             }
+            store.commit("increment", 1);
           })
           .catch((e) => {
             console.log(e.message);

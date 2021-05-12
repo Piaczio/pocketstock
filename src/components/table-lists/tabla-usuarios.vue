@@ -5,11 +5,19 @@
         <v-text-field
           v-model="search"
           label="Buscar usuario"
+          placeholder="Nombre, correo y rol"
           class="mx-4"
+          id="onsearch"
         ></v-text-field>
       </v-col>
     </v-row>
     <v-app id="inspire">
+      <v-progress-linear
+        height="6"
+        indeterminate
+        color="cyan"
+        :active="cargando"
+      ></v-progress-linear>
       <v-data-table
         id="tabla"
         :headers="headers"
@@ -49,11 +57,32 @@
                         <v-select
                           v-model="selectrol"
                           :items="itemsrol"
-                          v-on="categ()"
+                          v-on="usersync()"
                           item-text="name_rol"
                           item-value="rol_id"
                           label="Rol"
                         ></v-select>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col cols="12" sm="4" md="6">
+                        <v-text-field
+                          v-model="editedItem.password"
+                          hint="Minimo 8 caracteres"
+                          :counter="8"
+                          :rules="[rules.required, rules.min]"
+                          type="password"
+                          label="Contraseña"
+                          loading
+                        >
+                          <template v-slot:progress>
+                            <v-progress-linear
+                              :value="progress"
+                              :color="color"
+                              absolute
+                              height="2"
+                            ></v-progress-linear> </template
+                        ></v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
@@ -89,6 +118,11 @@
             </v-dialog>
           </v-toolbar>
         </template>
+        <template v-slot:[`item.name_rol`]="{ item }">
+          <v-chip :color="getColor(item.name_rol)" dark>
+            {{ item.name_rol }}
+          </v-chip>
+        </template>
         <template v-slot:[`item.actions`]="{ item }">
           <v-icon small class="mr-2" @click="editItem(item)">
             mdi-pencil
@@ -114,10 +148,14 @@
       dialog: false,
       dialogDelete: false,
       search: "",
-
+      password: "",
+      cargando: true,
+      rules: {
+        min: (v) => v.length >= 8 || "Necesitas 8 caracteres minimo",
+      },
       headers: [
         {
-          text: "Usuarios",
+          text: "Nombre",
           align: "start",
           sortable: false,
           value: "name",
@@ -140,16 +178,20 @@
         id: "",
         name: "",
         email: "",
+        password: "",
         name_rol: "",
       },
       defaultItem: {
         id: "",
         name: "",
         email: "",
+        password: "",
         name_rol: "",
       },
     }),
+
     mounted() {
+      this.onFocus();
       window.Echo.channel("users").listen("userCreated", (e) => {
         this.usersArray = e.users;
       });
@@ -172,6 +214,7 @@
             if (!datos) return;
             this.usersArray.push(datos);
           });
+          this.cargando = false;
         })
         .catch((error) => console.log(error));
 
@@ -189,6 +232,7 @@
             if (!datos) return;
             this.itemsrol.push(datos);
           });
+          this.cargando = false;
         })
         .catch((e) => {
           console.log(e.message);
@@ -198,6 +242,12 @@
     computed: {
       formTitle() {
         return this.editedIndex === -1 ? "New Item" : "Editar usuario";
+      },
+      progress() {
+        return Math.min(100, this.editedItem.password.length * 13);
+      },
+      color() {
+        return ["error", "warning", "success"][Math.floor(this.progress / 40)];
       },
     },
 
@@ -210,12 +260,22 @@
       },
     },
 
-    created() {
-      this.initialize();
-    },
+    created() {},
 
     methods: {
-      initialize() {},
+      onFocus() {
+        let stext = document.getElementById("onsearch");
+        stext;
+        stext = addEventListener("keydown", (e) => {
+          if (e.shiftKey) {
+            document.getElementById("onsearch").focus();
+          }
+        });
+      },
+      getColor(status) {
+        if (status === "Adminstrador") return "cyan darken-1";
+        else if (status === "Empleado") return "cyan lighten-3";
+      },
       filterOnlyCapsText(value, search) {
         return (
           value != null &&
@@ -224,7 +284,7 @@
           value.toString().toLocaleUpperCase().indexOf(search) !== -1
         );
       },
-      categ(recived) {
+      usersync(recived) {
         var tempid = null;
         var tempname = null;
         tempname;
@@ -253,7 +313,7 @@
 
         if (this.editedItem.name_rol) {
           //categoria
-          this.categ(this.editedItem.name_rol);
+          this.usersync(this.editedItem.name_rol);
         }
 
         this.dialog = true;
@@ -296,8 +356,8 @@
 
           url = url + send.id;
           url = `${url}?${"name=" + send.name}&${"email=" + send.email}&${
-            "rol_id=" + this.selectrol
-          }`;
+            "password=" + send.password
+          }&${"rol_id=" + this.selectrol}`;
 
           axios
             .put(url)

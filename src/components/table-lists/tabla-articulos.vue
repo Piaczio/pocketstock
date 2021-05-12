@@ -3,14 +3,22 @@
     <v-row>
       <v-col cols="12" sm="4" md="5">
         <v-text-field
-          v-model="search"
           label="Buscar artículo"
+          placeholder="Nombre, cantidad, categoria, tipo ...."
           class="mx-4"
-        ></v-text-field>
+          v-model="search"
+          id="onsearch"
+        />
       </v-col>
     </v-row>
 
     <v-app id="inspire">
+      <v-progress-linear
+        height="6"
+        indeterminate
+        color="cyan"
+        :active="cargando"
+      ></v-progress-linear>
       <v-data-table
         id="tabla"
         :headers="headers"
@@ -92,7 +100,7 @@
                           :items="itemstst"
                           item-text="nombre_status"
                           item-value="status_id"
-                          label="Status"
+                          label="Estatus"
                           required
                         ></v-select>
                       </v-col>
@@ -170,6 +178,7 @@
 <script>
   import axios from "axios";
   import store from "@/store";
+
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -178,10 +187,11 @@
       search: "",
       dialog: false,
       dialogDelete: false,
+      cargando: true,
 
       headers: [
         {
-          text: "Artículo",
+          text: "Nombre",
           align: "start",
           sortable: false,
           value: "nombre_articulo",
@@ -191,7 +201,7 @@
         { text: "Tipo", value: "name_tipo" },
         { text: "Marca", value: "nombre_marca" },
         { text: "Proveedor", value: "nombre_proveedor" },
-        { text: "Status", value: "nombre_status" },
+        { text: "estatus", value: "nombre_status" },
         { text: "Rack", value: "nombre_rack" },
         { text: "Travesaño", value: "nombre_travesano" },
         { text: "Acciones", value: "actions", sortable: false },
@@ -242,6 +252,7 @@
       },
     }),
     mounted() {
+      this.onFocus();
       window.Echo.channel("articulos").listen("articuloCreated", (e) => {
         this.articulosArray = e.articulos;
       });
@@ -290,6 +301,7 @@
             if (!datos) return;
             this.articulosArray.push(datos);
           });
+          this.cargando = false;
         })
         .catch((error) => console.log(error));
 
@@ -442,16 +454,23 @@
       },
     },
 
-    created() {
-      this.initialize();
-    },
+    created() {},
 
     methods: {
-      initialize() {},
+      onFocus() {
+        let stext = document.getElementById("onsearch");
+        stext;
+        stext = addEventListener("keydown", (e) => {
+          if (e.shiftKey) {
+            document.getElementById("onsearch").focus();
+          }
+        });
+      },
       getColor(status) {
-        if (status === "Agotado") return "red";
-        else if (status === "Disponible") return "orange";
-        else if (status === "En uso") return "blue";
+        if (status === "Agotado") return "red lighten-2";
+        else if (status === "Disponible") return "orange lighten-2";
+        else if (status === "En uso") return "blue lighten-2";
+        else return "withe";
       },
       filterOnlyCapsText(value, search) {
         return (
