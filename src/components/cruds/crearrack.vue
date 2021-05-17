@@ -30,6 +30,7 @@
 
 <script>
   import axios from "axios";
+  import store from "@/store";
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -59,6 +60,7 @@
             if (response.statusText === "Created") {
               this.rack = "";
               this.$emit("notifysuccess", true);
+              store.commit("increment", 1);
             }
           })
           .catch((e) => {

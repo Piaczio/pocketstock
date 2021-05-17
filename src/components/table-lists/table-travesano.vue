@@ -4,7 +4,7 @@
       <v-col cols="12" sm="6" md="4">
         <v-text-field
           v-model="search"
-          label="Buscar categoria"
+          label="Buscar travesaños"
           class="mx-4"
           id="onsearch"
         ></v-text-field>
@@ -20,7 +20,7 @@
       <v-data-table
         id="tabla"
         :headers="headers"
-        :items="categoriaArray"
+        :items="TravesanoArray"
         sort-by="cantidad_articulo"
         class="elevation-1"
         :search="search"
@@ -28,7 +28,7 @@
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Tabla categoria</v-toolbar-title>
+            <v-toolbar-title>Tabla travesaño</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
@@ -42,7 +42,7 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.nombre_categoria"
+                          v-model="editedItem.nombre_travesano"
                           label="Nombre"
                         ></v-text-field>
                       </v-col>
@@ -100,7 +100,7 @@
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    nombre_categoria: "tabla-categoria",
+    nombre: "tabla-travesano",
     data: () => ({
       dialog: false,
       dialogDelete: false,
@@ -108,49 +108,44 @@
       cargando: true,
       headers: [
         {
-          text: "Categorias",
+          text: "Travesaño",
           align: "start",
           sortable: false,
-          value: "nombre_categoria",
+          value: "nombre_travesano",
         },
 
         { text: "Acciones", value: "actions", sortable: false },
       ],
 
-      categoriaArray: [],
-      //variable en la que se deposita la posicion en el selector
-      selectrol: null, //Rol
-
-      //Array en el que se deposita de los selectores.
-      itemsrol: [], //Rol
+      TravesanoArray: [],
 
       editedIndex: -1,
       editedItem: {
         id: "",
-        nombre_categoria: "",
+        nombre_travesano: "",
       },
       defaultItem: {
         id: "",
-        nombre_categoria: "",
+        nombre_travesano: "",
       },
     }),
     mounted() {
       this.onFocus();
-      window.Echo.channel("categorias").listen("categoriaCreated", (e) => {
-        this.categoriaArray = e.categorias;
+      window.Echo.channel("travesanos").listen("travesañoCreated", (e) => {
+        this.TravesanoArray = e.travesanos;
       });
       axios
-        .get("api/categoria")
+        .get("api/travesano")
         .then((response) => {
-          let categoria = response.data;
+          let travesano = response.data;
 
-          categoria.forEach((element) => {
+          travesano.forEach((element) => {
             let datos = {
               id: element.id,
-              nombre_categoria: element.nombre_categoria,
+              nombre_travesano: element.nombre_travesano,
             };
             if (!datos) return;
-            this.categoriaArray.push(datos);
+            this.TravesanoArray.push(datos);
           });
           this.cargando = false;
         })
@@ -159,7 +154,7 @@
 
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? "New Item" : "Editar categoria";
+        return this.editedIndex === -1 ? "New Item" : "Editar travesano";
       },
     },
 
@@ -194,23 +189,24 @@
       },
 
       editItem(item) {
-        this.editedIndex = this.categoriaArray.indexOf(item);
+        this.editedIndex = this.TravesanoArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
 
         this.dialog = true;
       },
 
       deleteItem(item) {
-        this.editedIndex = this.categoriaArray.indexOf(item);
+        this.editedIndex = this.TravesanoArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/categoria/" + id).catch((error) => console.log(error));
+        console.log("delete working:", id);
+        axios.delete("api/travesano/" + id).catch((error) => console.log(error));
       },
 
       deleteItemConfirm() {
-        this.categoriaArray.splice(this.editedIndex, 1);
+        this.TravesanoArray.splice(this.editedIndex, 1);
         this.closeDelete();
       },
 
@@ -232,11 +228,11 @@
 
       save() {
         if (this.editedIndex > -1) {
-          Object.assign(this.categoriaArray[this.editedIndex], this.editedItem);
+          Object.assign(this.TravesanoArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
-          let url = "api/categoria/";
+          let url = "api/travesano/";
           url = url + send.id;
-          url = `${url}?${"nombre_categoria=" + send.nombre_categoria}`;
+          url = `${url}?${"nombre_travesano=" + send.nombre_travesano}`;
           axios
             .put(url)
             .then((response) => {
@@ -244,7 +240,7 @@
             })
             .catch((error) => console.log(error));
         } else {
-          this.categoriaArray.push(this.editedItem);
+          this.TravesanoArray.push(this.editedItem);
         }
         this.close();
       },

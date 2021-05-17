@@ -201,6 +201,54 @@ const routes = [
     }
   },
   {
+    path: '/racks',
+    name: 'racks',
+    component: () => import('../views/main-rack.vue'),
+    meta: {
+      authenticated: true
+    },
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
+          next();
+        }
+      }
+      else if (!validado) {
+        next({ name: 'login' });
+      }
+      else {
+        next({ name: 'login' });
+      }
+
+    }
+  },
+  {
+    path: '/travesano',
+    name: 'travesano',
+    component: () => import('../views/main-travesano.vue'),
+    meta: {
+      authenticated: true
+    },
+    beforeEnter: (to, from, next) => {
+      let validado = to.matched.some(record => record.meta.authenticated);
+      if (store.state.token) {
+        next();
+        if (validado == true && from.path !== '/') {
+          next();
+        }
+      }
+      else if (!validado) {
+        next({ name: 'login' });
+      }
+      else {
+        next({ name: 'login' });
+      }
+
+    }
+  },
+  {
     path: '*',
     name: 'Error',
     component: () => import('@/layouts/error.vue'),

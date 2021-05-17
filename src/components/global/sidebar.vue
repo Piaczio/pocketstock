@@ -144,6 +144,16 @@
           title: "Proveedores",
           icon: "mdi-folder-multiple",
         },
+        {
+          path: "/racks",
+          title: "Racks",
+          icon: "mdi-folder-multiple",
+        },
+        {
+          path: "/travesano",
+          title: "Travesaños",
+          icon: "mdi-folder-multiple",
+        },
       ],
     }),
     computed: {

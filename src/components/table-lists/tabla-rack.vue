@@ -4,7 +4,7 @@
       <v-col cols="12" sm="6" md="4">
         <v-text-field
           v-model="search"
-          label="Buscar marca"
+          label="Buscar rack"
           class="mx-4"
           id="onsearch"
         ></v-text-field>
@@ -20,7 +20,7 @@
       <v-data-table
         id="tabla"
         :headers="headers"
-        :items="marcaArray"
+        :items="RackArray"
         sort-by="cantidad_articulo"
         class="elevation-1"
         :search="search"
@@ -28,7 +28,7 @@
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Tabla marca</v-toolbar-title>
+            <v-toolbar-title>Tabla rack</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
@@ -42,7 +42,7 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.nombre_marca"
+                          v-model="editedItem.nombre_rack"
                           label="Nombre"
                         ></v-text-field>
                       </v-col>
@@ -96,10 +96,11 @@
 
 <script>
   import axios from "axios";
+
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    nombre_marca: "tabla-marca",
+    nombre_rack: "tabla-rack",
     data: () => ({
       dialog: false,
       dialogDelete: false,
@@ -107,45 +108,45 @@
       cargando: true,
       headers: [
         {
-          text: "Marcas",
+          text: "Rack",
           align: "start",
           sortable: false,
-          value: "nombre_marca",
+          value: "nombre_rack",
         },
 
         { text: "Acciones", value: "actions", sortable: false },
       ],
 
-      marcaArray: [],
+      RackArray: [],
+      //variable en la que se deposita la posicion en el selector
 
       editedIndex: -1,
       editedItem: {
         id: "",
-        nombre_marca: "",
+        nombre_rack: "",
       },
       defaultItem: {
         id: "",
-        nombre_marca: "",
+        nombre_rack: "",
       },
     }),
     mounted() {
       this.onFocus();
-      window.Echo.channel("marcas").listen("marcaCreated", (e) => {
-        this.marcaArray = e.marcas;
+      window.Echo.channel("racks").listen("rackCreated", (e) => {
+        this.RackArray = e.racks;
       });
-
       axios
-        .get("api/marca")
+        .get("api/rack")
         .then((response) => {
-          let marca = response.data;
+          let rack = response.data;
 
-          marca.forEach((element) => {
+          rack.forEach((element) => {
             let datos = {
               id: element.id,
-              nombre_marca: element.nombre_marca,
+              nombre_rack: element.nombre_rack,
             };
             if (!datos) return;
-            this.marcaArray.push(datos);
+            this.RackArray.push(datos);
           });
           this.cargando = false;
         })
@@ -154,7 +155,7 @@
 
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? "New Item" : "Editar marca";
+        return this.editedIndex === -1 ? "New Item" : "Editar rack";
       },
     },
 
@@ -189,23 +190,23 @@
       },
 
       editItem(item) {
-        this.editedIndex = this.marcaArray.indexOf(item);
+        this.editedIndex = this.RackArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
 
         this.dialog = true;
       },
 
       deleteItem(item) {
-        this.editedIndex = this.marcaArray.indexOf(item);
+        this.editedIndex = this.RackArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/marca/" + id).catch((error) => console.log(error));
+        axios.delete("api/rack/" + id).catch((error) => console.log(error));
       },
 
       deleteItemConfirm() {
-        this.marcaArray.splice(this.editedIndex, 1);
+        this.RackArray.splice(this.editedIndex, 1);
         this.closeDelete();
       },
 
@@ -227,13 +228,11 @@
 
       save() {
         if (this.editedIndex > -1) {
-          Object.assign(this.marcaArray[this.editedIndex], this.editedItem);
+          Object.assign(this.RackArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
-          let url = "api/marca/";
-
+          let url = "api/rack/";
           url = url + send.id;
-          url = `${url}?${"nombre_marca=" + send.nombre_marca}`;
-
+          url = `${url}?${"nombre_rack=" + send.nombre_rack}`;
           axios
             .put(url)
             .then((response) => {
@@ -241,7 +240,7 @@
             })
             .catch((error) => console.log(error));
         } else {
-          this.marcaArray.push(this.editedItem);
+          this.RackArray.push(this.editedItem);
         }
         this.close();
       },
