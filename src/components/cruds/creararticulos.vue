@@ -17,7 +17,7 @@
           <v-text-field
             v-model="name"
             :counter="10"
-            label="Nombre articulo"
+            label="Nombre artículo"
             required
           ></v-text-field>
         </v-col>
@@ -26,7 +26,7 @@
             v-model="cant"
             type="number"
             :counter="10"
-            label="Cantidad articulo"
+            label="Cantidad artículo"
             required
           ></v-text-field>
         </v-col>

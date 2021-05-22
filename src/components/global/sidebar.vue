@@ -15,14 +15,14 @@
       <v-navigation-drawer permanent app>
         <v-list>
           <v-list-item-title
-            style="font-size: 29px"
+            style="font-size: 28px"
             class="text-uppercase grey--text title"
           >
             <code class="font-weight-light">Pocket</code><strong>stock</strong>
             <v-divider></v-divider>
           </v-list-item-title>
           <v-list-item-group color="primary">
-            <v-list v-if="hasrol === 1" dense flat>
+            <v-list v-if="hasrol === 1" flat>
               <v-list-item
                 v-for="item in itemsmain"
                 :key="item.title"
@@ -42,7 +42,7 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            <v-list v-else-if="hasrol === 2" dense flat>
+            <v-list v-else-if="hasrol === 2" flat>
               <v-list-item
                 v-for="item in itemsemp"
                 :key="item.title"
@@ -66,7 +66,7 @@
           <v-list-group :value="true" no-action sub-group>
             <template v-slot:activator>
               <v-list-item-content>
-                <v-list-item-title
+                <v-list-item-title style="font-size: 20px"
                   >Catálogos<v-icon> mdi-view-list</v-icon>
                 </v-list-item-title>
               </v-list-item-content>
@@ -75,7 +75,6 @@
               v-for="item in itemstable"
               :key="item.title"
               link
-              dense
               flat
               :to="item.path"
               v-shortkey="{

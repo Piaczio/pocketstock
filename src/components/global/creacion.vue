@@ -290,8 +290,8 @@
         this.dialogproveedor = updatedDialog;
       },
       /*syncFromStatus(updatedDialog) {
-                                                                                                            this.dialogstatus = updatedDialog;
-                                                                                                          },*/
+                                                                                                              this.dialogstatus = updatedDialog;
+                                                                                                            },*/
       syncFromRack(updatedDialog) {
         this.dialograck = updatedDialog;
       },

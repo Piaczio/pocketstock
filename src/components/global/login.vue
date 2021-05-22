@@ -119,7 +119,7 @@
                     router.push("/articulos").catch(() => {});
                   }
                 } else if (validado == false) {
-                  alert("Cuanta no existen o incorrecta");
+                  alert("Cuanta no existe o es incorrecta");
                 }
               })
               .catch((e) => {

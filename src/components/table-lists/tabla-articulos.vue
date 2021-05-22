@@ -726,7 +726,6 @@
             .put(url)
             .then((response) => {
               response;
-              console.log("dentro de la edicion:", response);
               store.commit("increment", 1);
             })
             .catch((error) => console.log(error));
