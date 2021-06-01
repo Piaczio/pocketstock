@@ -81,6 +81,34 @@
                 categorias: ['ctrl', 'c'],
                 marcas: ['ctrl', 'm'],
                 proveedores: ['ctrl', 'p'],
+                tipos: ['ctrl', 't'],
+              }"
+              @shortkey="paths"
+            >
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+
+              <v-list-item-icon>
+                <v-icon>{{ item.icon }}</v-icon>
+              </v-list-item-icon>
+            </v-list-item>
+          </v-list-group>
+          <v-list-group :value="true" no-action sub-group>
+            <template v-slot:activator>
+              <v-list-item-content>
+                <v-list-item-title style="font-size: 20px"
+                  >Ubicaiones<v-icon> mdi-view-list</v-icon>
+                </v-list-item-title>
+              </v-list-item-content>
+            </template>
+            <v-list-item
+              v-for="item in itemlocation"
+              :key="item.title"
+              link
+              flat
+              :to="item.path"
+              v-shortkey="{
+                travesano: ['ctrl', 'e'],
+                racks: ['ctrl', 'r'],
               }"
               @shortkey="paths"
             >
@@ -139,10 +167,17 @@
           icon: "mdi-folder-multiple",
         },
         {
+          path: "/tipos",
+          title: "Tipos",
+          icon: "mdi-folder-multiple",
+        },
+        {
           path: "/proveedores",
           title: "Proveedores",
           icon: "mdi-folder-multiple",
         },
+      ],
+      itemlocation: [
         {
           path: "/racks",
           title: "Racks",
@@ -175,8 +210,17 @@
           case "marcas":
             router.push("/marcas").catch(() => {});
             break;
+          case "tipos":
+            router.push("/tipos").catch(() => {});
+            break;
           case "proveedores":
             router.push("/proveedores").catch(() => {});
+            break;
+          case "racks":
+            router.push("/racks").catch(() => {});
+            break;
+          case "travesano":
+            router.push("/travesano").catch(() => {});
             break;
           default:
             break;

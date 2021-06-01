@@ -50,7 +50,7 @@
                   </v-container>
                 </v-card-text>
 
-                <v-card-actions>
+                <v-card-actions v-on:keyup.enter="save">
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="close">
                     Cancelar
@@ -66,7 +66,7 @@
                 <v-card-title class="headline"
                   >¿Estas seguro de querer eliminarlo?</v-card-title
                 >
-                <v-card-actions>
+                <v-card-actions v-on:keyup.enter="deleteItemConfirm">
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="closeDelete"
                     >Cancelar</v-btn
@@ -179,7 +179,7 @@
         let stext = document.getElementById("onsearch");
         stext;
         stext = addEventListener("keydown", (e) => {
-          if (e.shiftKey) {
+          if (e.altKey) {
             document.getElementById("onsearch").focus();
           }
         });
