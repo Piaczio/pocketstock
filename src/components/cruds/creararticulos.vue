@@ -101,7 +101,7 @@
             v-model="selectT"
             :items="itemsT"
             item-text="nombre_travesano"
-            item-value="travesaño_id"
+            item-value="travesano_id"
             label="Ubicación travesaño"
             required
           ></v-select>
@@ -263,7 +263,7 @@
 
           travesaños.forEach((element) => {
             let datos = {
-              travesaño_id: element.id,
+              travesano_id: element.id,
               nombre_travesano: element.nombre_travesano,
             };
 
@@ -294,7 +294,7 @@
           status_id: this.selectst,
           marca_id: this.selectm,
           rack_id: this.selectr,
-          travesaño_id: this.selectT,
+          travesano_id: this.selectT,
         };
         axios
           .post("api/articulo", enviar)
