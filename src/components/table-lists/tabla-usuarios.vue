@@ -67,28 +67,23 @@
                     <v-row>
                       <v-col cols="12" sm="4" md="6">
                         <v-text-field
+                          :append-icon="show3 ? 'mdi-eye' : 'mdi-eye-off'"
                           v-model="editedItem.password"
+                          :type="show3 ? 'text' : 'password'"
                           hint="Minimo 8 caracteres"
                           :counter="8"
                           :rules="[rules.required, rules.min]"
-                          type="password"
+                          @click:append="show3 = !show3"
                           label="Contraseña"
-                          loading
+                          placeholder="Contraseña"
                         >
-                          <template v-slot:progress>
-                            <v-progress-linear
-                              :value="progress"
-                              :color="color"
-                              absolute
-                              height="2"
-                            ></v-progress-linear> </template
-                        ></v-text-field>
+                        </v-text-field>
                       </v-col>
                     </v-row>
                   </v-container>
                 </v-card-text>
 
-                <v-card-actions>
+                <v-card-actions v-on:keyup.enter="save">
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="close">
                     Cancelar
@@ -104,7 +99,7 @@
                 <v-card-title class="headline"
                   >¿Estas seguro de querer eliminarlo?</v-card-title
                 >
-                <v-card-actions>
+                <v-card-actions v-on:keyup.enter="deleteItemConfirm">
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="closeDelete"
                     >Cancelar</v-btn
@@ -150,6 +145,7 @@
       search: "",
       password: "",
       cargando: true,
+      show3: false,
       rules: {
         min: (v) => v.length >= 8 || "Necesitas 8 caracteres minimo",
       },
@@ -267,7 +263,7 @@
         let stext = document.getElementById("onsearch");
         stext;
         stext = addEventListener("keydown", (e) => {
-          if (e.shiftKey) {
+          if (e.altKey) {
             document.getElementById("onsearch").focus();
           }
         });

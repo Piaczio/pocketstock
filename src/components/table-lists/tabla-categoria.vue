@@ -52,7 +52,12 @@
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">
+                  <v-btn
+                    color="blue darken-1"
+                    v-on:keyup.enter="save"
+                    text
+                    @click="close"
+                  >
                     Cancelar
                   </v-btn>
                   <v-btn color="blue darken-1" text @click="save">
@@ -179,7 +184,7 @@
         let stext = document.getElementById("onsearch");
         stext;
         stext = addEventListener("keydown", (e) => {
-          if (e.shiftKey) {
+          if (e.altKey) {
             document.getElementById("onsearch").focus();
           }
         });

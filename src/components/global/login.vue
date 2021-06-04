@@ -59,7 +59,7 @@
     email: "crearusuario",
     data: () => ({
       email: "", //a@a.com//b@b.com
-      password: "", //1234
+      password: "", //12345678
       show3: false,
     }),
 

@@ -4,7 +4,7 @@
       <v-col cols="12" sm="6" md="4">
         <v-text-field
           v-model="search"
-          label="Buscar proveedor"
+          label="Buscar tipo"
           class="mx-4"
           id="onsearch"
         ></v-text-field>
@@ -20,7 +20,7 @@
       <v-data-table
         id="tabla"
         :headers="headers"
-        :items="proveedorArray"
+        :items="TipoArray"
         sort-by="cantidad_articulo"
         class="elevation-1"
         :search="search"
@@ -28,7 +28,7 @@
       >
         <template v-slot:top>
           <v-toolbar flat>
-            <v-toolbar-title>Tabla proveedor</v-toolbar-title>
+            <v-toolbar-title>Tabla tipo</v-toolbar-title>
             <v-divider class="mx-4" inset vertical></v-divider>
             <v-spacer></v-spacer>
             <v-dialog v-model="dialog" max-width="500px">
@@ -42,7 +42,7 @@
                     <v-row>
                       <v-col cols="12" sm="6" md="4">
                         <v-text-field
-                          v-model="editedItem.nombre_proveedor"
+                          v-model="editedItem.name_tipo"
                           label="Nombre"
                         ></v-text-field>
                       </v-col>
@@ -96,10 +96,11 @@
 
 <script>
   import axios from "axios";
+
   //axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "https://test-api.loca.lt/";
+  axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
-    nombre_proveedor: "tabla-proveedor",
+    name_tipo: "tabla-tipo",
     data: () => ({
       dialog: false,
       dialogDelete: false,
@@ -107,50 +108,45 @@
       cargando: true,
       headers: [
         {
-          text: "Proveedores",
+          text: "Tipo",
           align: "start",
           sortable: false,
-          value: "nombre_proveedor",
+          value: "name_tipo",
         },
 
         { text: "Acciones", value: "actions", sortable: false },
       ],
 
-      proveedorArray: [],
+      TipoArray: [],
       //variable en la que se deposita la posicion en el selector
-      selectrol: null, //Rol
-
-      //Array en el que se deposita de los selectores.
-      itemsrol: [], //Rol
 
       editedIndex: -1,
       editedItem: {
         id: "",
-        nombre_proveedor: "",
+        name_tipo: "",
       },
       defaultItem: {
         id: "",
-        nombre_proveedor: "",
+        name_tipo: "",
       },
     }),
     mounted() {
       this.onFocus();
-      window.Echo.channel("proveedores").listen("proveedorCreated", (e) => {
-        this.proveedorArray = e.proveedores;
+      window.Echo.channel("tipos").listen("tipoCreated", (e) => {
+        this.TipoArray = e.tipos;
       });
-
       axios
-        .get("api/proveedor")
+        .get("api/tipo")
         .then((response) => {
-          let proveedor = response.data;
+          let tipo = response.data;
 
-          proveedor.forEach((element) => {
+          tipo.forEach((element) => {
             let datos = {
               id: element.id,
-              nombre_proveedor: element.nombre_proveedor,
+              name_tipo: element.name_tipo,
             };
             if (!datos) return;
-            this.proveedorArray.push(datos);
+            this.TipoArray.push(datos);
           });
           this.cargando = false;
         })
@@ -159,7 +155,7 @@
 
     computed: {
       formTitle() {
-        return this.editedIndex === -1 ? "New Item" : "Editar proveedor";
+        return this.editedIndex === -1 ? "New Item" : "Editar tipo";
       },
     },
 
@@ -194,23 +190,23 @@
       },
 
       editItem(item) {
-        this.editedIndex = this.proveedorArray.indexOf(item);
+        this.editedIndex = this.TipoArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
 
         this.dialog = true;
       },
 
       deleteItem(item) {
-        this.editedIndex = this.proveedorArray.indexOf(item);
+        this.editedIndex = this.TipoArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/proveedor/" + id).catch((error) => console.log(error));
+        axios.delete("api/tipo/" + id).catch((error) => console.log(error));
       },
 
       deleteItemConfirm() {
-        this.proveedorArray.splice(this.editedIndex, 1);
+        this.TipoArray.splice(this.editedIndex, 1);
         this.closeDelete();
       },
 
@@ -232,22 +228,19 @@
 
       save() {
         if (this.editedIndex > -1) {
-          Object.assign(this.proveedorArray[this.editedIndex], this.editedItem);
+          Object.assign(this.TipoArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
-          let url = "api/proveedor/";
-          console.log("edit method:", url + send.id);
+          let url = "api/tipo/";
           url = url + send.id;
-          url = `${url}?${"nombre_proveedor=" + send.nombre_proveedor}`;
-
-          console.log("edit method:", url);
+          url = `${url}?${"name_tipo=" + send.name_tipo}`;
           axios
             .put(url)
             .then((response) => {
-              console.log("Si se pudo:", response.data);
+              response;
             })
             .catch((error) => console.log(error));
         } else {
-          this.proveedorArray.push(this.editedItem);
+          this.TipoArray.push(this.editedItem);
         }
         this.close();
       },
