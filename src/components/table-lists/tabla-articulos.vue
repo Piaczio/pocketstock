@@ -251,8 +251,10 @@
         nombre_travesano: "",
       },
     }),
-    mounted() {
+    created() {
       this.onFocus();
+    },
+    mounted() {
       window.Echo.channel("articulos").listen("articuloCreated", (e) => {
         this.articulosArray = e.articulos;
       });
@@ -453,8 +455,6 @@
         val || this.closeDelete();
       },
     },
-
-    created() {},
 
     methods: {
       onFocus() {
