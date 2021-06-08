@@ -306,7 +306,7 @@
           this.cargando = false;
         })
         .catch((error) => console.log(error));
-      getArticulos();
+      getArticulos(); //Aqui pretendo tener la llamada de articulos
       axios
         .get("api/categoria")
         .then((response) => {
