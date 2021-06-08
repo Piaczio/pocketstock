@@ -721,7 +721,7 @@
           }&${"proveedor_id=" + this.selectp}&${"status_id=" + this.selectst}&${
             "rack_id=" + this.selectr
           }&${"travesano_id=" + this.selectT}`;
-          console.log("antes de editar:", url);
+
           axios
             .put(url)
             .then((response) => {
