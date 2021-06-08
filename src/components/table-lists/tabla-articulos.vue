@@ -128,7 +128,7 @@
                   </v-container>
                 </v-card-text>
 
-                <v-card-actions>
+                <v-card-actions v-on:keyup.enter="save">
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="close">
                     Cancel
@@ -142,7 +142,7 @@
                 <v-card-title class="headline"
                   >Are you sure you want to delete this item?</v-card-title
                 >
-                <v-card-actions>
+                <v-card-actions v-on:keyup.enter="deleteItemConfirm">
                   <v-spacer></v-spacer>
                   <v-btn color="blue darken-1" text @click="closeDelete"
                     >Cancel</v-btn
@@ -178,7 +178,7 @@
 <script>
   import axios from "axios";
   import store from "@/store";
-
+  import { getArticulos } from "@/api/articulos.js";
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -251,8 +251,10 @@
         nombre_travesano: "",
       },
     }),
-    mounted() {
+    created() {
       this.onFocus();
+    },
+    mounted() {
       window.Echo.channel("articulos").listen("articuloCreated", (e) => {
         this.articulosArray = e.articulos;
       });
@@ -304,7 +306,7 @@
           this.cargando = false;
         })
         .catch((error) => console.log(error));
-
+      getArticulos(); //Aqui pretendo tener la llamada de articulos
       axios
         .get("api/categoria")
         .then((response) => {
@@ -454,14 +456,12 @@
       },
     },
 
-    created() {},
-
     methods: {
       onFocus() {
         let stext = document.getElementById("onsearch");
         stext;
-        stext = addEventListener("keydown", (e) => {
-          if (e.shiftKey) {
+        stext = addEventListener("keyup", (e) => {
+          if (e.altKey) {
             document.getElementById("onsearch").focus();
           }
         });
@@ -721,7 +721,7 @@
           }&${"proveedor_id=" + this.selectp}&${"status_id=" + this.selectst}&${
             "rack_id=" + this.selectr
           }&${"travesano_id=" + this.selectT}`;
-          console.log("antes de editar:", url);
+
           axios
             .put(url)
             .then((response) => {
