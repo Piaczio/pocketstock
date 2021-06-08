@@ -306,7 +306,7 @@
           this.cargando = false;
         })
         .catch((error) => console.log(error));
-
+      getArticulos();
       axios
         .get("api/categoria")
         .then((response) => {
