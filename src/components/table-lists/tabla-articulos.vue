@@ -178,7 +178,7 @@
 <script>
   import axios from "axios";
   import store from "@/store";
-  import { getArticulos } from "@/api/articulos.js";
+  //import { getArticulos } from "@/api/articulos.js";
   //axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -280,7 +280,7 @@
       window.Echo.channel("travesanos").listen("travesañoCreated", (e) => {
         this.itemsT = e.travesanos;
       });
-
+      //getArticulos(); //Aqui pretendo tener la llamada de articulos
       axios
         .get("api/articulo")
         .then((response) => {
@@ -304,9 +304,11 @@
             this.articulosArray.push(datos);
           });
           this.cargando = false;
+          store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
+          store.commit("setdanger", false);
         })
         .catch((error) => console.log(error));
-      getArticulos(); //Aqui pretendo tener la llamada de articulos
+
       axios
         .get("api/categoria")
         .then((response) => {

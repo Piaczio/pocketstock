@@ -2,10 +2,10 @@
   <v-dialog
     content-class="elevation-0"
     v-model="parentdialog"
-    max-width="28rem"
+    max-width="20rem"
     persistent
   >
-    <v-card class="cont-card" v-on:keyup.enter="submit()" elevation="2">
+    <v-card class="cont-card" v-on:keyup.enter="submit()" elevation="1">
       <v-toolbar light flat>
         <v-btn icon color="dark" @click="onClose">
           <v-icon> mdi-close </v-icon>
@@ -13,7 +13,7 @@
         <v-toolbar-title>Crear rack</v-toolbar-title>
       </v-toolbar>
       <v-row>
-        <v-col sm="3" md="6">
+        <v-col sm="6" md="12" lx="13">
           <v-text-field
             v-model="rack"
             :counter="10"
@@ -46,10 +46,12 @@
       onClose() {
         /*Envia parametro de cierre a componente creación*/
         this.$emit("dialogFromChild", false);
+        store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        store.commit("setdanger", false);
       },
       submit() {
-        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("notifyproblem", false);
+        store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        store.commit("setdanger", false);
         let enviar_rack = {
           nombre_rack: this.rack,
         };
@@ -59,13 +61,13 @@
           .then((response) => {
             if (response.statusText === "Created") {
               this.rack = "";
-              this.$emit("notifysuccess", true);
+              store.commit("setsuccess", true);
               store.commit("increment", 1);
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("notifyproblem", true);
+            store.commit("setdanger", true);
           });
       },
 
@@ -78,6 +80,6 @@
 
 <style scoped>
   .cont-card {
-    padding: 2%;
+    padding: 1rem;
   }
 </style>

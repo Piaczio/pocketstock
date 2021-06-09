@@ -30,6 +30,7 @@
 
 <script>
   import axios from "axios";
+  import store from "@/store";
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -39,9 +40,6 @@
     } /*data de llegado de componente padre creacion*/,
     data: () => ({
       name: "",
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
 
     methods: {
@@ -51,8 +49,8 @@
       },
       submit() {
         //this.$emit("dialogFromChild", false);
-        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("notifyproblem", false);
+        store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        store.commit("setdanger", false);
         let enviar = {
           nombre_status: this.name,
         };
@@ -62,12 +60,12 @@
           .then((response) => {
             if (response.statusText === "Created") {
               this.name = "";
-              this.$emit("notifysuccess", true);
+              store.commit("setsuccess", true);
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("notifyproblem", true);
+            store.commit("setdanger", true);
           });
       },
       clear() {
@@ -79,6 +77,6 @@
 
 <style scoped>
   .cont-card {
-    padding: 2%;
+    padding: 1rem;
   }
 </style>

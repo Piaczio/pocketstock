@@ -4,28 +4,6 @@
   dentro del sistema.
 -->
   <v-card class="list-card">
-    <v-snackbar
-      dense
-      color="success"
-      outlined
-      :value="alertsuccess"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Guardado exitosamente!
-    </v-snackbar>
-    <v-snackbar
-      dense
-      color="danger"
-      outlined
-      :value="alertproblem"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Oops hubo un problema!
-    </v-snackbar>
     <v-row>
       <v-col align-self="end" cols="2">
         <v-row>
@@ -51,19 +29,12 @@
       :key="count"
       :parentdialog="dialogusuarios"
       v-on:dialogFromChild="syncFromUsuario($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
     />
     <!--
     <crearrol
       :parentdialog="dialogrol"
       v-on:dialogFromChild="syncFromRol($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
+     
     />-->
   </v-card>
 </template>
@@ -74,10 +45,7 @@
   import store from "@/store";
   export default {
     name: "crearlist",
-    props: {
-      incomingsuccess: { type: Boolean },
-      incomingproblem: { type: Boolean },
-    },
+
     components: {
       crearusuario,
       //crearrol,
@@ -88,12 +56,6 @@
       },
     },
     methods: {
-      syncToSuccess(updatedDialog) {
-        this.alertsuccess = updatedDialog;
-      },
-      syncToProblem(updatedDialog) {
-        this.alertproblem = updatedDialog;
-      },
       syncFromUsuario(updatedDialog) {
         this.dialogusuarios = updatedDialog;
       },
@@ -104,9 +66,6 @@
     data: () => ({
       dialogusuarios: false,
       dialogrol: false,
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
   };
 </script>

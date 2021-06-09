@@ -4,28 +4,6 @@
   dentro del sistema.
 -->
   <v-card class="list-card">
-    <v-snackbar
-      dense
-      color="success"
-      outlined
-      :value="alertsuccess"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Guardado exitosamente!
-    </v-snackbar>
-    <v-snackbar
-      dense
-      color="danger"
-      outlined
-      :value="alertproblem"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Oops hubo un problema!
-    </v-snackbar>
     <v-row>
       <v-col align-self="end" cols="2">
         <v-row>
@@ -45,10 +23,6 @@
     <creartipo
       :parentdialog="dialogtipo"
       v-on:dialogFromChild="syncFromTipo($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
     />
   </v-card>
 </template>
@@ -58,29 +32,17 @@
 
   export default {
     name: "crearlist",
-    props: {
-      incomingsuccess: { type: Boolean },
-      incomingproblem: { type: Boolean },
-    },
+
     components: {
       creartipo,
     },
     methods: {
-      syncToSuccess(updatedDialog) {
-        this.alertsuccess = updatedDialog;
-      },
-      syncToProblem(updatedDialog) {
-        this.alertproblem = updatedDialog;
-      },
       syncFromTipo(updatedDialog) {
         this.dialogtipo = updatedDialog;
       },
     },
     data: () => ({
       dialogtipo: false,
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
   };
 </script>

@@ -13,7 +13,7 @@
         <v-toolbar-title>Crear travesaño</v-toolbar-title>
       </v-toolbar>
       <v-row>
-        <v-col sm="3" md="6">
+        <v-col sm="6" md="12" lx="13">
           <v-text-field
             v-model="travesaño"
             :counter="10"
@@ -48,8 +48,8 @@
         this.$emit("dialogFromChild", false);
       },
       submit() {
-        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("notifyproblem", false);
+        store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        store.commit("setdanger", false);
 
         let enviar_travesaño = {
           nombre_travesano: this.travesaño,
@@ -60,14 +60,14 @@
           .then((response) => {
             if (response.statusText === "Created") {
               this.travesaño = "";
-              this.$emit("notifysuccess", true);
+              store.commit("setsuccess", true);
               store.commit("increment", 1);
             }
           })
           .catch((e) => {
             console.log(e.message);
 
-            this.$emit("notifyproblem", true);
+            store.commit("setdanger", true);
           });
       },
 
@@ -80,6 +80,6 @@
 
 <style scoped>
   .cont-card {
-    padding: 2%;
+    padding: 1rem;
   }
 </style>
