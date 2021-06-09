@@ -146,10 +146,6 @@
       :key="count"
       :parentdialog="dialogarticulo"
       @dialogFromChild="syncFromArticulo($event)"
-      :incomingsuccess="alertsuccess"
-      @notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      @notifyproblem="syncToProblem($event)"
     />
     <crearcategoria
       :parentdialog="dialogcategoria"
@@ -232,8 +228,8 @@
         this.dialogproveedor = updatedDialog;
       },
       /*syncFromStatus(updatedDialog) {
-                                                                                                                        this.dialogstatus = updatedDialog;
-                                                                                                                      },*/
+                                                                                                                          this.dialogstatus = updatedDialog;
+                                                                                                                        },*/
       syncFromRack(updatedDialog) {
         this.dialograck = updatedDialog;
       },

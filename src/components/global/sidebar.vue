@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <v-app-bar outlined flat fixed>
+      <v-app-bar style="background-color: white" outlined flat fixed>
         <!--<v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>-->
 
         <v-spacer></v-spacer>
@@ -248,11 +248,10 @@
     padding: 30px;
 
     a {
-      font-weight: bold;
       color: #2c3e50;
 
       &.router-link-exact-active {
-        color: #42b983;
+        color: #ffffff;
       }
     }
   }
