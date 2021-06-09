@@ -66,9 +66,7 @@
           <v-list-group :value="true" no-action sub-group>
             <template v-slot:activator>
               <v-list-item-content>
-                <v-list-item-title style="font-size: 20px"
-                  >Catálogos<v-icon> mdi-view-list</v-icon>
-                </v-list-item-title>
+                <v-list-item-title>Catálogos </v-list-item-title>
               </v-list-item-content>
             </template>
             <v-list-item
@@ -95,9 +93,7 @@
           <v-list-group :value="true" no-action sub-group>
             <template v-slot:activator>
               <v-list-item-content>
-                <v-list-item-title style="font-size: 20px"
-                  >Ubicaiones<v-icon> mdi-view-list</v-icon>
-                </v-list-item-title>
+                <v-list-item-title>Ubicaiones </v-list-item-title>
               </v-list-item-content>
             </template>
             <v-list-item
@@ -237,11 +233,11 @@
 </script>
 <style lang="scss">
   #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-family: Verdana, Tahoma, sans-serif, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: #396796;
   }
 
   #nav {
