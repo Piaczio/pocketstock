@@ -13,7 +13,7 @@
         <v-toolbar-title>Crear artículo</v-toolbar-title>
       </v-toolbar>
       <v-row>
-        <v-col sm="6" md="6" lx="4">
+        <v-col sm="6" md="12" lx="13">
           <v-text-field
             v-model="name"
             :counter="10"
@@ -21,7 +21,9 @@
             required
           ></v-text-field>
         </v-col>
-        <v-col sm="2" md="4" lx="4">
+      </v-row>
+      <v-row>
+        <v-col sm="6" md="12" lx="13">
           <v-text-field
             v-model="cant"
             type="number"
@@ -32,7 +34,7 @@
         </v-col>
       </v-row>
       <v-row align="center">
-        <v-col sm="3" md="3" lx="4">
+        <v-col sm="6" md="12" lx="13">
           <v-select
             v-model="selectc"
             :items="itemsc"
@@ -42,7 +44,9 @@
           >
           </v-select>
         </v-col>
-        <v-col sm="2" md="3" lx="4">
+      </v-row>
+      <v-row>
+        <v-col sm="6" md="6" lx="8">
           <v-select
             v-model="selectt"
             :items="itemstt"
@@ -52,7 +56,8 @@
           >
           </v-select>
         </v-col>
-        <v-col sm="2" md="4" lx="5">
+
+        <v-col sm="6" md="6" lx="8">
           <v-select
             v-model="selectp"
             :items="itemsp"
@@ -64,7 +69,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col sm="2" md="4" lx="5">
+        <v-col sm="6" md="6" lx="8">
           <v-select
             v-model="selectm"
             :items="itemstm"
@@ -74,7 +79,8 @@
             required
           ></v-select>
         </v-col>
-        <v-col sm="2" md="4" lx="5">
+
+        <v-col sm="6" md="6" lx="8">
           <v-select
             v-model="selectst"
             :items="itemstst"
@@ -86,7 +92,7 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col sm="3" md="5" lx="5">
+        <v-col sm="3" md="6" lx="8">
           <v-select
             v-model="selectr"
             :items="itemsr"
@@ -96,7 +102,7 @@
             required
           ></v-select>
         </v-col>
-        <v-col sm="3" md="5" lx="5">
+        <v-col sm="3" md="6" lx="8">
           <v-select
             v-model="selectT"
             :items="itemsT"
@@ -280,11 +286,11 @@
       onClose() {
         /*Envia parametro de cierre a componente creación*/
         this.$emit("dialogFromChild", false);
+        store.commit("increment", 1);
       },
       submit() {
-        this.$emit("dialogFromChild", true);
-        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("notifyproblem", false); //para resetear el valor de la notificion en una nueva entrada
+        store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        store.commit("setdanger", false); //para resetear el valor de la notificion en una nueva entrada
         let enviar = {
           nombre_articulo: this.name,
           cantidad_articulo: this.cant,
@@ -299,9 +305,8 @@
         axios
           .post("api/articulo", enviar)
           .then((response) => {
-            this.$emit("dialogFromChild", true);
             if (response.statusText === "Created") {
-              this.$emit("notifysuccess", true);
+              store.commit("setsuccess", true);
               (this.name = ""),
                 (this.cant = ""),
                 (this.selectc = ""),
@@ -312,11 +317,10 @@
                 (this.selectT = ""),
                 (this.selectm = "");
             }
-            store.commit("increment", 1);
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("notifyproblem", true);
+            store.commit("setdanger", true);
           });
       },
       clear() {
@@ -335,6 +339,6 @@
 </script>
 <style scoped>
   .cont-card {
-    padding: 2%;
+    padding: 1rem;
   }
 </style>

@@ -4,28 +4,6 @@
   dentro del sistema.
 -->
   <v-card class="list-card">
-    <v-snackbar
-      dense
-      color="success"
-      outlined
-      :value="alertsuccess"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Guardado exitosamente!
-    </v-snackbar>
-    <v-snackbar
-      dense
-      color="danger"
-      outlined
-      :value="alertproblem"
-      :timeout="timeout"
-      rounded="pill"
-      top
-    >
-      ¡Oops hubo un problema!
-    </v-snackbar>
     <v-row>
       <v-col align-self="end" cols="2">
         <v-row>
@@ -176,59 +154,32 @@
     <crearcategoria
       :parentdialog="dialogcategoria"
       v-on:dialogFromChild="syncFromCategoria($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
     />
     <crearmarca
       :parentdialog="dialogmarca"
       v-on:dialogFromChild="syncFromMarca($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
     />
     <creartipo
       :parentdialog="dialogtipo"
       v-on:dialogFromChild="syncFromTipo($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
     />
     <crearproveedor
       :parentdialog="dialogproveedor"
       v-on:dialogFromChild="syncFromProveedor($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
     />
     <!--<crearstatus
       :parentdialog="dialogstatus"
       v-on:dialogFromChild="syncFromStatus($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
+     
     />-->
 
     <crearrack
       :parentdialog="dialograck"
       v-on:dialogFromChild="syncFromRack($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
     />
     <creartravesaño
       :parentdialog="dialogtravesaño"
       v-on:dialogFromChild="syncFromTravesaño($event)"
-      :incomingsuccess="alertsuccess"
-      v-on:notifysuccess="syncToSuccess($event)"
-      :incomingproblem="alertproblem"
-      v-on:notifyproblem="syncToProblem($event)"
     />
   </v-card>
 </template>
@@ -248,10 +199,7 @@
 
   export default {
     name: "crearlist",
-    props: {
-      incomingsuccess: { type: Boolean },
-      incomingproblem: { type: Boolean },
-    },
+
     components: {
       creararticulo,
       crearcategoria,
@@ -268,12 +216,6 @@
       },
     },
     methods: {
-      syncToSuccess(updatedDialog) {
-        this.alertsuccess = updatedDialog;
-      },
-      syncToProblem(updatedDialog) {
-        this.alertproblem = updatedDialog;
-      },
       syncFromArticulo(updatedDialog) {
         this.dialogarticulo = updatedDialog;
       },
@@ -290,8 +232,8 @@
         this.dialogproveedor = updatedDialog;
       },
       /*syncFromStatus(updatedDialog) {
-                                                                                                              this.dialogstatus = updatedDialog;
-                                                                                                            },*/
+                                                                                                                        this.dialogstatus = updatedDialog;
+                                                                                                                      },*/
       syncFromRack(updatedDialog) {
         this.dialograck = updatedDialog;
       },
@@ -308,9 +250,6 @@
       //dialogstatus: false,
       dialograck: false,
       dialogtravesaño: false,
-      alertsuccess: false,
-      alertproblem: false,
-      timeout: 2000,
     }),
   };
 </script>

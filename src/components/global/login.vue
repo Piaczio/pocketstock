@@ -144,14 +144,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 12em;
+    padding-top: 15rem;
   }
 
   .cont-card {
-    padding-left: 2%;
-    padding-top: 2%;
-    padding-right: 2%;
-    padding-bottom: 2%;
+    padding: 1rem;
     width: 24em;
   }
 

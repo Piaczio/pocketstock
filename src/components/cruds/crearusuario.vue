@@ -13,7 +13,7 @@
         <v-toolbar-title>Crear usuario</v-toolbar-title>
       </v-toolbar>
       <v-row
-        ><v-col md="10">
+        ><v-col sm="6" md="12" lx="13">
           <v-text-field
             v-model="name"
             :counter="10"
@@ -23,12 +23,12 @@
         </v-col>
       </v-row>
       <v-row
-        ><v-col md="10">
+        ><v-col sm="6" md="12" lx="13">
           <v-text-field v-model="email" label="Correo" required></v-text-field>
         </v-col>
       </v-row>
       <v-row
-        ><v-col md="10">
+        ><v-col sm="6" md="12" lx="13">
           <v-text-field
             v-model="password"
             :counter="8"
@@ -39,7 +39,7 @@
         </v-col>
       </v-row>
       <v-row align="center">
-        <v-col sm="3" md="3" lx="4">
+        <v-col sm="6" md="12" lx="13">
           <v-select
             v-model="selectrol"
             :items="itemsrol"
@@ -103,11 +103,12 @@
       onClose() {
         /*Envia parametro de cierre a componente creación*/
         this.$emit("dialogFromChild", false);
+        store.commit("increment", 1);
       },
       submit() {
         //this.$emit("dialogFromChild", false);
-        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("notifyproblem", false);
+        store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
+        store.commit("setdanger", false);
         let enviar = {
           name: this.name,
           email: this.email,
@@ -120,14 +121,12 @@
           .then((response) => {
             this.$emit("dialogFromChild", true);
             if (response.statusText === "Created") {
-              this.$emit("notifysuccess", true);
-              store.commit("increment", 1);
+              store.commit("setsuccess", true);
             }
-            store.commit("increment", 1);
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("notifyproblem", true);
+            store.commit("setdanger", true);
           });
       },
       clear() {
@@ -139,6 +138,6 @@
 
 <style scoped>
   .cont-card {
-    padding: 2%;
+    padding: 1rem;
   }
 </style>

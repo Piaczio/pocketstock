@@ -41,6 +41,7 @@
 
 <script>
   import axios from "axios";
+  import store from "@/store";
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
@@ -59,8 +60,8 @@
         this.$emit("dialogFromChild", false);
       },
       submit() {
-        this.$emit("notifysuccess", false); //para resetear el valor de la notificion en una nueva entrada
-        this.$emit("notifyproblem", false);
+        store.commit("setsuccess", false);
+        store.commit("setdanger", false);
         let enviar = {
           nombre_categoria: this.name,
           descripcion_categoria: this.descripcion,
@@ -70,13 +71,15 @@
           .post("api/categoria", enviar)
           .then((response) => {
             if (response.statusText === "Created") {
-              this.$emit("notifysuccess", true);
+              store.commit("setsuccess", true);
               (this.name = ""), (this.descripcion = "");
             }
           })
           .catch((e) => {
             console.log(e.message);
-            this.$emit("notifyproblem", true);
+            if (e) {
+              store.commit("setdanger", true);
+            }
           });
       },
       clear() {
@@ -88,6 +91,6 @@
 
 <style scoped>
   .cont-card {
-    padding: 2%;
+    padding: 1rem;
   }
 </style>
