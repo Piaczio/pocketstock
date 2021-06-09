@@ -46,11 +46,11 @@
       onClose() {
         /*Envia parametro de cierre a componente creación*/
         this.$emit("dialogFromChild", false);
+        store.commit("increment", 1);
       },
       submit() {
         store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
         store.commit("setdanger", false);
-
         let enviar_travesaño = {
           nombre_travesano: this.travesaño,
         };
@@ -61,12 +61,10 @@
             if (response.statusText === "Created") {
               this.travesaño = "";
               store.commit("setsuccess", true);
-              store.commit("increment", 1);
             }
           })
           .catch((e) => {
             console.log(e.message);
-
             store.commit("setdanger", true);
           });
       },

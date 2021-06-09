@@ -45,7 +45,7 @@
     methods: {
       onClose() {
         /*Envia parametro de cierre a componente creación*/
-        this.$emit("dialogFromChild", false);
+        store.commit("increment", 1);
         store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
         store.commit("setdanger", false);
       },
@@ -62,7 +62,6 @@
             if (response.statusText === "Created") {
               this.rack = "";
               store.commit("setsuccess", true);
-              store.commit("increment", 1);
             }
           })
           .catch((e) => {
