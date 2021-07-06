@@ -31,12 +31,10 @@
 </template>
 
 <script>
-  import axios from "axios";
   import store from "@/store";
-  axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import { postProveedores } from "@/api/proveedores.js";
   export default {
-    name: "crearmarca",
+    name: "crearproveedor",
     props: {
       parentdialog: { type: Boolean },
     } /*data de llegado de componente padre creacion*/,
@@ -56,19 +54,8 @@
         let enviar = {
           nombre_proveedor: this.name,
         };
-
-        axios
-          .post("api/proveedor", enviar)
-          .then((response) => {
-            if (response.statusText === "Created") {
-              this.name = "";
-              store.commit("setsuccess", true);
-            }
-          })
-          .catch((e) => {
-            console.log(e.message);
-            store.commit("setdanger", true);
-          });
+        postProveedores(enviar);
+        this.clear();
       },
       clear() {
         this.name = "";

@@ -31,10 +31,9 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import { postTipos } from "@/api/tipos.js";
   import store from "@/store";
-  axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+
   export default {
     name: "creartipo",
     props: {
@@ -56,19 +55,8 @@
         let enviar = {
           name_tipo: this.name,
         };
-
-        axios
-          .post("api/tipo", enviar)
-          .then((response) => {
-            if (response.statusText === "Created") {
-              this.name = "";
-              store.commit("setsuccess", true);
-            }
-          })
-          .catch((e) => {
-            console.log(e.message);
-            store.commit("setdanger", true);
-          });
+        postTipos(enviar);
+        this.clear();
       },
       clear() {
         this.name = "";

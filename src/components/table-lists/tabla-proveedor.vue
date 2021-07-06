@@ -95,9 +95,11 @@
 </template>
 
 <script>
-  import axios from "axios";
-  //axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import {
+    getProveedores,
+    deleteProveedores,
+    editProveedores,
+  } from "@/api/proveedores.js";
   export default {
     nombre_proveedor: "tabla-proveedor",
     data: () => ({
@@ -139,22 +141,16 @@
         this.proveedorArray = e.proveedores;
       });
 
-      axios
-        .get("api/proveedor")
+      getProveedores(this.proveedorArray)
         .then((response) => {
-          let proveedor = response.data;
-
-          proveedor.forEach((element) => {
-            let datos = {
-              id: element.id,
-              nombre_proveedor: element.nombre_proveedor,
-            };
-            if (!datos) return;
-            this.proveedorArray.push(datos);
-          });
-          this.cargando = false;
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((e) => {
+          console.log(e);
+          this.cargando = true;
+        });
     },
 
     computed: {
@@ -206,7 +202,7 @@
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/proveedor/" + id).catch((error) => console.log(error));
+        deleteProveedores(id);
       },
 
       deleteItemConfirm() {
@@ -238,14 +234,7 @@
           console.log("edit method:", url + send.id);
           url = url + send.id;
           url = `${url}?${"nombre_proveedor=" + send.nombre_proveedor}`;
-
-          console.log("edit method:", url);
-          axios
-            .put(url)
-            .then((response) => {
-              console.log("Si se pudo:", response.data);
-            })
-            .catch((error) => console.log(error));
+          editProveedores(url);
         } else {
           this.proveedorArray.push(this.editedItem);
         }

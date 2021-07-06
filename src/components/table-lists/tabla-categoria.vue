@@ -100,10 +100,12 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import {
+    getCategorias,
+    deleteCategoria,
+    editCategoria,
+  } from "@/api/categorias.js";
 
-  //axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     nombre_categoria: "tabla-categoria",
     data: () => ({
@@ -144,22 +146,16 @@
       window.Echo.channel("categorias").listen("categoriaCreated", (e) => {
         this.categoriaArray = e.categorias;
       });
-      axios
-        .get("api/categoria")
+      getCategorias(this.categoriaArray)
         .then((response) => {
-          let categoria = response.data;
-
-          categoria.forEach((element) => {
-            let datos = {
-              id: element.id,
-              nombre_categoria: element.nombre_categoria,
-            };
-            if (!datos) return;
-            this.categoriaArray.push(datos);
-          });
-          this.cargando = false;
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((e) => {
+          console.log(e);
+          this.cargando = true;
+        });
     },
 
     computed: {
@@ -211,7 +207,7 @@
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/categoria/" + id).catch((error) => console.log(error));
+        deleteCategoria(id);
       },
 
       deleteItemConfirm() {
@@ -242,12 +238,7 @@
           let url = "api/categoria/";
           url = url + send.id;
           url = `${url}?${"nombre_categoria=" + send.nombre_categoria}`;
-          axios
-            .put(url)
-            .then((response) => {
-              response;
-            })
-            .catch((error) => console.log(error));
+          editCategoria(url);
         } else {
           this.categoriaArray.push(this.editedItem);
         }

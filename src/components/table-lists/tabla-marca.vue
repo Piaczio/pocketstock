@@ -95,9 +95,7 @@
 </template>
 
 <script>
-  import axios from "axios";
-  //axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import { getMarcas, editMarcas, deleteMarcas } from "@/api/marcas.js";
   export default {
     nombre_marca: "tabla-marca",
     data: () => ({
@@ -133,23 +131,16 @@
       window.Echo.channel("marcas").listen("marcaCreated", (e) => {
         this.marcaArray = e.marcas;
       });
-
-      axios
-        .get("api/marca")
+      getMarcas(this.marcaArray)
         .then((response) => {
-          let marca = response.data;
-
-          marca.forEach((element) => {
-            let datos = {
-              id: element.id,
-              nombre_marca: element.nombre_marca,
-            };
-            if (!datos) return;
-            this.marcaArray.push(datos);
-          });
-          this.cargando = false;
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((e) => {
+          console.log(e);
+          this.cargando = true;
+        });
     },
 
     computed: {
@@ -199,9 +190,8 @@
         this.editedIndex = this.marcaArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
-
         let id = this.editedItem.id;
-        axios.delete("api/marca/" + id).catch((error) => console.log(error));
+        deleteMarcas(id);
       },
 
       deleteItemConfirm() {
@@ -233,13 +223,7 @@
 
           url = url + send.id;
           url = `${url}?${"nombre_marca=" + send.nombre_marca}`;
-
-          axios
-            .put(url)
-            .then((response) => {
-              response;
-            })
-            .catch((error) => console.log(error));
+          editMarcas(url);
         } else {
           this.marcaArray.push(this.editedItem);
         }

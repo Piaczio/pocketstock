@@ -40,10 +40,9 @@
 </template>
 
 <script>
-  import axios from "axios";
   import store from "@/store";
-  axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import { postCategorias } from "@/api/categorias.js";
+
   export default {
     name: "crearcategoria",
     props: {
@@ -66,21 +65,8 @@
           nombre_categoria: this.name,
           descripcion_categoria: this.descripcion,
         };
-
-        axios
-          .post("api/categoria", enviar)
-          .then((response) => {
-            if (response.statusText === "Created") {
-              store.commit("setsuccess", true);
-              (this.name = ""), (this.descripcion = "");
-            }
-          })
-          .catch((e) => {
-            console.log(e.message);
-            if (e) {
-              store.commit("setdanger", true);
-            }
-          });
+        postCategorias(enviar);
+        this.clear();
       },
       clear() {
         (this.name = ""), (this.descripcion = "");

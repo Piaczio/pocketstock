@@ -20,7 +20,7 @@
       <v-data-table
         id="tabla"
         :headers="headers"
-        :items="TipoArray"
+        :items="tipoArray"
         sort-by="cantidad_articulo"
         class="elevation-1"
         :search="search"
@@ -95,10 +95,7 @@
 </template>
 
 <script>
-  import axios from "axios";
-
-  //axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import { getTipos, deleteTipos, editTipos } from "@/api/tipos.js";
   export default {
     name_tipo: "tabla-tipo",
     data: () => ({
@@ -117,7 +114,7 @@
         { text: "Acciones", value: "actions", sortable: false },
       ],
 
-      TipoArray: [],
+      tipoArray: [],
       //variable en la que se deposita la posicion en el selector
 
       editedIndex: -1,
@@ -133,24 +130,18 @@
     mounted() {
       this.onFocus();
       window.Echo.channel("tipos").listen("tipoCreated", (e) => {
-        this.TipoArray = e.tipos;
+        this.tipoArray = e.tipos;
       });
-      axios
-        .get("api/tipo")
+      getTipos(this.tipoArray)
         .then((response) => {
-          let tipo = response.data;
-
-          tipo.forEach((element) => {
-            let datos = {
-              id: element.id,
-              name_tipo: element.name_tipo,
-            };
-            if (!datos) return;
-            this.TipoArray.push(datos);
-          });
-          this.cargando = false;
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((e) => {
+          console.log(e);
+          this.cargando = true;
+        });
     },
 
     computed: {
@@ -190,23 +181,23 @@
       },
 
       editItem(item) {
-        this.editedIndex = this.TipoArray.indexOf(item);
+        this.editedIndex = this.tipoArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
 
         this.dialog = true;
       },
 
       deleteItem(item) {
-        this.editedIndex = this.TipoArray.indexOf(item);
+        this.editedIndex = this.tipoArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/tipo/" + id).catch((error) => console.log(error));
+        deleteTipos(id);
       },
 
       deleteItemConfirm() {
-        this.TipoArray.splice(this.editedIndex, 1);
+        this.tipoArray.splice(this.editedIndex, 1);
         this.closeDelete();
       },
 
@@ -228,19 +219,14 @@
 
       save() {
         if (this.editedIndex > -1) {
-          Object.assign(this.TipoArray[this.editedIndex], this.editedItem);
+          Object.assign(this.tipoArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/tipo/";
           url = url + send.id;
           url = `${url}?${"name_tipo=" + send.name_tipo}`;
-          axios
-            .put(url)
-            .then((response) => {
-              response;
-            })
-            .catch((error) => console.log(error));
+          editTipos(url);
         } else {
-          this.TipoArray.push(this.editedItem);
+          this.tipoArray.push(this.editedItem);
         }
         this.close();
       },

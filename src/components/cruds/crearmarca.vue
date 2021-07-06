@@ -31,10 +31,9 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import { postMarcas } from "@/api/marcas.js";
   import store from "@/store";
-  axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+
   export default {
     name: "crearmarca",
     props: {
@@ -56,19 +55,8 @@
         let enviar = {
           nombre_marca: this.name,
         };
-
-        axios
-          .post("api/marca", enviar)
-          .then((response) => {
-            if (response.statusText === "Created") {
-              this.name = "";
-              store.commit("setsuccess", true);
-            }
-          })
-          .catch((e) => {
-            console.log(e.message);
-            store.commit("setdanger", true);
-          });
+        postMarcas(enviar);
+        this.clear();
       },
       clear() {
         this.name = "";

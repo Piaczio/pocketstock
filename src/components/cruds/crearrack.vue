@@ -29,10 +29,9 @@
 </template>
 
 <script>
-  import axios from "axios";
   import store from "@/store";
-  axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import { postRack } from "@/api/racks.js";
+
   export default {
     name: "crearrack",
     props: {
@@ -55,19 +54,8 @@
         let enviar_rack = {
           nombre_rack: this.rack,
         };
-
-        axios
-          .post("api/rack", enviar_rack)
-          .then((response) => {
-            if (response.statusText === "Created") {
-              this.rack = "";
-              store.commit("setsuccess", true);
-            }
-          })
-          .catch((e) => {
-            console.log(e.message);
-            store.commit("setdanger", true);
-          });
+        postRack(enviar_rack);
+        this.clear();
       },
 
       clear() {

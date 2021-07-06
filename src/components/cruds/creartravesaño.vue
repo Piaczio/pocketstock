@@ -29,10 +29,9 @@
 </template>
 
 <script>
-  import axios from "axios";
   import store from "@/store";
-  axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import { postTravesano } from "@/api/travesanos.js";
+
   export default {
     name: "crearmarca",
     props: {
@@ -54,19 +53,8 @@
         let enviar_travesaño = {
           nombre_travesano: this.travesaño,
         };
-        console.log("Antes de enviar a travesaño", enviar_travesaño);
-        axios
-          .post("api/travesano/", enviar_travesaño)
-          .then((response) => {
-            if (response.statusText === "Created") {
-              this.travesaño = "";
-              store.commit("setsuccess", true);
-            }
-          })
-          .catch((e) => {
-            console.log(e.message);
-            store.commit("setdanger", true);
-          });
+        postTravesano(enviar_travesaño);
+        this.clear();
       },
 
       clear() {
