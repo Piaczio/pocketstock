@@ -53,4 +53,4 @@ export function editProveedores(url) {
     .catch((error) => console.log(error));
 }
 
-export default { getProveedores, postProveedores, deleteProveedores, editProveedores }
+export default { getProveedores, postProveedores, deleteProveedores, editProveedores };

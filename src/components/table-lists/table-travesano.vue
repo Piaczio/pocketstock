@@ -20,7 +20,7 @@
       <v-data-table
         id="tabla"
         :headers="headers"
-        :items="TravesanoArray"
+        :items="travesanoArray"
         sort-by="cantidad_articulo"
         class="elevation-1"
         :search="search"
@@ -95,10 +95,12 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import {
+    getTravesano,
+    deleteTravesano,
+    editTravesano,
+  } from "@/api/travesanos.js";
 
-  //axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     nombre: "tabla-travesano",
     data: () => ({
@@ -117,7 +119,7 @@
         { text: "Acciones", value: "actions", sortable: false },
       ],
 
-      TravesanoArray: [],
+      travesanoArray: [],
 
       editedIndex: -1,
       editedItem: {
@@ -132,24 +134,18 @@
     mounted() {
       this.onFocus();
       window.Echo.channel("travesanos").listen("travesañoCreated", (e) => {
-        this.TravesanoArray = e.travesanos;
+        this.travesanoArray = e.travesanos;
       });
-      axios
-        .get("api/travesano")
+      getTravesano(this.travesanoArray)
         .then((response) => {
-          let travesano = response.data;
-
-          travesano.forEach((element) => {
-            let datos = {
-              id: element.id,
-              nombre_travesano: element.nombre_travesano,
-            };
-            if (!datos) return;
-            this.TravesanoArray.push(datos);
-          });
-          this.cargando = false;
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
-        .catch((error) => console.log(error));
+        .catch((e) => {
+          console.log(e);
+          this.cargando = true;
+        });
     },
 
     computed: {
@@ -189,24 +185,23 @@
       },
 
       editItem(item) {
-        this.editedIndex = this.TravesanoArray.indexOf(item);
+        this.editedIndex = this.travesanoArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
 
         this.dialog = true;
       },
 
       deleteItem(item) {
-        this.editedIndex = this.TravesanoArray.indexOf(item);
+        this.editedIndex = this.travesanoArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        console.log("delete working:", id);
-        axios.delete("api/travesano/" + id).catch((error) => console.log(error));
+        deleteTravesano(id);
       },
 
       deleteItemConfirm() {
-        this.TravesanoArray.splice(this.editedIndex, 1);
+        this.travesanoArray.splice(this.editedIndex, 1);
         this.closeDelete();
       },
 
@@ -228,19 +223,14 @@
 
       save() {
         if (this.editedIndex > -1) {
-          Object.assign(this.TravesanoArray[this.editedIndex], this.editedItem);
+          Object.assign(this.travesanoArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/travesano/";
           url = url + send.id;
           url = `${url}?${"nombre_travesano=" + send.nombre_travesano}`;
-          axios
-            .put(url)
-            .then((response) => {
-              response;
-            })
-            .catch((error) => console.log(error));
+          editTravesano(url);
         } else {
-          this.TravesanoArray.push(this.editedItem);
+          this.travesanoArray.push(this.editedItem);
         }
         this.close();
       },

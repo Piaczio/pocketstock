@@ -176,11 +176,18 @@
 </template>
 
 <script>
-  import axios from "axios";
   import store from "@/store";
-  //import { getArticulos } from "@/api/articulos.js";
-  //axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import {
+    getArticulos,
+    deleteArticulos,
+    editArticulos,
+  } from "@/api/articulos.js";
+  import { getCategorias } from "@/api/categorias.js";
+  import { getProveedores } from "@/api/proveedores.js";
+  import { getMarcas } from "@/api/marcas.js";
+  import { getRacks } from "@/api/racks.js";
+  import { getTravesano } from "@/api/travesanos.js";
+  import { getTipos } from "@/api/tipos.js";
   export default {
     name: "tabla-articulos",
     data: () => ({
@@ -268,9 +275,9 @@
       window.Echo.channel("proveedores").listen("proveedorCreated", (e) => {
         this.itemsp = e.proveedores;
       });
-      window.Echo.channel("status").listen("statusCreated", (e) => {
-        this.itemstst = e.status;
-      });
+      /*window.Echo.channel("status").listen("statusCreated", (e) => {
+                this.itemstst = e.status;
+              });*/
       window.Echo.channel("tipos").listen("tipoCreated", (e) => {
         this.itemstt = e.tipos;
       });
@@ -280,167 +287,98 @@
       window.Echo.channel("travesanos").listen("travesañoCreated", (e) => {
         this.itemsT = e.travesanos;
       });
-      //getArticulos(); //Aqui pretendo tener la llamada de articulos
-      axios
-        .get("api/articulo")
+      getArticulos(this.articulosArray)
         .then((response) => {
-          let articulos = response.data;
-          articulos.forEach((element) => {
-            let datos = {
-              id: element.id,
-              nombre_articulo: element.nombre_articulo,
-              cantidad_articulo: element.cantidad_articulo,
-              descripcion_articulo: element.descripcion_articulo, //pendiente
-              nombre_categoria: element.nombre_categoria,
-              name_tipo: element.name_tipo,
-              nombre_marca: element.nombre_marca,
-              nombre_proveedor: element.nombre_proveedor,
-              nombre_status: element.nombre_status,
-              //campos de ubicación
-              nombre_rack: element.nombre_rack,
-              nombre_travesano: element.nombre_travesano,
-            };
-            if (!datos) return;
-            this.articulosArray.push(datos);
-          });
-          this.cargando = false;
-          store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
-          store.commit("setdanger", false);
-        })
-        .catch((error) => console.log(error));
-
-      axios
-        .get("api/categoria")
-        .then((response) => {
-          let categorias = response.data;
-
-          categorias.forEach((element) => {
-            let datos = {
-              categoria_id: element.id,
-              nombre_categoria: element.nombre_categoria,
-            };
-
-            if (!datos) return;
-            this.itemsc.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+            store.commit("setsuccess", false); //para resetear el valor de la notificion en una nueva entrada
+            store.commit("setdanger", false);
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
 
-      axios
-        .get("api/marca")
+      getCategorias(this.itemsc)
         .then((response) => {
-          let marcas = response.data;
-
-          marcas.forEach((element) => {
-            let datos = {
-              marca_id: element.id,
-              nombre_marca: element.nombre_marca,
-            };
-
-            if (!datos) return;
-            this.itemstm.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-
-      axios
-        .get("api/proveedor")
+      getProveedores(this.itemsp)
         .then((response) => {
-          let proveedores = response.data;
-
-          proveedores.forEach((element) => {
-            let datos = {
-              proveedor_id: element.id,
-              nombre_proveedor: element.nombre_proveedor,
-            };
-
-            if (!datos) return;
-            this.itemsp.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-
-      axios
-        .get("api/status")
+      getTipos(this.itemstt)
         .then((response) => {
-          let status = response.data;
-
-          status.forEach((element) => {
-            let datos = {
-              status_id: element.id,
-              nombre_status: element.nombre_status,
-            };
-
-            if (!datos) return;
-            this.itemstst.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-
-      axios
-        .get("api/tipo")
+      getTravesano(this.itemsT)
         .then((response) => {
-          let tipos = response.data;
-
-          tipos.forEach((element) => {
-            let datos = {
-              tipo_id: element.id,
-              name_tipo: element.name_tipo,
-            };
-
-            if (!datos) return;
-            this.itemstt.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-
-      axios
-        .get("api/rack")
+      getRacks(this.itemsr)
         .then((response) => {
-          let racks = response.data;
-
-          racks.forEach((element) => {
-            let datos = {
-              rack_id: element.id,
-              nombre_rack: element.nombre_rack,
-            };
-
-            if (!datos) return;
-            this.itemsr.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-
-      axios
-        .get("api/travesano")
+      getMarcas(this.itemstm)
         .then((response) => {
-          let travesaños = response.data;
-
-          travesaños.forEach((element) => {
-            let datos = {
-              travesaño_id: element.id,
-              nombre_travesano: element.nombre_travesano,
-            };
-
-            if (!datos) return;
-            this.itemsT.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
+
+      /*axios
+                    .get("api/status")
+                    .then((response) => {
+                      let status = response.data;
+
+                      status.forEach((element) => {
+                        let datos = {
+                          status_id: element.id,
+                          nombre_status: element.nombre_status,
+                        };
+
+                        if (!datos) return;
+                        this.itemstst.push(datos);
+                      });
+                    })
+                    .catch((e) => {
+                      console.log(e.message);
+                    });*/
     },
 
     computed: {
@@ -486,7 +424,7 @@
         var tempid = "";
         var tempname = "";
         tempname;
-        console.log("tipo nombre:", recived);
+
         if (this.itemstt) {
           let tipo = this.itemstt;
 
@@ -509,7 +447,7 @@
         var tempid = "";
         var tempname = "";
         tempname;
-        console.log("proveedor nombre", recived);
+
         if (this.itemsp) {
           let proveedor = this.itemsp;
           proveedor.forEach((element) => {
@@ -531,7 +469,7 @@
         var tempid = "";
         var tempname = "";
         tempname;
-        console.log("marcas nombre", recived);
+
         if (this.itemstm) {
           let marca = this.itemstm;
           marca.forEach((element) => {
@@ -552,7 +490,7 @@
       statusync(recived) {
         var tempid = "";
         var tempname = "";
-        console.log("status nombre", recived);
+
         tempname;
         if (this.itemstst) {
           let status = this.itemstst;
@@ -573,7 +511,6 @@
         return this.selectst;
       },
       racksync(recived) {
-        console.log("rack nombre", recived);
         var tempid = "";
         var tempname = "";
         tempname;
@@ -595,7 +532,6 @@
         return this.selectr;
       },
       travesañosync(recived) {
-        console.log("travesaño nombre", recived);
         var tempid = "";
         var tempname = "";
         tempname;
@@ -645,14 +581,14 @@
         //categoria
         if (this.editedItem.nombre_categoria) {
           let categoriasync = this.editedItem.nombre_categoria;
-          console.log("antes entrar sync", categoriasync);
+
           this.categsync(categoriasync);
         }
 
         //tipo
         if (this.editedItem.name_tipo) {
           let tiposync = this.editedItem.name_tipo;
-          console.log("antes entrar sync", tiposync);
+
           this.tiposync(tiposync);
         }
 
@@ -685,7 +621,7 @@
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/articulo/" + id).catch((error) => console.log(error));
+        deleteArticulos(id);
       },
 
       deleteItemConfirm() {
@@ -723,14 +659,7 @@
           }&${"proveedor_id=" + this.selectp}&${"status_id=" + this.selectst}&${
             "rack_id=" + this.selectr
           }&${"travesano_id=" + this.selectT}`;
-
-          axios
-            .put(url)
-            .then((response) => {
-              response;
-              store.commit("increment", 1);
-            })
-            .catch((error) => console.log(error));
+          editArticulos(url);
         } else {
           this.articulosArray.push(this.editedItem);
         }

@@ -20,7 +20,7 @@
       <v-data-table
         id="tabla"
         :headers="headers"
-        :items="RackArray"
+        :items="rackArray"
         sort-by="cantidad_articulo"
         class="elevation-1"
         :search="search"
@@ -95,10 +95,7 @@
 </template>
 
 <script>
-  import axios from "axios";
-
-  //axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+  import { getRack, deleteRack, editRack } from "@/api/racks.js";
   export default {
     nombre_rack: "tabla-rack",
     data: () => ({
@@ -117,7 +114,7 @@
         { text: "Acciones", value: "actions", sortable: false },
       ],
 
-      RackArray: [],
+      rackArray: [],
       //variable en la que se deposita la posicion en el selector
 
       editedIndex: -1,
@@ -133,24 +130,13 @@
     mounted() {
       this.onFocus();
       window.Echo.channel("racks").listen("rackCreated", (e) => {
-        this.RackArray = e.racks;
+        this.rackArray = e.racks;
       });
-      axios
-        .get("api/rack")
-        .then((response) => {
-          let rack = response.data;
-
-          rack.forEach((element) => {
-            let datos = {
-              id: element.id,
-              nombre_rack: element.nombre_rack,
-            };
-            if (!datos) return;
-            this.RackArray.push(datos);
-          });
+      getRack(this.rackArray).then((response) => {
+        if (response.stats === 200) {
           this.cargando = false;
-        })
-        .catch((error) => console.log(error));
+        }
+      });
     },
 
     computed: {
@@ -190,23 +176,23 @@
       },
 
       editItem(item) {
-        this.editedIndex = this.RackArray.indexOf(item);
+        this.editedIndex = this.rackArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
 
         this.dialog = true;
       },
 
       deleteItem(item) {
-        this.editedIndex = this.RackArray.indexOf(item);
+        this.editedIndex = this.rackArray.indexOf(item);
         this.editedItem = Object.assign({}, item);
         this.dialogDelete = true;
 
         let id = this.editedItem.id;
-        axios.delete("api/rack/" + id).catch((error) => console.log(error));
+        deleteRack(id);
       },
 
       deleteItemConfirm() {
-        this.RackArray.splice(this.editedIndex, 1);
+        this.rackArray.splice(this.editedIndex, 1);
         this.closeDelete();
       },
 
@@ -228,19 +214,14 @@
 
       save() {
         if (this.editedIndex > -1) {
-          Object.assign(this.RackArray[this.editedIndex], this.editedItem);
+          Object.assign(this.rackArray[this.editedIndex], this.editedItem);
           let send = this.editedItem;
           let url = "api/rack/";
           url = url + send.id;
           url = `${url}?${"nombre_rack=" + send.nombre_rack}`;
-          axios
-            .put(url)
-            .then((response) => {
-              response;
-            })
-            .catch((error) => console.log(error));
+          editRack(url);
         } else {
-          this.RackArray.push(this.editedItem);
+          this.rackArray.push(this.editedItem);
         }
         this.close();
       },
