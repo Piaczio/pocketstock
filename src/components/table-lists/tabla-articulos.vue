@@ -176,18 +176,14 @@
 </template>
 
 <script>
+  import axios from "axios";
   import store from "@/store";
   import {
     getArticulos,
     deleteArticulos,
     editArticulos,
   } from "@/api/articulos.js";
-  import { getCategorias } from "@/api/categorias.js";
-  import { getProveedores } from "@/api/proveedores.js";
-  import { getMarcas } from "@/api/marcas.js";
-  import { getRacks } from "@/api/racks.js";
-  import { getTravesano } from "@/api/travesanos.js";
-  import { getTipos } from "@/api/tipos.js";
+  axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     name: "tabla-articulos",
     data: () => ({
@@ -275,9 +271,9 @@
       window.Echo.channel("proveedores").listen("proveedorCreated", (e) => {
         this.itemsp = e.proveedores;
       });
-      /*window.Echo.channel("status").listen("statusCreated", (e) => {
-                this.itemstst = e.status;
-              });*/
+      window.Echo.channel("status").listen("statusCreated", (e) => {
+        this.itemstst = e.status;
+      });
       window.Echo.channel("tipos").listen("tipoCreated", (e) => {
         this.itemstt = e.tipos;
       });
@@ -299,86 +295,138 @@
           console.log(e);
           this.cargando = true;
         });
+      axios
+        .get("api/categoria")
+        .then((response) => {
+          let categorias = response.data;
 
-      getCategorias(this.itemsc)
-        .then((response) => {
-          if (response.stats === 200) {
-            this.cargando = false;
-          }
+          categorias.forEach((element) => {
+            let datos = {
+              categoria_id: element.id,
+              nombre_categoria: element.nombre_categoria,
+            };
+
+            if (!datos) return;
+            this.itemsc.push(datos);
+          });
         })
         .catch((e) => {
-          console.log(e);
-          this.cargando = true;
-        });
-      getProveedores(this.itemsp)
-        .then((response) => {
-          if (response.stats === 200) {
-            this.cargando = false;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.cargando = true;
-        });
-      getTipos(this.itemstt)
-        .then((response) => {
-          if (response.stats === 200) {
-            this.cargando = false;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.cargando = true;
-        });
-      getTravesano(this.itemsT)
-        .then((response) => {
-          if (response.stats === 200) {
-            this.cargando = false;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.cargando = true;
-        });
-      getRacks(this.itemsr)
-        .then((response) => {
-          if (response.stats === 200) {
-            this.cargando = false;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.cargando = true;
-        });
-      getMarcas(this.itemstm)
-        .then((response) => {
-          if (response.stats === 200) {
-            this.cargando = false;
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-          this.cargando = true;
+          console.log(e.message);
         });
 
-      /*axios
-                    .get("api/status")
-                    .then((response) => {
-                      let status = response.data;
+      axios
+        .get("api/marca")
+        .then((response) => {
+          let marcas = response.data;
 
-                      status.forEach((element) => {
-                        let datos = {
-                          status_id: element.id,
-                          nombre_status: element.nombre_status,
-                        };
+          marcas.forEach((element) => {
+            let datos = {
+              marca_id: element.id,
+              nombre_marca: element.nombre_marca,
+            };
 
-                        if (!datos) return;
-                        this.itemstst.push(datos);
-                      });
-                    })
-                    .catch((e) => {
-                      console.log(e.message);
-                    });*/
+            if (!datos) return;
+            this.itemstm.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+
+      axios
+        .get("api/proveedor")
+        .then((response) => {
+          let proveedores = response.data;
+
+          proveedores.forEach((element) => {
+            let datos = {
+              proveedor_id: element.id,
+              nombre_proveedor: element.nombre_proveedor,
+            };
+
+            if (!datos) return;
+            this.itemsp.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+
+      // axios
+      //   .get("api/status")
+      //   .then((response) => {
+      //     let status = response.data;
+
+      //     status.forEach((element) => {
+      //       let datos = {
+      //         status_id: element.id,
+      //         nombre_status: element.nombre_status,
+      //       };
+
+      //       if (!datos) return;
+      //       this.itemstst.push(datos);
+      //     });
+      //   })
+      //   .catch((e) => {
+      //     console.log(e.message);
+      //   });
+
+      axios
+        .get("api/tipo")
+        .then((response) => {
+          let tipos = response.data;
+
+          tipos.forEach((element) => {
+            let datos = {
+              tipo_id: element.id,
+              name_tipo: element.name_tipo,
+            };
+
+            if (!datos) return;
+            this.itemstt.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+
+      axios
+        .get("api/rack")
+        .then((response) => {
+          let racks = response.data;
+
+          racks.forEach((element) => {
+            let datos = {
+              rack_id: element.id,
+              nombre_rack: element.nombre_rack,
+            };
+
+            if (!datos) return;
+            this.itemsr.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
+
+      axios
+        .get("api/travesano")
+        .then((response) => {
+          let travesaños = response.data;
+
+          travesaños.forEach((element) => {
+            let datos = {
+              travesaño_id: element.id,
+              nombre_travesano: element.nombre_travesano,
+            };
+
+            if (!datos) return;
+            this.itemsT.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
     },
 
     computed: {
@@ -566,7 +614,7 @@
             if (datos.nombre_categoria === recived) {
               tempid = datos.categoria_id;
               tempname = datos.nombre_categoria;
-              console.log("categoria id", tempid);
+
               this.selectc = tempid;
             }
           });
@@ -660,6 +708,13 @@
             "rack_id=" + this.selectr
           }&${"travesano_id=" + this.selectT}`;
           editArticulos(url);
+          axios
+            .put(url)
+            .then((response) => {
+              response;
+              store.commit("increment", 1);
+            })
+            .catch((error) => console.log(error));
         } else {
           this.articulosArray.push(this.editedItem);
         }
