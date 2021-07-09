@@ -124,6 +124,13 @@
 <script>
   import axios from "axios";
   import store from "@/store";
+  import { postArticulos } from "@/api/articulos.js";
+  import { getCategorias } from "@/api/categorias.js";
+  import { getMarcas } from "@/api/marcas.js";
+  import { getProveedores } from "@/api/proveedores.js";
+  import { getRack } from "@/api/racks.js";
+  import { getTravesano } from "@/api/travesanos.js";
+  import { getTipos } from "@/api/tipos.js";
   axios.defaults.withCredentials = true;
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
 
@@ -135,7 +142,7 @@
     data: () => ({
       name: "",
       cant: "",
-
+      cargando: false,
       selectc: "", //categoria
       selectt: "", //tipo
       selectp: "", //proveedor
@@ -153,59 +160,35 @@
       itemsT: [], //travesaño
     }),
     mounted() {
-      axios
-        .get("api/categoria")
+      getCategorias(this.itemsc)
         .then((response) => {
-          let categorias = response.data;
-
-          categorias.forEach((element) => {
-            let datos = {
-              categoria_id: element.id,
-              nombre_categoria: element.nombre_categoria,
-            };
-
-            if (!datos) return;
-            this.itemsc.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-      axios
-        .get("api/marca")
+      getMarcas(this.itemstm)
         .then((response) => {
-          let marcas = response.data;
-
-          marcas.forEach((element) => {
-            let datos = {
-              marca_id: element.id,
-              nombre_marca: element.nombre_marca,
-            };
-
-            if (!datos) return;
-            this.itemstm.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-      axios
-        .get("api/proveedor")
+      getProveedores(this.itemsp)
         .then((response) => {
-          let proveedores = response.data;
-
-          proveedores.forEach((element) => {
-            let datos = {
-              proveedor_id: element.id,
-              nombre_proveedor: element.nombre_proveedor,
-            };
-
-            if (!datos) return;
-            this.itemsp.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
       axios
         .get("api/status")
@@ -225,60 +208,36 @@
         .catch((e) => {
           console.log(e.message);
         });
-      axios
-        .get("api/tipo")
+
+      getTipos(this.itemstt)
         .then((response) => {
-          let tipos = response.data;
-
-          tipos.forEach((element) => {
-            let datos = {
-              tipo_id: element.id,
-              name_tipo: element.name_tipo,
-            };
-
-            if (!datos) return;
-            this.itemstt.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-
-      axios
-        .get("api/rack")
+      getRack(this.itemsr)
         .then((response) => {
-          let racks = response.data;
-
-          racks.forEach((element) => {
-            let datos = {
-              rack_id: element.id,
-              nombre_rack: element.nombre_rack,
-            };
-
-            if (!datos) return;
-            this.itemsr.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
-      axios
-        .get("api/travesano")
+      getTravesano(this.itemsT)
         .then((response) => {
-          let travesaños = response.data;
-
-          travesaños.forEach((element) => {
-            let datos = {
-              travesano_id: element.id,
-              nombre_travesano: element.nombre_travesano,
-            };
-
-            if (!datos) return;
-            this.itemsT.push(datos);
-          });
+          if (response.stats === 200) {
+            this.cargando = false;
+          }
         })
         .catch((e) => {
-          console.log(e.message);
+          console.log(e);
+          this.cargando = true;
         });
     },
 
@@ -302,26 +261,8 @@
           rack_id: this.selectr,
           travesano_id: this.selectT,
         };
-        axios
-          .post("api/articulo", enviar)
-          .then((response) => {
-            if (response.statusText === "Created") {
-              store.commit("setsuccess", true);
-              (this.name = ""),
-                (this.cant = ""),
-                (this.selectc = ""),
-                (this.selectp = ""),
-                (this.selectt = ""),
-                (this.selectst = ""),
-                (this.selectr = ""),
-                (this.selectT = ""),
-                (this.selectm = "");
-            }
-          })
-          .catch((e) => {
-            console.log(e.message);
-            store.commit("setdanger", true);
-          });
+        postArticulos(enviar);
+        this.clear();
       },
       clear() {
         (this.name = ""),
