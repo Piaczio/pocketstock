@@ -352,24 +352,24 @@
           console.log(e.message);
         });
 
-      // axios
-      //   .get("api/status")
-      //   .then((response) => {
-      //     let status = response.data;
+      axios
+        .get("api/status")
+        .then((response) => {
+          let status = response.data;
 
-      //     status.forEach((element) => {
-      //       let datos = {
-      //         status_id: element.id,
-      //         nombre_status: element.nombre_status,
-      //       };
+          status.forEach((element) => {
+            let datos = {
+              status_id: element.id,
+              nombre_status: element.nombre_status,
+            };
 
-      //       if (!datos) return;
-      //       this.itemstst.push(datos);
-      //     });
-      //   })
-      //   .catch((e) => {
-      //     console.log(e.message);
-      //   });
+            if (!datos) return;
+            this.itemstst.push(datos);
+          });
+        })
+        .catch((e) => {
+          console.log(e.message);
+        });
 
       axios
         .get("api/tipo")
@@ -629,7 +629,6 @@
         //categoria
         if (this.editedItem.nombre_categoria) {
           let categoriasync = this.editedItem.nombre_categoria;
-
           this.categsync(categoriasync);
         }
 
