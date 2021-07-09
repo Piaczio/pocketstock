@@ -60,7 +60,7 @@
                           v-model="selectc"
                           :items="itemsc"
                           item-text="nombre_categoria"
-                          item-value="categoria_id"
+                          item-value="id"
                           label="Categoría"
                         ></v-select>
                       </v-col>
@@ -69,7 +69,7 @@
                           v-model="selectt"
                           :items="itemstt"
                           item-text="name_tipo"
-                          item-value="tipo_id"
+                          item-value="id"
                           label="Tipo"
                         >
                         </v-select>
@@ -79,7 +79,7 @@
                           v-model="selectm"
                           :items="itemstm"
                           item-text="nombre_marca"
-                          item-value="marca_id"
+                          item-value="id"
                           label="Marca"
                           required
                         ></v-select>
@@ -89,7 +89,7 @@
                           v-model="selectp"
                           :items="itemsp"
                           item-text="nombre_proveedor"
-                          item-value="proveedor_id"
+                          item-value="id"
                           label="Proveedor"
                           required
                         ></v-select>
@@ -109,7 +109,7 @@
                           v-model="selectr"
                           :items="itemsr"
                           item-text="nombre_rack"
-                          item-value="rack_id"
+                          item-value="id"
                           label="Ubicación rack"
                           required
                         ></v-select>
@@ -119,7 +119,7 @@
                           v-model="selectT"
                           :items="itemsT"
                           item-text="nombre_travesano"
-                          item-value="travesaño_id"
+                          item-value="id"
                           label="Ubicación travesaño"
                           required
                         ></v-select>
@@ -183,6 +183,12 @@
     deleteArticulos,
     editArticulos,
   } from "@/api/articulos.js";
+  import { getCategorias } from "@/api/categorias.js";
+  import { getMarcas } from "@/api/marcas.js";
+  import { getProveedores } from "@/api/proveedores.js";
+  import { getTipos } from "@/api/tipos.js";
+  import { getRack } from "@/api/racks.js";
+  import { getTravesano } from "@/api/travesanos.js";
   axios.defaults.baseURL = "http://127.0.0.1:8000/";
   export default {
     name: "tabla-articulos",
@@ -295,62 +301,12 @@
           console.log(e);
           this.cargando = true;
         });
-      axios
-        .get("api/categoria")
-        .then((response) => {
-          let categorias = response.data;
-
-          categorias.forEach((element) => {
-            let datos = {
-              categoria_id: element.id,
-              nombre_categoria: element.nombre_categoria,
-            };
-
-            if (!datos) return;
-            this.itemsc.push(datos);
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-        });
-
-      axios
-        .get("api/marca")
-        .then((response) => {
-          let marcas = response.data;
-
-          marcas.forEach((element) => {
-            let datos = {
-              marca_id: element.id,
-              nombre_marca: element.nombre_marca,
-            };
-
-            if (!datos) return;
-            this.itemstm.push(datos);
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-        });
-
-      axios
-        .get("api/proveedor")
-        .then((response) => {
-          let proveedores = response.data;
-
-          proveedores.forEach((element) => {
-            let datos = {
-              proveedor_id: element.id,
-              nombre_proveedor: element.nombre_proveedor,
-            };
-
-            if (!datos) return;
-            this.itemsp.push(datos);
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-        });
+      getCategorias(this.itemsc);
+      getMarcas(this.itemstm);
+      getProveedores(this.itemsp);
+      getTipos(this.itemstt);
+      getRack(this.itemsr);
+      getTravesano(this.itemsT);
 
       axios
         .get("api/status")
@@ -365,63 +321,6 @@
 
             if (!datos) return;
             this.itemstst.push(datos);
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-        });
-
-      axios
-        .get("api/tipo")
-        .then((response) => {
-          let tipos = response.data;
-
-          tipos.forEach((element) => {
-            let datos = {
-              tipo_id: element.id,
-              name_tipo: element.name_tipo,
-            };
-
-            if (!datos) return;
-            this.itemstt.push(datos);
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-        });
-
-      axios
-        .get("api/rack")
-        .then((response) => {
-          let racks = response.data;
-
-          racks.forEach((element) => {
-            let datos = {
-              rack_id: element.id,
-              nombre_rack: element.nombre_rack,
-            };
-
-            if (!datos) return;
-            this.itemsr.push(datos);
-          });
-        })
-        .catch((e) => {
-          console.log(e.message);
-        });
-
-      axios
-        .get("api/travesano")
-        .then((response) => {
-          let travesaños = response.data;
-
-          travesaños.forEach((element) => {
-            let datos = {
-              travesaño_id: element.id,
-              nombre_travesano: element.nombre_travesano,
-            };
-
-            if (!datos) return;
-            this.itemsT.push(datos);
           });
         })
         .catch((e) => {
@@ -478,11 +377,11 @@
 
           tipo.forEach((element) => {
             let datos = {
-              tipo_id: element.tipo_id,
+              id: element.id,
               name_tipo: element.name_tipo,
             };
             if (datos.name_tipo === recived) {
-              tempid = datos.tipo_id;
+              tempid = datos.id;
               tempname = datos.name_tipo;
               this.selectt = tempid;
             }
@@ -500,11 +399,11 @@
           let proveedor = this.itemsp;
           proveedor.forEach((element) => {
             let datos = {
-              proveedor_id: element.proveedor_id,
+              id: element.id,
               nombre_proveedor: element.nombre_proveedor,
             };
             if (datos.nombre_proveedor === recived) {
-              tempid = datos.proveedor_id;
+              tempid = datos.id;
               tempname = datos.nombre_proveedor;
 
               this.selectp = tempid;
@@ -522,11 +421,11 @@
           let marca = this.itemstm;
           marca.forEach((element) => {
             let datos = {
-              marca_id: element.marca_id,
+              id: element.id,
               nombre_marca: element.nombre_marca,
             };
             if (datos.nombre_marca === recived) {
-              tempid = datos.marca_id;
+              tempid = datos.id;
               tempname = datos.nombre_marca;
 
               this.selectm = tempid;
@@ -566,11 +465,11 @@
           let rack = this.itemsr;
           rack.forEach((element) => {
             let datos = {
-              rack_id: element.rack_id,
+              id: element.id,
               nombre_rack: element.nombre_rack,
             };
             if (datos.nombre_rack === recived) {
-              tempid = datos.rack_id;
+              tempid = datos.id;
               tempname = datos.nombre_rack;
 
               this.selectr = tempid;
@@ -587,11 +486,11 @@
           let rack = this.itemsT;
           rack.forEach((element) => {
             let datos = {
-              travesaño_id: element.travesaño_id,
+              id: element.id,
               nombre_travesano: element.nombre_travesano,
             };
             if (datos.nombre_travesano === recived) {
-              tempid = datos.travesaño_id;
+              tempid = datos.id;
               tempname = datos.nombre_travesano;
 
               this.selectT = tempid;
@@ -605,14 +504,15 @@
         var tempname = "";
         tempname;
         if (this.itemsc) {
+          console.log(this.itemsc);
           let categoria = this.itemsc;
           categoria.forEach((element) => {
             let datos = {
-              categoria_id: element.categoria_id,
+              id: element.id,
               nombre_categoria: element.nombre_categoria,
             };
             if (datos.nombre_categoria === recived) {
-              tempid = datos.categoria_id;
+              tempid = datos.id;
               tempname = datos.nombre_categoria;
 
               this.selectc = tempid;
