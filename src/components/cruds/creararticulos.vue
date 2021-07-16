@@ -131,8 +131,8 @@
   import { getRack } from "@/api/racks.js";
   import { getTravesano } from "@/api/travesanos.js";
   import { getTipos } from "@/api/tipos.js";
-  axios.defaults.withCredentials = true;
-  axios.defaults.baseURL = "http://127.0.0.1:8000/";
+
+  import { upperConverter } from "@/special/uppercases-converter.js";
 
   export default {
     name: "creararticulos",
@@ -261,6 +261,7 @@
           rack_id: this.selectr,
           travesano_id: this.selectT,
         };
+        enviar.nombre_articulo = upperConverter(enviar.nombre_articulo);
         postArticulos(enviar);
         this.clear();
       },
